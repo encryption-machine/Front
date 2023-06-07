@@ -1,0 +1,36 @@
+.footer {
+	width: 100%;
+	background-color: #676767;
+	margin: 0;
+	padding: 0;
+	color: #fff;
+}
+
+.container {
+	width: calc(100% - 2 * 150px);
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	ul {
+		list-style: none;
+		display: flex;
+		margin: 0;
+		padding: 0;
+		align-items: center;
+		font-weight: 600;
+	}
+
+	li {
+		margin-right: 12px;
+	}
+
+	l a {
+		text-decoration: none;
+	}
+
+	p {
+		font-weight: 600;
+	}
+}
