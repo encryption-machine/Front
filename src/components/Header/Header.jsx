@@ -34,7 +34,7 @@ export const Header = () => {
 				</nav>
 				<div className={styles.entrance}>
 					<div>
-            {/* скорее всего заменить кнопки на Link, когда будут страницы регистрации и авторизации */}
+						{/* скорее всего заменить кнопки на Link, когда будут страницы регистрации и авторизации */}
 						{!loggedIn ? (
 							<button type="button" onClick={handleLogin}>
 								Вход
