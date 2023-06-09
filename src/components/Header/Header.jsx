@@ -17,7 +17,7 @@ export const Header = () => {
 
 	return (
 		<header className={styles.header}>
-			<div className={styles.container}>
+			<div className={styles.header_container}>
 				<div className={styles.logo}>Шифровальная машина</div>
 				<nav>
 					<ul>
@@ -33,20 +33,21 @@ export const Header = () => {
 					</ul>
 				</nav>
 				<div className={styles.entrance}>
-					<div>
-						{/* скорее всего заменить кнопки на Link, когда будут страницы регистрации и авторизации */}
-						{!loggedIn ? (
-							<button type="button" onClick={handleLogin}>
-								Вход
-							</button>
-						) : (
+					{/* скорее всего заменить кнопки на Link, когда будут страницы регистрации и авторизации */}
+					{!loggedIn ? (
+						<button type="button" onClick={handleLogin}>
+							Войти
+						</button>
+					) : (
+						<div className={styles.userInfo}>
+							<span>mail@mail.ru</span>
+							<hr />
 							<button type="button" onClick={handleLogout}>
 								Выйти
 							</button>
-						)}
-						<img src={IconUser} />
-					</div>
-					{loggedIn && <p>maggggggggggggggggil@mail.ru</p>}
+						</div>
+					)}
+					<img className={styles.img} src={IconUser} />
 				</div>
 			</div>
 		</header>
