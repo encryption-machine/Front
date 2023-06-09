@@ -1,5 +1,18 @@
 import React from 'react';
+import { Machine } from '../components/Machine/Machine';
 
 export const MainPage = () => {
-	return <div className="layout">здесь будет контент главной</div>;
+	const dataMachine = [
+		'Азбука Морзе',
+		'QR код',
+		'AES (Advanced Encryption Standard)',
+		'Шифр Виженера',
+		'DSA (Digital Signature Algorithm)',
+		'Код Цезаря',
+	];
+	return (
+		<div className="layout">
+			<Machine list={dataMachine} />
+		</div>
+	);
 };

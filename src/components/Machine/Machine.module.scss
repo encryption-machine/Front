@@ -1,0 +1,97 @@
+*{
+  box-sizing: border-box;
+}
+.machine{
+  width: 1140px;
+  margin: 20px auto;
+  //стили выше потом удалить
+  display: grid;
+  gap: 15px 20px;
+  grid-template-columns: repeat(2,1fr);
+  align-items: center;
+  &__switch{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  &__tab{
+    background: none;
+    border-radius: 0;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000;
+    font-weight: 600;
+    border:none;
+    cursor: pointer;
+    &Active{
+      border-bottom: 1px solid #000000;
+    }
+  }
+  &__select{
+    position: relative;
+    display: block;
+    &Title{
+      width: 316px;
+      height: 40px;
+      padding: 0 12px;
+      font-size: 16px;
+      line-height: 19px;
+      background: #F3F3F3;
+      border: 1.5px solid #000000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    &Icon{
+      сolor: #000;
+      transition: .3s ease-in;
+      svg {
+        fill: currentColor;
+      }
+    }
+    &Hide{
+      position: absolute;
+      top: 100%;
+      left: 0;
+      height: 0;
+      transition: .5s ease-in;
+      overflow: hidden;
+    }
+    &List{
+      width: 316px;
+      display: grid;
+      align-items: flex-start;
+      padding: 0;
+      margin: 0;
+      border:1.5px solid #000000;
+      border-top:0;
+      li{
+        list-style-type: none;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0 12px;
+        background: #F3F3F3;
+        border-top:1.5px solid #000000;
+        cursor: pointer;
+        &:first-child{
+          border-top: 0;
+        }
+      }
+    }
+    &Open{
+      position: relative;
+      .machine__selectIcon{
+        transform: rotate(180deg);
+      }
+      .machine__selectTitle{
+        border-radius: 5px 5px 0 0;
+      }
+    }
+  }
+  
+  
+}
