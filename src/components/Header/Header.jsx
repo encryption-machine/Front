@@ -1,5 +1,5 @@
 import styles from './Header.module.scss';
-import IconUser from '../../img/user.svg';
+import UserIcon from '../../img/user.svg';
 import { useState } from 'react';
 
 export const Header = () => {
@@ -47,7 +47,7 @@ export const Header = () => {
 							</button>
 						</div>
 					)}
-					<img className={styles.img} src={IconUser} />
+					<img className={styles.img} src={UserIcon} />
 				</div>
 			</div>
 		</header>
