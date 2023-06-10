@@ -1,0 +1,27 @@
+.appButton{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  color: #ffffff;
+  background-color: #000000;
+  border: none;
+  border-radius: 8px;
+  padding: 0 25px;
+  font-weight: 600;
+  width: 100%;
+  cursor: pointer;
+  &:disabled{
+    cursor: default;
+    opacity: .6;
+  }
+  &__secondary{
+    background: #CDC6C6;
+    color: #000;
+  }
+  &__outlined{
+    background: none;
+    border: 1.5px solid #000000;
+    color: #A5A5A5;
+  }
+}

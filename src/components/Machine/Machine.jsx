@@ -1,6 +1,7 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Chevron, Copy } from '../Icons';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { copyToClipboard } from '../../helpers';
+import { AppButton } from '../AppButton/AppButton';
+import { Chevron, Copy } from '../Icons';
 import styles from './Machine.module.scss';
 
 export const Machine = ({ list }) => {
@@ -10,9 +11,7 @@ export const Machine = ({ list }) => {
 	const [filteredList, setFilteredList] = React.useState(
 		list.filter((item) => item !== selected)
 	);
-	const [result, setResult] = React.useState(
-		"fuck you, I wan't do what you tell me"
-	);
+	const [result, setResult] = React.useState('Скопируй меня');
 	const [isCopyShow, setIsCopyShow] = useState(false);
 	const [copyMessage, setCopyMessage] = useState('');
 	const [encryption, SetEncryption] = useState('');
@@ -43,6 +42,11 @@ export const Machine = ({ list }) => {
 		setFilteredList(list.filter((item) => item !== value));
 		selectClick();
 	};
+
+	const handleEncrypt = useCallback(async () => {
+		// здесь будет запрос к серверу
+		setResult('hsdfjdsfihsls');
+	}, [encryption.target?.value, current]);
 
 	const copyCode = () => {
 		try {
@@ -85,6 +89,8 @@ export const Machine = ({ list }) => {
 	const copyClasses = !isCopyShow
 		? styles.machine__copyMessage
 		: `${styles.machine__copyMessageShow} ${styles.machine__copyMessage}`;
+
+	const buttonText = current === 'encryption' ? 'Шифровать' : 'Дешифровать';
 
 	return (
 		<div className={styles.machine}>
@@ -137,9 +143,9 @@ export const Machine = ({ list }) => {
 					id="leftArea"
 					className={styles.machine__text}
 					placeholder="Введите текст"
-					value={encryption}
+					defaultValue={encryption}
 					onChange={SetEncryption}
-				></textarea>
+				/>
 			</div>
 			<div className={styles.machine__copyCont}>
 				<div className={copyClasses}>Результат Скопирован</div>
@@ -150,10 +156,27 @@ export const Machine = ({ list }) => {
 					placeholder="Результат"
 					value={result}
 					readOnly
-				></textarea>
-				<button onClick={copyCode} className={styles.machine__copyButton}>
+				/>
+				<button
+					disabled={isCopyShow}
+					onClick={copyCode}
+					className={styles.machine__copyButton}
+				>
 					<Copy />
 				</button>
+			</div>
+			<div className={styles.machine__bottom}>
+				<div>
+					<AppButton
+						action={() => handleEncrypt()}
+						isButtonDisabled={!encryption.target?.value.length}
+					>
+						{buttonText}
+					</AppButton>
+				</div>
+				<div>
+					<AppButton type={'outlined'}>Ввести секретный ключ</AppButton>
+				</div>
 			</div>
 		</div>
 	);
