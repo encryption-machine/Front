@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, {
+	useRef,
+	useEffect,
+	useState,
+	useCallback,
+	useMemo,
+} from 'react';
 import { copyToClipboard } from '../../helpers';
 import { AppButton } from '../AppButton/AppButton';
 import { Chevron, Copy } from '../Icons';
@@ -80,7 +86,7 @@ export const Machine = ({ list }) => {
 		return () => {
 			window.removeEventListener('click', handleClick);
 		};
-	}, []);
+	}, [isSelectOpen]);
 
 	const selectClasses = !isSelectOpen
 		? styles.machine__select
@@ -148,7 +154,7 @@ export const Machine = ({ list }) => {
 				/>
 			</div>
 			<div className={styles.machine__copyCont}>
-				<div className={copyClasses}>Результат Скопирован</div>
+				<div className={copyClasses}>{copyMessage}</div>
 				<textarea
 					name="rightArea"
 					id="rightArea"
