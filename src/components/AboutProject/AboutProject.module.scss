@@ -4,10 +4,10 @@
     width: calc(100% - 2 * 90px);
     height: 743px;
     background: #FFFFFF;
-    border-width: 1px 1px 0px 1px;
+    border-width: 3px 3px 0px 3px;
     border-style: solid;
-    border-color: #2F2F2F;
-    border-radius: 40px;
+    border-color: #90D3E7;
+    border-radius: 20px;
   }
   &__container {
     margin: 100px 60px 0;
@@ -41,7 +41,7 @@
     gap: 5%;
     position: relative;
   }
-  &__titleItemFirst {
+  &__titleItem {
     margin: 0;
     font-family: 'Montserrat';
     font-style: normal;
@@ -49,8 +49,7 @@
     font-size: 26px;
     line-height: 32px;
     text-align: start;
-    color: #BDF155;
-    ;
+    color: #2F2F2F;
   }
   &__titleItemSecond {
     margin: 0 0 0 11px;
@@ -60,17 +59,7 @@
     font-size: 26px;
     line-height: 32px;
     text-align: start;
-    color: #29CABE;
-  }
-  &__titleItemThird {
-    margin: 0;
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 26px;
-    line-height: 32px;
-    text-align: start;
-    color: #71BCD2;
+    color: #2F2F2F;
   }
   &__description {
     margin: 40px 0 0;
@@ -84,12 +73,12 @@
   }
   &__square {
     position: absolute;
-    top: -13px;
+    top: 0px;
     left: 32%;
     width: 35%;
-    height: 352px;
+    height: 320px;
     border: 1px solid transparent;
-    border-image: linear-gradient(rgba(47, 47, 47, 1), rgba(47, 47, 47, 0));
+    border-image: linear-gradient(rgba(144, 211, 231, 1), rgba(144, 211, 231, 0));
     border-image-slice: 1;
     border-width: 0px 1px 0px 1px;
   }
