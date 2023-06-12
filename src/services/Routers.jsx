@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { MainPage, ProfilePage } from '../pages';
+import { Footer } from '../components/Footer/Footer';
 import { Header } from '../components/Header/Header';
 
 export const Routers = () => {
@@ -13,7 +14,7 @@ export const Routers = () => {
 			<Routes>
 				<Route path="/profile" exact element={<ProfilePage />} />
 			</Routes>
-			{/*Здесь должен быть размешен футер*/}
+			<Footer />
 		</>
 	);
 };
