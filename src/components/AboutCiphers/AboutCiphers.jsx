@@ -1,6 +1,5 @@
 import { nanoid } from 'nanoid';
 import style from './AboutCiphers.module.scss';
-import cn from 'classnames'
 
 const ciphersInfo = [
   {
