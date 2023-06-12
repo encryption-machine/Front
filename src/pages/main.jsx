@@ -4,7 +4,7 @@ import AboutCiphers from '../components/AboutCiphers/AboutCiphers';
 export const MainPage = () => {
   return (
     <>
-      <AboutCiphers />
+      {/*<AboutCiphers />*/}
     </>
   );
 };
