@@ -1,17 +1,15 @@
+import { useState } from 'react';
 import styles from './Header.module.scss';
 import UserIcon from '../../img/user.svg';
-import { useState } from 'react';
 
 export const Header = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 
 	const handleLogin = () => {
-		console.log('входит');
 		setLoggedIn(true);
 	};
 
 	const handleLogout = () => {
-		console.log('выходит');
 		setLoggedIn(false);
 	};
 
