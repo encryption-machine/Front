@@ -1,8 +1,12 @@
 import React from 'react';
+import AboutCiphers from '../components/AboutCiphers/AboutCiphers';
 import AboutProject from '../../src/components/AboutProject/AboutProject';
 
 export const MainPage = () => {
-	return <div className="layout">
-    <AboutProject/>
-  </div>;
+  return (
+    <>
+      <AboutProject/>
+      <AboutCiphers />
+    </>
+  );
 };
