@@ -1,4 +1,5 @@
 .about {
+  margin: 160px 0;
   &__frame {
     margin: 0 auto;
     width: calc(100% - 2 * 90px);
@@ -41,6 +42,13 @@
     gap: 5%;
     position: relative;
   }
+  &__item {
+    &:nth-child(2) {
+      .about__titleItem {
+        margin-left: 11px;
+      }
+    }
+  }
   &__titleItem {
     margin: 0;
     font-family: 'Montserrat', sans-serif;
@@ -50,16 +58,9 @@
     line-height: 32px;
     text-align: start;
     color: #2F2F2F;
-  }
-  &__titleItemSecond {
-    margin: 0 0 0 11px;
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 26px;
-    line-height: 32px;
-    text-align: start;
-    color: #2F2F2F;
+    span {
+      display: block;
+    }
   }
   &__description {
     margin: 40px 0 0;

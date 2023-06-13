@@ -13,8 +13,7 @@ function AboutProject() {
 					</p>
 					<ul className={styles.about__items}>
 						<li className={styles.about__item}>
-							<h3 className={styles.about__titleItem}>Безопасность и</h3>
-							<h3 className={styles.about__titleItem}>конфеденциальность</h3>
+							<h3 className={styles.about__titleItem}><span>Безопасность и</span><span>конфеденциальность</span></h3>
 							<p className={styles.about__description}>
 								Сайт обеспечивает защиту ваших конфиденциальных данных и
 								сообщений, обеспечивая безопасность передачи и хранения
@@ -22,8 +21,7 @@ function AboutProject() {
 							</p>
 						</li>
 						<li className={styles.about__item}>
-							<h3 className={styles.about__titleItemSecond}>Изучение и</h3>
-							<h3 className={styles.about__titleItemSecond}>творчество</h3>
+							<h3 className={styles.about__titleItem}><span>Изучение и</span><span>творчество</span></h3>
 							<p className={styles.about__description}>
 								Использование сайта позволяет изучать различные языки
 								шифрования, расширять знания в области криптографии и
@@ -31,8 +29,7 @@ function AboutProject() {
 							</p>
 						</li>
 						<li className={styles.about__item}>
-							<h3 className={styles.about__titleItem}>Удобство и</h3>
-							<h3 className={styles.about__titleItem}>доступность</h3>
+							<h3 className={styles.about__titleItem}><span>Удобство и</span><span>доступность</span></h3>
 							<p className={styles.about__description}>
 								Удобство и доступность: Сайт предоставляет удобный и доступный
 								способ шифрования текста, не требующий установки дополнительного
