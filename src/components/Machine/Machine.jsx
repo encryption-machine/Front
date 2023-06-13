@@ -22,7 +22,7 @@ export const Machine = ({ list }) => {
 	const [copyMessage, setCopyMessage] = useState('');
 	const [encryption, SetEncryption] = useState('');
 	const selectRef = useRef(null);
-	const activeClass = styles.machine__tabActive;
+	const activeClass = styles.tabActive;
 
 	const clickTab = (event) => {
 		setCurrent(event.target.value);
@@ -89,20 +89,20 @@ export const Machine = ({ list }) => {
 	}, [isSelectOpen]);
 
 	const selectClasses = !isSelectOpen
-		? styles.machine__select
-		: `${styles.machine__selectOpen} ${styles.machine__select}`;
+		? styles.select
+		: `${styles.select__open} ${styles.select}`;
 
 	const copyClasses = !isCopyShow
-		? styles.machine__copyMessage
-		: `${styles.machine__copyMessageShow} ${styles.machine__copyMessage}`;
+		? styles.copy__message
+		: `${styles.copy__messageShow} ${styles.copy__message}`;
 
 	const buttonText = current === 'encryption' ? 'Шифровать' : 'Дешифровать';
 
 	return (
 		<div className={styles.machine}>
-			<div className={styles.machine__switch}>
+			<div className={styles.switch}>
 				<button
-					className={`${styles.machine__tab} ${
+					className={`${styles.tab} ${
 						current === 'encryption' ? activeClass : ''
 					}`}
 					value="encryption"
@@ -111,7 +111,7 @@ export const Machine = ({ list }) => {
 					Шифрование
 				</button>
 				<button
-					className={`${styles.machine__tab} ${
+					className={`${styles.tab} ${
 						current === 'decryption' ? activeClass : ''
 					}`}
 					value="decryption"
@@ -122,18 +122,18 @@ export const Machine = ({ list }) => {
 			</div>
 			<div>
 				<div className={selectClasses} ref={selectRef}>
-					<div className={styles.machine__selectTitle} onClick={selectClick}>
+					<div className={styles.select__title} onClick={selectClick}>
 						{selected}
-						<div className={styles.machine__selectIcon}>
+						<div className={styles.select__icon}>
 							<Chevron />
 						</div>
 					</div>
-					<div className={styles.machine__selectHide} id="hide">
-						<ul className={styles.machine__selectList} id="list">
+					<div className={styles.select__hide} id="hide">
+						<ul className={styles.select__list} id="list">
 							{filteredList.map((item) => (
 								<li
 									key={item}
-									className={styles.machine__selectOtion}
+									className={styles.select__option}
 									onClick={(event) => choiceType(event, item)}
 								>
 									{item}
@@ -147,18 +147,18 @@ export const Machine = ({ list }) => {
 				<textarea
 					name="leftArea"
 					id="leftArea"
-					className={styles.machine__text}
+					className={styles.text}
 					placeholder="Введите текст"
 					defaultValue={encryption}
 					onChange={SetEncryption}
 				/>
 			</div>
-			<div className={styles.machine__copyCont}>
+			<div className={styles.copy__cont}>
 				<div className={copyClasses}>{copyMessage}</div>
 				<textarea
 					name="rightArea"
 					id="rightArea"
-					className={styles.machine__text}
+					className={styles.text}
 					placeholder="Результат"
 					value={result}
 					readOnly
@@ -166,12 +166,12 @@ export const Machine = ({ list }) => {
 				<button
 					disabled={isCopyShow}
 					onClick={copyCode}
-					className={styles.machine__copyButton}
+					className={styles.copy__button}
 				>
 					<Copy />
 				</button>
 			</div>
-			<div className={styles.machine__bottom}>
+			<div className={styles.bottom}>
 				<div>
 					<AppButton
 						action={() => handleEncrypt()}
