@@ -1,0 +1,20 @@
+.confirm {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.confirm__text {
+text-align: start;
+}
+
+.disabled {
+  cursor: not-allowed;
+  background: #9e9d9d;
+  color: #000;
+}
+
+.disabled:hover {
+  background: #9e9d9d;
+}

@@ -37,4 +37,17 @@
   border: none;
   border-radius: 8px;
   height: 44px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #222222;
+}
+
+.error {
+  font-size: 14px;
+  font-weight: 300;
+  margin: 0;
+  padding: 0;
+  text-align: start;
 }
