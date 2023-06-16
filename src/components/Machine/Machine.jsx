@@ -6,7 +6,6 @@ import React, {
 } from 'react';
 import { copyToClipboard } from '../../helpers';
 import { AppButton } from '../AppButton/AppButton';
-import { Chevron, Copy } from '../../assets/icons';
 import styles from './Machine.module.scss';
 
 export const Machine = ({ list }) => {
@@ -124,7 +123,8 @@ export const Machine = ({ list }) => {
           <div className={styles.select__title} onClick={selectClick}>
             {selected}
             <div className={styles.select__icon}>
-              <Chevron />
+              <div className="icon-check"></div>
+             {/*  <Chevron /> */}
             </div>
           </div>
           <div className={styles.select__hide} id="hide">
@@ -167,7 +167,8 @@ export const Machine = ({ list }) => {
           onClick={copyCode}
           className={styles.copy__button}
         >
-          <Copy />
+          <div className="icon-copy"></div>
+          {/* <Copy /> */}
         </button>
       </div>
       <div className={styles.bottom}>

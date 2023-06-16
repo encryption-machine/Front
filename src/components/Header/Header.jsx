@@ -45,7 +45,8 @@ export const Header = () => {
               </button>
             </div>
           )}
-          <img className={styles.img} src={UserIcon} alt={''} />
+          <div className="icon-user"></div>
+        {/*   <img className={styles.img} src={UserIcon} alt={''} /> */}
         </div>
       </div>
     </header>
