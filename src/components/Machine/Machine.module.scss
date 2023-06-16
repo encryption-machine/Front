@@ -1,146 +1,139 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins';
+
 .machine {
-  width: 1140px;
-  margin: 20px auto;
-  //стили выше потом удалить
+  margin-top: 85px;
   display: grid;
   gap: 15px 20px;
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
 }
-.switch{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-.tab{
-    background: none;
-    border-radius: 0;
-    font-size: 16px;
-    line-height: 19px;
-    color: #000;
-    font-weight: 600;
-    border:none;
-    cursor: pointer;
-    &Active{
-      border-bottom: 1px solid #000000;
-    }
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-.select{
+.tab {
+  background: none;
+  @include font-source-sans(16px, $black, 600, 19px);
+  border-radius: 0;
+  border: none;
+  cursor: pointer;
+  &Active {
+    border-bottom: 1px solid $black;
+  }
+}
+.select {
   position: relative;
   display: block;
-  &__title{
+  &__title {
     width: 316px;
     height: 40px;
     padding: 0 12px;
-    font-size: 16px;
-    line-height: 19px;
-    background: #F3F3F3;
-    border: 1.5px solid #000000;
+    @include font-source-sans(16px, $black, 600, 19px);
+    background: $background_select;
+    border: 1.5px solid $black;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-radius: 5px;
     cursor: pointer;
   }
-  &__icon{
-    сolor: #000;
-    transition: .3s ease-in;
+  &__icon {
+    transition: 0.3s ease-in;
     svg {
       fill: currentColor;
     }
   }
-  &__hide{
+  &__hide {
     position: absolute;
     top: 100%;
     left: 0;
     height: 0;
-    transition: .5s ease-in;
+    transition: 0.5s ease-in;
     overflow: hidden;
-    z-index: 10;
+    z-index: 3;
     border-radius: 0 0 5px 5px;
   }
-  &__list{
+  &__list {
     width: 316px;
     display: grid;
     align-items: flex-start;
     padding: 0;
     margin: 0;
-    border:1.5px solid #000000;
-    border-top:0;
-    li{
+    border: 1.5px solid $black;
+    border-top: 0;
+    li {
       list-style-type: none;
       height: 40px;
       display: flex;
       align-items: center;
       justify-content: flex-start;
       padding: 0 12px;
-      background: #F3F3F3;
-      border-top:1.5px solid #000000;
+      background: $background_select;
+      border-top: 1.5px solid $black;
       cursor: pointer;
-      &:first-child{
+      &:first-child {
         border-top: 0;
       }
     }
   }
-  &__open{
+  &__open {
     position: relative;
-    .select__icon{
+    .select__icon {
       transform: rotate(180deg);
     }
-    .select__title{
+    .select__title {
       border-radius: 5px 5px 0 0;
     }
   }
 }
-.text{
+.text {
   width: 100% !important;
   height: 250px !important;
   padding: 20px;
-  background: #FBFBFB;
+  background: $background_text;
   border-radius: 20px;
   resize: none;
-  border:none;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 19px;
+  border: none;
+  @include font-source-sans(16px, $grey_light, 600, 19px);
 }
-.copy{
-  &__cont{
+.copy {
+  &__cont {
     position: relative;
     border-radius: 20px;
     overflow: hidden;
   }
-  &__button{
+  &__button {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    border:none;
-    background: none;
+    border: none;
+    background: inherit;
     cursor: pointer;
-    color: #969595;
-    z-index: 10;
-    svg{
-      stroke:currentColor;
+    color: $grey_secondary;
+    z-index: 3;
+    svg {
+      stroke: currentColor;
     }
   }
-  &__message{
+  &__message {
     position: absolute;
     width: 100%;
     height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #F3F3F3;
-    font-size: 16px;
-    font-weight: 600;
+    background-color: $background_select;
+    @include font-source-sans(16px, $black, 600, 19px);
     overflow: hidden;
-    transition: .3s ease-in;
-    &Show{
+    transition: 0.3s ease-in;
+    &Show {
       height: 40px;
     }
   }
 }
-.bottom{
+.bottom {
   display: flex;
   align-items: center;
   justify-content: flex-start;

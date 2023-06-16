@@ -1,29 +1,29 @@
-.appButton{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  color: #ffffff;
-  background-color: #90D3E7;
-  font-weight: 500;
+@import '../../styles/colors.scss';
+@import '../../styles/mixins';
+
+.appButton {
+  height: 44px;
+  @include font-source-sans(16px, $white, 600, 19px);
+  background-color: $black;
   border: none;
   border-radius: 8px;
   padding: 0 25px;
-  font-weight: 600;
-  border-bottom: 1.5px solid #2F2F2F;
-  width: 100%;
   cursor: pointer;
-  &:disabled{
+  box-sizing: border-box;
+
+  &:disabled {
     cursor: default;
-    opacity: .6;
+    opacity: 0.6;
   }
-  &__secondary{
-    background: #CDC6C6;
-    color: #000;
+
+  &__secondary {
+    background: $background_secondary;
+    color: $black;
   }
-  &__outlined{
+
+  &__outlined {
     background: none;
-    border: 1.5px solid #000000;
-    color: #A5A5A5;
+    border: 1.5px solid $grey_light;
+    color: $grey_light;
   }
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './Header.module.scss';
-import UserIcon from '../../img/user.svg';
+import UserIcon from '../../assets/icons/user.svg';
 
 export const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -20,13 +20,13 @@ export const Header = () => {
         <nav>
           <ul>
             <li>
-              <a href="#">Шифрование</a>
+              <a href="#ciphers">Шифрование</a>
             </li>
             <li>
-              <a href="#">О проекте</a>
+              <a href="#aboutProject">О проекте</a>
             </li>
             <li>
-              <a href="#">О шифрах</a>
+              <a href="#aboutCiphers">О шифрах</a>
             </li>
           </ul>
         </nav>
@@ -45,7 +45,7 @@ export const Header = () => {
               </button>
             </div>
           )}
-          <img className={styles.img} src={UserIcon} />
+          <img className={styles.img} src={UserIcon} alt={''} />
         </div>
       </div>
     </header>

@@ -1,5 +1,5 @@
 import styles from './Footer.module.scss';
-import TelegramIcon from '../../img/telegram.svg';
+import TelegramIcon from '../../assets/icons/telegram.svg';
 
 export const Footer = () => {
   return (

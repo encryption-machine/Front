@@ -1,15 +1,16 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins';
+
 .footer {
   width: 100%;
-  background-color: #676767;
-  margin: 0;
-  padding: 0;
-  color: #fff;
+  border-top: 2px solid $grey_dark;
+  padding: 10px 0;
   position: sticky;
-  top: 100vh;
 }
 
 .footer_container {
-  width: calc(100% - 2 * 150px);
+  max-width: 1440px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -30,11 +31,11 @@
 
   a {
     text-decoration: none;
-    color: #fff;
+    color: $black;
   }
 
   p {
-    font-weight: 600;
+    @include font-source-sans(16px, $black, 400, 19px);
   }
 }
 
@@ -43,7 +44,7 @@
   align-items: center;
 
   span {
-    font-weight: 600;
-    margin-right: 12px;
+    @include font-source-sans(16px, $black, 400, 19px);
+    margin-right: 5px;
   }
 }

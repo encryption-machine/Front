@@ -14,7 +14,7 @@ export const MainPage = () => {
     'Код Цезаря',
   ];
   return (
-    <div className="container">
+    <div>
       <Machine list={dataMachine} />
       <AboutProject />
       <AboutCiphers />

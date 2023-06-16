@@ -3,11 +3,10 @@ import React, {
   useEffect,
   useState,
   useCallback,
-  useMemo,
 } from 'react';
 import { copyToClipboard } from '../../helpers';
 import { AppButton } from '../AppButton/AppButton';
-import { Chevron, Copy } from '../Icons';
+import { Chevron, Copy } from '../../assets/icons';
 import styles from './Machine.module.scss';
 
 export const Machine = ({ list }) => {
@@ -148,7 +147,7 @@ export const Machine = ({ list }) => {
           name="leftArea"
           id="leftArea"
           className={styles.text}
-          placeholder="Введите текст"
+          placeholder="Текст"
           defaultValue={encryption}
           onChange={SetEncryption}
         />
