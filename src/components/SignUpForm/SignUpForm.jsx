@@ -3,139 +3,114 @@
 import { useState, useEffect } from 'react';
 import AuthForms from '../AuthForms/AuthForms';
 import cn from 'classnames';
+import useInput from '../../hooks/useInput';
 import style from '../AuthForms/AuthForms.module.scss';
 import styleLocal from './SignUpForm.module.scss';
 
 const SignUpForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [isConfirmPassword, setIsConfirmPassword] = useState(false);
-  const [emailDirty, setEmailDirty] = useState(false);
-  const [passwordDirty, setPasswordDirty] = useState(false);
-  const [confirmPasswordDirty, setConfirmPasswordDirty] = useState(false);
-  const [emailError, setEmailError] = useState(
-    'Поле "Email" не может быть пустым'
+  const email = useInput(
+    '',
+    { isEmpty: true, minLength: 6, isEmail: true, typePlaceholder: 'email' },
+    'Email'
   );
-  const [passwordError, setPasswordError] = useState(
-    'Поле "Пароль" не может быть пустым'
+  const password = useInput(
+    '',
+    { isEmpty: true, minLength: 6, maxLength: 8, typePlaceholder: 'password' },
+    'Пароль'
   );
-  const [confirmPasswordError, setConfirmPasswordError] = useState(
-    'Поле "Повторите пароль" не может быть пустым'
+  const confirmPassword = useInput(
+    '',
+    { isEmpty: true, typePlaceholder: 'confirmPassword' },
+    'Подтвердите пароль'
   );
+
   const [formValid, setFormValid] = useState(false);
   const [checked, setChecked] = useState(false);
 
-  useEffect(() => {
-    if (!emailError && !passwordError && isConfirmPassword && checked) {
-      setFormValid(true);
-    } else {
-      setFormValid(false);
-    }
-  }, [emailError, passwordError, isConfirmPassword, checked]);
-  
   const chengeCheckbox = () => {
     setChecked(!checked);
- }
+  };
 
-  const emailHandler = (e) => {
-    setEmail(e.target.value);
-    const re =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!re.test(String(e.target.value).toLowerCase())) {
-      setEmailError('Некорректный Email');
+  useEffect(() => {
+    if (
+      !email.inputValid ||
+      !password.inputValid ||
+      password.value !== confirmPassword.value ||
+      !checked
+    ) {
+      setFormValid(false);
     } else {
-      setEmailError('');
+      setFormValid(true);
     }
-  };
-
-  const passwordHandler = (e) => {
-    setPassword(e.target.value);
-    if (e.target.value.length < 6 || e.target.value.length > 8) {
-      setPasswordError(
-        'Пароль должен содержать от 6 до 8 символов, включая, как минимум, один цифровой и один не алфавитно цифровой символ'
-      );
-      if (!e.target.value) {
-        setPasswordError('Поле "Пароль" не может быть пустым');
-      }
-    } else {
-      setPasswordError('');
-    }
-  };
-
-  const confirmPasswordHandler = (e) => {
-    setConfirmPassword(e.target.value);
-    if (confirmPassword === password) {
-      setConfirmPasswordError('Пароли не совпадают');
-      setIsConfirmPassword(false)
-      if (!e.target.value) {
-        setConfirmPasswordError('Поле "Повторите пароль" не может быть пустым');
-      }
-    } else {
-      setIsConfirmPassword(true)
-      setConfirmPasswordError('');
-    }
-  };
-
-  const blurHandler = (e) => {
-    switch (e.target.name) {
-      case 'email':
-        setEmailDirty(true);
-        break;
-      case 'password':
-        setPasswordDirty(true);
-        break;
-      case 'confirm password':
-        setConfirmPasswordDirty(true);
-        break;
-    }
-  };
+  }, [checked, confirmPassword.value, email.inputValid, password.inputValid, password.value]);
 
   return (
     <AuthForms title={'Регистрация'}>
       <input
-        onBlur={(e) => blurHandler(e)}
+        onBlur={(e) => email.onBlur(e)}
         className={style.input}
         name="email"
         type="text"
         placeholder="Email"
-        value={email}
-        onChange={(e) => emailHandler(e)}
+        value={email.value}
+        onChange={(e) => email.onChange(e)}
       />
-      {emailDirty && emailError && (
-        <span className={style.error}>{emailError}</span>
+      {email.isDirty && email.isEmpty && (
+        <span className={style.error}>{email.emptyErrorMessage}</span>
       )}
+      {email.isDirty && email.emailError && !email.isEmpty && (
+        <span className={style.error}>{email.emailErrorMessage}</span>
+      )}
+
       <input
-        onBlur={(e) => blurHandler(e)}
+        onBlur={(e) => password.onBlur(e)}
         className={style.input}
         name="password"
         type="password"
         placeholder="Пароль"
-        value={password}
-        onChange={(e) => passwordHandler(e)}
+        value={password.value}
+        onChange={(e) => password.onChange(e)}
       />
-      {passwordDirty && passwordError && (
-        <span className={style.error}>{passwordError}</span>
+      {password.isDirty && password.isEmpty && (
+        <span className={style.error}>{password.emptyErrorMessage}</span>
       )}
+      {password.isDirty && password.minLengthError && !password.isEmpty && (
+        <span className={style.error}>{password.minLengthErrorMessage}</span>
+      )}
+      {password.isDirty && password.maxLengthError && (
+        <span className={style.error}>{password.maxLengthErrorMessage}</span>
+      )}
+
       <input
-        onBlur={(e) => blurHandler(e)}
+        onBlur={(e) => confirmPassword.onBlur(e)}
         className={style.input}
-        name="confirm password"
+        name="confirmPassword"
         type="password"
         placeholder="Повторите пароль"
-        value={confirmPassword}
-        onChange={(e) => confirmPasswordHandler(e)}
+        value={confirmPassword.value}
+        onChange={(e) => confirmPassword.onChange(e)}
       />
 
-      {confirmPasswordDirty && confirmPasswordError && (
-        <span className={style.error}>{confirmPasswordError}</span>
+      {confirmPassword.isDirty && confirmPassword.isEmpty && (
+        <span className={style.error}>Поле не может быть пустым</span>
       )}
-      <button disabled={!formValid} className={(!formValid ? cn(styleLocal.disabled, style.button) : style.button)} type="submit">
+      {confirmPassword.isDirty && confirmPassword.minLengthError && (
+        <span className={style.error}>Некорректная длина</span>
+      )}
+      <button
+        disabled={!formValid}
+        className={!formValid ? cn(style.disabled, style.button) : style.button}
+        type="submit"
+      >
         Зарегистрироваться
       </button>
       <div className={styleLocal.confirm}>
         {' '}
-        <input type="checkbox" checked={checked} onChange={chengeCheckbox} />{' '}
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={chengeCheckbox}
+        />{' '}
         <span className={styleLocal.confirm__text}>
           {' '}
           Я даю согласие на обработку моих персональных данных{' '}
