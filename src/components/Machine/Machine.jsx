@@ -181,7 +181,7 @@ export const Machine = ({ list }) => {
           </AppButton>
         </div>
         <div>
-          <AppButton type="outlined">Ввести секретный ключ</AppButton>
+          <AppButton typeClass="outlined">Ввести секретный ключ</AppButton>
         </div>
       </div>
     </div>

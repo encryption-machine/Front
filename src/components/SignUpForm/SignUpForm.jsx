@@ -2,8 +2,9 @@
 /* eslint-disable default-case */
 import { useState, useEffect } from 'react';
 import AuthForms from '../AuthForms/AuthForms';
-import cn from 'classnames';
+//import cn from 'classnames';
 import useInput from '../../hooks/useInput';
+import { AppButton } from '../AppButton/AppButton';
 import style from '../AuthForms/AuthForms.module.scss';
 import styleLocal from './SignUpForm.module.scss';
 
@@ -42,7 +43,13 @@ const SignUpForm = () => {
     } else {
       setFormValid(true);
     }
-  }, [checked, confirmPassword.value, email.inputValid, password.inputValid, password.value]);
+  }, [
+    checked,
+    confirmPassword.value,
+    email.inputValid,
+    password.inputValid,
+    password.value,
+  ]);
 
   return (
     <AuthForms title={'Регистрация'}>
@@ -97,13 +104,15 @@ const SignUpForm = () => {
       {confirmPassword.isDirty && confirmPassword.minLengthError && (
         <span className={style.error}>Некорректная длина</span>
       )}
-      <button
-        disabled={!formValid}
-        className={!formValid ? cn(style.disabled, style.button) : style.button}
+      <AppButton
+        isButtonDisabled={!formValid}
+        action={undefined}
+        //className={!formValid ? cn(style.disabled, style.button) : style.button}
+        typeClass="secondary"
         type="submit"
       >
         Зарегистрироваться
-      </button>
+      </AppButton>
       <div className={styleLocal.confirm}>
         {' '}
         <input

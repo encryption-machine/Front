@@ -1,5 +1,4 @@
 .root {
-  font-family: 'Inter', sans-serif;
   display: flex;
   background: #e2e2e2;
   height: calc(100vh - 50px);
@@ -27,10 +26,6 @@
   height: 44px;
 }
 
-.inputs {
-  //gap: 10px;
-}
-
 .button {
   background: #353535;
   color: #fff;
@@ -52,12 +47,12 @@
   text-align: start;
 }
 
-.disabled {
-  cursor: not-allowed;
-  background: #9e9d9d;
-  color: #000;
-}
+//.disabled {
+//  cursor: not-allowed;
+//  background: #9e9d9d;
+//  color: #000;
+//}
 
-.disabled:hover {
-  background: #9e9d9d;
-}
+//.disabled:hover {
+//  background: #9e9d9d;
+//}

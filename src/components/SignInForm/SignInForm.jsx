@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AuthForms from '../AuthForms/AuthForms';
 import cn from 'classnames';
+import { AppButton } from '../AppButton/AppButton';
 import style from '../AuthForms/AuthForms.module.scss';
-import styleLocal from './SignInForm.module.scss'
+import styleLocal from './SignInForm.module.scss';
 
 const SignInForm = () => {
   const [email, setEmail] = useState('');
@@ -93,16 +94,19 @@ const SignInForm = () => {
       {passwordDirty && passwordError && (
         <span className={style.error}>{passwordError}</span>
       )}
-      <button
+      <AppButton
         disabled={!formValid}
         className={!formValid ? cn(style.disabled, style.button) : style.button}
         type="submit"
+        typeClass="secondary"
       >
         Вход
-      </button>
-      <button className={style.button} type='link'>
-        <Link to='/signup' className={styleLocal.link}>Зарегистрироваться</Link>
-      </button>
+      </AppButton>
+      <AppButton typeClass="secondary" type="link">
+        <Link to="/signup" className={styleLocal.link}>
+          Зарегистрироваться
+        </Link>
+      </AppButton>
     </AuthForms>
   );
 };
