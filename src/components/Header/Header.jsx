@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import styles from './Header.module.scss';
-import UserIcon from '../../assets/icons/user.svg';
 
 export const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -13,6 +12,11 @@ export const Header = () => {
     setLoggedIn(false);
   };
 
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
@@ -20,13 +24,25 @@ export const Header = () => {
         <nav>
           <ul>
             <li>
-              <a href="#ciphers">Шифрование</a>
+              <a href="#ciphers" onClick={() => scrollToSection('ciphers')}>
+                Шифрование
+              </a>
             </li>
             <li>
-              <a href="#aboutProject">О проекте</a>
+              <a
+                href="#aboutProject"
+                onClick={() => scrollToSection('aboutProject')}
+              >
+                О проекте
+              </a>
             </li>
             <li>
-              <a href="#aboutCiphers">О шифрах</a>
+              <a
+                href="#aboutCiphers"
+                onClick={() => scrollToSection('aboutCiphers')}
+              >
+                О шифрах
+              </a>
             </li>
           </ul>
         </nav>
@@ -46,7 +62,6 @@ export const Header = () => {
             </div>
           )}
           <div className="icon-user"></div>
-        {/*   <img className={styles.img} src={UserIcon} alt={''} /> */}
         </div>
       </div>
     </header>

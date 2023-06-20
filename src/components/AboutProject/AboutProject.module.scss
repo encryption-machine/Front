@@ -2,10 +2,11 @@
 @import '../../styles/mixins';
 
 .aboutProject {
-  margin-top: 108px;
+  padding-top: 108px;
   &_title {
     @include font-source-sans(38px, $black, 900);
     text-align: left;
+
   }
 
   &_subtitle {

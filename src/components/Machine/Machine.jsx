@@ -97,7 +97,7 @@ export const Machine = ({ list }) => {
   const buttonText = current === 'encryption' ? 'Шифровать' : 'Дешифровать';
 
   return (
-    <div className={styles.machine}>
+    <section className={styles.machine} id="ciphers">
       <div className={styles.switch}>
         <button
           className={`${styles.tab} ${
@@ -184,6 +184,6 @@ export const Machine = ({ list }) => {
           <AppButton type="outlined">Ввести секретный ключ</AppButton>
         </div>
       </div>
-    </div>
+    </section>
   );
 };

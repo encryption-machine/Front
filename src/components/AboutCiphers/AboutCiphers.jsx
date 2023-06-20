@@ -3,7 +3,7 @@ import styles from './AboutCiphers.module.scss';
 
 const AboutCiphers = () => {
   return (
-    <section className={styles.aboutCiphers}>
+    <section className={styles.aboutCiphers} id="aboutCiphers">
       <h2 className={styles.aboutCiphers_title}>О шифрах</h2>
       <div>
         {ciphersInfo.map(({ id, name, description }) => (

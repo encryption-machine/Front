@@ -3,7 +3,7 @@ import styles from './AboutProject.module.scss';
 
 const AboutProject = () => {
   return (
-    <section className={styles.aboutProject}>
+    <section className={styles.aboutProject} id="aboutProject">
       <h1 className={styles.aboutProject_title}>О проекте</h1>
       <p className={styles.aboutProject_subtitle}>
         Шифровальная машина — это бесплатный сервис по шифрованию текста. С его
