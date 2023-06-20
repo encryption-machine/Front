@@ -22,7 +22,9 @@
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .js,.jsx .",
     "lint:fix": "npm run lint -- --fix",
-    "format": "prettier . --write"
+    "format": "prettier --write .",
+    "check": "prettier --check .",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -44,12 +46,12 @@
     ]
   },
   "devDependencies": {
-    "husky": "^8.0.3",
+    "husky": "^8.0.0",
     "prettier": "^2.8.8"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run format"
+      "pre-commit": "npm run check"
     }
   }
 }

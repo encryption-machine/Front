@@ -1,29 +1,29 @@
-.appButton{
+.appButton {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 40px;
   color: #ffffff;
-  background-color: #90D3E7;
+  background-color: #90d3e7;
   font-weight: 500;
   border: none;
   border-radius: 8px;
   padding: 0 25px;
   font-weight: 600;
-  border-bottom: 1.5px solid #2F2F2F;
+  border-bottom: 1.5px solid #2f2f2f;
   width: 100%;
   cursor: pointer;
-  &:disabled{
+  &:disabled {
     cursor: not-allowed;
-    opacity: .6;
+    opacity: 0.6;
   }
-  &__secondary{
-    background: #CDC6C6;
+  &__secondary {
+    background: #cdc6c6;
     color: #000;
   }
-  &__outlined{
+  &__outlined {
     background: none;
     border: 1.5px solid #000000;
-    color: #A5A5A5;
+    color: #a5a5a5;
   }
 }

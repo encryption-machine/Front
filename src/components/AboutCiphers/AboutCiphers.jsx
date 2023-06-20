@@ -54,6 +54,6 @@ const AboutCiphers = () => {
       </div>
     </section>
   );
-}
+};
 
 export default AboutCiphers;

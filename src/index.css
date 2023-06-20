@@ -16,7 +16,7 @@ code {
 body * {
   box-sizing: border-box;
 }
-.container{
+.container {
   width: 1140px;
   margin: 0 auto;
   padding-top: 136px;

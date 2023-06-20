@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AuthForms from '../AuthForms/AuthForms';
-import cn from 'classnames';
 import { AppButton } from '../AppButton/AppButton';
 import style from '../AuthForms/AuthForms.module.scss';
 import styleLocal from './SignInForm.module.scss';
@@ -94,12 +93,7 @@ const SignInForm = () => {
       {passwordDirty && passwordError && (
         <span className={style.error}>{passwordError}</span>
       )}
-      <AppButton
-        disabled={!formValid}
-        className={!formValid ? cn(style.disabled, style.button) : style.button}
-        type="submit"
-        typeClass="secondary"
-      >
+      <AppButton disabled={!formValid} type="submit" typeClass="secondary">
         Вход
       </AppButton>
       <AppButton typeClass="secondary" type="link">
