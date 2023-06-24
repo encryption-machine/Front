@@ -17,28 +17,28 @@ const SignUpForm = () => {
 
   const sumb = '!@#$%^&*()_+-=]{};\':"\\|,.<>?~';
 
-  //const [showPassword, setShowPassword] = useState('password');
-  //const [showConfirmPassword, setShowConfirmPassword] = useState('password');
-  //const [clickShowPassword, setClickShowPassword] = useState(false);
-  //const [clickShowConfirmPassword, setClickShowConfirmPassword] =
-  //  useState(false);
+  const [showPassword, setShowPassword] = useState('password');
+  const [showConfirmPassword, setShowConfirmPassword] = useState('password');
+  const [clickShowPassword, setClickShowPassword] = useState(false);
+  const [clickShowConfirmPassword, setClickShowConfirmPassword] =
+    useState(false);
 
-  //const handleShowPassword = (e) => {
-  //  e.preventDefault();
-  //  setClickShowPassword(!clickShowPassword);
-  //};
+  const handleShowPassword = (e) => {
+    e.preventDefault();
+    setClickShowPassword(!clickShowPassword);
+  };
 
-  //const handleShowConfirmPassword = (e) => {
-  //  e.preventDefault();
-  //  setClickShowConfirmPassword(!clickShowConfirmPassword);
-  //};
+  const handleShowConfirmPassword = (e) => {
+    e.preventDefault();
+    setClickShowConfirmPassword(!clickShowConfirmPassword);
+  };
 
-  //useEffect(() => {
-  //  clickShowPassword ? setShowPassword('text') : setShowPassword('password');
-  //  clickShowConfirmPassword
-  //    ? setShowConfirmPassword('text')
-  //    : setShowConfirmPassword('password');
-  //}, [clickShowPassword, clickShowConfirmPassword]);
+  useEffect(() => {
+    clickShowPassword ? setShowPassword('text') : setShowPassword('password');
+    clickShowConfirmPassword
+      ? setShowConfirmPassword('text')
+      : setShowConfirmPassword('password');
+  }, [clickShowPassword, clickShowConfirmPassword]);
 
   //const email = useInputValidation(
   //  '',
@@ -131,13 +131,13 @@ const SignUpForm = () => {
           //onFocus={(e) => signup.onFocus(e)}
           className={style.input}
           name="password"
-          //type={showPassword}
+          type={showPassword}
           placeholder="Пароль"
           value={signup.password}
           onChange={setFirst}
         />
 
-        {/*<button
+        <button
           onBlur={(e) => signup.onBlur(e)}
           onFocus={(e) => signup.onFocus(e)}
           onClick={(e) => handleShowPassword(e)}
@@ -146,7 +146,7 @@ const SignUpForm = () => {
           }
         >
           {clickShowPassword ? 'Скрыть' : 'Показать'}
-        </button>*/}
+        </button>
       </div>
       {/*<span>{password.password}</span>
       {password.isDirty && password.isEmpty && (
@@ -204,22 +204,22 @@ const SignUpForm = () => {
           //disabled={!signup.isPasswordInputValid}
           className={style.input}
           name="confirmPassword"
-          //type={showConfirmPassword}
+          type={showConfirmPassword}
           placeholder="Повторите пароль"
           value={signup.confirmPassword}
           onChange={setSecond}
         />
 
-        {/*<button
+        <button
           onBlur={(e) => confirmPassword.onBlur(e)}
           onFocus={(e) => confirmPassword.onFocus(e)}
-          //onClick={(e) => handleShowConfirmPassword(e)}
+          onClick={(e) => handleShowConfirmPassword(e)}
           className={
             !confirmPassword.isFocus ? styleLocal.unfocused : styleLocal.focused
           }
         >
           {clickShowConfirmPassword ? 'Скрыть' : 'Показать'}
-        </button>*/}
+        </button>
       </div>
 
       {/*
