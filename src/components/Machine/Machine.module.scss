@@ -1,7 +1,8 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins';
+
 .machine {
-  width: 1140px;
-  margin: 20px auto;
-  //стили выше потом удалить
+  padding-top: 180px;
   display: grid;
   gap: 15px 20px;
   grid-template-columns: repeat(2, 1fr);
@@ -14,15 +15,12 @@
 }
 .tab {
   background: none;
+  @include font-source-sans(16px, $black, 600, 19px);
   border-radius: 0;
-  font-size: 16px;
-  line-height: 19px;
-  color: #000;
-  font-weight: 600;
   border: none;
   cursor: pointer;
   &Active {
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid $black;
   }
 }
 .select {
@@ -32,10 +30,9 @@
     width: 316px;
     height: 40px;
     padding: 0 12px;
-    font-size: 16px;
-    line-height: 19px;
-    background: #f3f3f3;
-    border: 1.5px solid #000000;
+    @include font-source-sans(16px, $black, 600, 19px);
+    background: $background_select;
+    border: 1.5px solid $black;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -43,7 +40,6 @@
     cursor: pointer;
   }
   &__icon {
-    сolor: #000;
     transition: 0.3s ease-in;
     svg {
       fill: currentColor;
@@ -56,7 +52,7 @@
     height: 0;
     transition: 0.5s ease-in;
     overflow: hidden;
-    z-index: 10;
+    z-index: 3;
     border-radius: 0 0 5px 5px;
   }
   &__list {
@@ -65,7 +61,7 @@
     align-items: flex-start;
     padding: 0;
     margin: 0;
-    border: 1.5px solid #000000;
+    border: 1.5px solid $black;
     border-top: 0;
     li {
       list-style-type: none;
@@ -74,8 +70,8 @@
       align-items: center;
       justify-content: flex-start;
       padding: 0 12px;
-      background: #f3f3f3;
-      border-top: 1.5px solid #000000;
+      background: $background_select;
+      border-top: 1.5px solid $black;
       cursor: pointer;
       &:first-child {
         border-top: 0;
@@ -86,6 +82,9 @@
     position: relative;
     .select__icon {
       transform: rotate(180deg);
+      & div{
+        height: 16px;
+      }
     }
     .select__title {
       border-radius: 5px 5px 0 0;
@@ -96,13 +95,11 @@
   width: 100% !important;
   height: 250px !important;
   padding: 20px;
-  background: #fbfbfb;
+  background: $background_text;
   border-radius: 20px;
   resize: none;
   border: none;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 19px;
+  @include font-source-sans(16px, $grey_light, 600, 19px);
 }
 .copy {
   &__cont {
@@ -115,10 +112,10 @@
     bottom: 10px;
     right: 10px;
     border: none;
-    background: none;
     cursor: pointer;
-    color: #969595;
-    z-index: 10;
+    color: $grey_secondary;
+    z-index: 3;
+    background-color: $background_text;
     svg {
       stroke: currentColor;
     }
@@ -130,9 +127,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f3f3f3;
-    font-size: 16px;
-    font-weight: 600;
+    background-color: $background_select;
+    @include font-source-sans(16px, $black, 600, 19px);
     overflow: hidden;
     transition: 0.3s ease-in;
     &Show {

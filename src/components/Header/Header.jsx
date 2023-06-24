@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import styles from './Header.module.scss';
-import UserIcon from '../../img/user.svg';
 
 export const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -13,6 +12,11 @@ export const Header = () => {
     setLoggedIn(false);
   };
 
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
@@ -20,13 +24,25 @@ export const Header = () => {
         <nav>
           <ul>
             <li>
-              <a href="#">Шифрование</a>
+              <a href="#ciphers" onClick={() => scrollToSection('ciphers')}>
+                Шифрование
+              </a>
             </li>
             <li>
-              <a href="#">О проекте</a>
+              <a
+                href="#aboutProject"
+                onClick={() => scrollToSection('aboutProject')}
+              >
+                О проекте
+              </a>
             </li>
             <li>
-              <a href="#">О шифрах</a>
+              <a
+                href="#aboutCiphers"
+                onClick={() => scrollToSection('aboutCiphers')}
+              >
+                О шифрах
+              </a>
             </li>
           </ul>
         </nav>
@@ -45,7 +61,7 @@ export const Header = () => {
               </button>
             </div>
           )}
-          <img className={styles.img} src={UserIcon} />
+          <div className="icon-user"></div>
         </div>
       </div>
     </header>

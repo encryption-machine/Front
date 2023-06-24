@@ -14,10 +14,10 @@ export const MainPage = () => {
     'Код Цезаря',
   ];
   return (
-    <div className="container">
+    <>
       <Machine list={dataMachine} />
       <AboutProject />
       <AboutCiphers />
-    </div>
+    </>
   );
 };

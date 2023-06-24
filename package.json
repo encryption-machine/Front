@@ -7,6 +7,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "eslint-config-prettier": "^8.8.0",
+    "husky": "^8.0.3",
     "nanoid": "^4.0.2",
     "node-sass": "^7.0.3",
     "react": "^18.2.0",
@@ -22,9 +23,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .js,.jsx .",
     "lint:fix": "npm run lint -- --fix",
-    "format": "prettier --write .",
-    "check": "prettier --check .",
-    "prepare": "husky install"
+    "format": "prettier . --write"
   },
   "eslintConfig": {
     "extends": [
@@ -46,12 +45,11 @@
     ]
   },
   "devDependencies": {
-    "husky": "^8.0.0",
-    "prettier": "^2.8.8"
+    "prettier": "2.8.8"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run check"
+      "pre-commit": "npm run format"
     }
   }
 }

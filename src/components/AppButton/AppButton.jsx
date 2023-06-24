@@ -1,16 +1,11 @@
 import React from 'react';
 import styles from './AppButton.module.scss';
 
-export const AppButton = ({
-  typeClass,
-  action,
-  children,
-  isButtonDisabled,
-}) => {
+export const AppButton = ({ type, action, children, isButtonDisabled }) => {
   const buttonClass =
-    typeClass === 'secondary'
+    type === 'secondary'
       ? `${styles.appButton__secondary} ${styles.appButton}`
-      : typeClass === 'outlined'
+      : type === 'outlined'
       ? `${styles.appButton__outlined} ${styles.appButton}`
       : styles.appButton;
 

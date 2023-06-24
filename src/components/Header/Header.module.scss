@@ -1,26 +1,28 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins';
+
 .header {
-  margin: 0;
-  box-sizing: border-box;
   position: fixed;
   padding: 30px 0 20px 0;
-  width: 100%;
   z-index: 5;
-  background-color: #e2e2e2;
-  height: 136px;
   top: 0;
+  left: 0;
+  width: 100%;
+  border-bottom: 2px solid $grey_dark;
 }
 
 .header_container {
-  width: calc(100% - 2 * 150px);
+  max-width: 1140px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr min-content;
   justify-content: space-between;
+  align-items: center;
   gap: 60px;
 
   ul {
     margin: 0;
-    padding: 15.5px 0 0 0;
+    padding: 0;
     list-style: none;
     display: flex;
     justify-content: space-between;
@@ -40,18 +42,14 @@
 }
 
 .logo {
-  font-weight: 900;
-  font-size: 44px;
-  line-height: 53px;
-  justify-self: flex-start;
-  text-align: start;
+  @include font-source-sans(30px, $black, 900);
 }
 
 .entrance {
-  padding: 15.5px 0 0 0;
   display: flex;
   position: relative;
   justify-content: flex-end;
+  align-items: center;
 
   div {
     display: flex;

@@ -1,29 +1,29 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins';
+
 .appButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  color: #ffffff;
-  background-color: #90d3e7;
-  font-weight: 500;
+  height: 44px;
+  @include font-source-sans(16px, $white, 600, 19px);
+  background-color: $black;
   border: none;
   border-radius: 8px;
   padding: 0 25px;
-  font-weight: 600;
-  border-bottom: 1.5px solid #2f2f2f;
-  width: 100%;
   cursor: pointer;
+  box-sizing: border-box;
+
   &:disabled {
-    cursor: not-allowed;
+    cursor: default;
     opacity: 0.6;
   }
+
   &__secondary {
-    background: #cdc6c6;
-    color: #000;
+    background: $background_secondary;
+    color: $black;
   }
+
   &__outlined {
     background: none;
-    border: 1.5px solid #000000;
-    color: #a5a5a5;
+    border: 1.5px solid $grey_light;
+    color: $grey_light;
   }
 }

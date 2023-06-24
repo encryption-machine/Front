@@ -1,51 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;800;900&display=swap');
+@import '../../styles/colors.scss';
+@import '../../styles/mixins';
 
-:root {
-  --border: #ad9c9c;
-}
-
-.root {
-  font-family: 'Inter', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 68px 150px 60px;
-  background: #e2e2e2;
-}
-
-.title {
-  font-weight: 900;
-  font-size: 38px;
-}
-
-.ciphers {
-  display: flex;
-  flex-direction: column;
-}
-
-.cipher {
-  display: grid;
-  grid-template-columns: 2fr 4fr;
-  align-items: center;
-  border-bottom: 2px solid var(--border);
-  &:last-child {
-    border: none;
+.aboutCiphers {
+  &_title {
+    @include font-source-sans(38px, $black, 900);
+    margin-bottom: 46px;
+    text-align: left;
   }
-}
 
-.name {
-  font-weight: 800;
-  font-size: 30px;
-  text-align: initial;
-  margin: 0;
-  padding: 0;
-}
+  &_cipher {
+    display: grid;
+    grid-template-columns: minmax(100px, 1fr) minmax(200px, 72%);
+    align-items: center;
+    border-bottom: 2px solid $border;
+    &:last-child {
+      border: none;
+    }
+  }
 
-.description {
-  font-weight: 600;
-  font-size: 24px;
-  text-align: initial;
-  margin: 0;
-  padding: 20px 0 20px 20px;
-  border-left: 2px solid var(--border);
+  &_name {
+    @include font-source-sans(30px, $black, 800);
+    max-width: 367px;
+    text-align: initial;
+  }
+
+  &_description {
+    @include font-source-sans(24px, $black, 600);
+    text-align: initial;
+    padding: 20px 0 20px 20px;
+    border-left: 2px solid $border;
+  }
 }

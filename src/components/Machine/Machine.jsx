@@ -3,11 +3,9 @@ import React, {
   useEffect,
   useState,
   useCallback,
-  useMemo,
 } from 'react';
 import { copyToClipboard } from '../../helpers';
 import { AppButton } from '../AppButton/AppButton';
-import { Chevron, Copy } from '../Icons';
 import styles from './Machine.module.scss';
 
 export const Machine = ({ list }) => {
@@ -99,7 +97,7 @@ export const Machine = ({ list }) => {
   const buttonText = current === 'encryption' ? 'Шифровать' : 'Дешифровать';
 
   return (
-    <div className={styles.machine}>
+    <section className={styles.machine} id="ciphers">
       <div className={styles.switch}>
         <button
           className={`${styles.tab} ${
@@ -125,7 +123,8 @@ export const Machine = ({ list }) => {
           <div className={styles.select__title} onClick={selectClick}>
             {selected}
             <div className={styles.select__icon}>
-              <Chevron />
+              <div className="icon-check"></div>
+             {/*  <Chevron /> */}
             </div>
           </div>
           <div className={styles.select__hide} id="hide">
@@ -148,7 +147,7 @@ export const Machine = ({ list }) => {
           name="leftArea"
           id="leftArea"
           className={styles.text}
-          placeholder="Введите текст"
+          placeholder="Текст"
           defaultValue={encryption}
           onChange={SetEncryption}
         />
@@ -168,7 +167,8 @@ export const Machine = ({ list }) => {
           onClick={copyCode}
           className={styles.copy__button}
         >
-          <Copy />
+          <div className="icon-copy"></div>
+          {/* <Copy /> */}
         </button>
       </div>
       <div className={styles.bottom}>
@@ -181,9 +181,9 @@ export const Machine = ({ list }) => {
           </AppButton>
         </div>
         <div>
-          <AppButton typeClass="outlined">Ввести секретный ключ</AppButton>
+          <AppButton type="outlined">Ввести секретный ключ</AppButton>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
