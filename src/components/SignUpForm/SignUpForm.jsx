@@ -2,7 +2,7 @@
 /* eslint-disable default-case */
 import { useState, useEffect } from 'react';
 import AuthForms from '../AuthForms/AuthForms';
-//import cn from 'classnames';
+import cn from 'classnames';
 import useInputValidation from '../../hooks/useInputValidation';
 //import { usePasswordValidation } from '../../hooks/usePasswordValidation';
 import { AppButton } from '../AppButton/AppButton';
@@ -21,19 +21,22 @@ const SignUpForm = () => {
   //  { isEmpty: true, minLength: 6, isEmail: true, typePlaceholder: 'email' },
   //  'Email'
   //);
-  const password = useInputValidation({
+  const signup = useInputValidation({
     isEmptyInputCheck: true,
     password: passwordsValue.firstPassword,
-    minLength: 6,
-    maxLength: 8,
-  });
-
-  const confirmPassword = useInputValidation({
-    isEmptyInputCheck: true,
     confirmPassword: passwordsValue.secondPassword,
     minLength: 6,
     maxLength: 8,
   });
+
+  //const confirmPassword = useInputValidation({
+  //  isEmptyInputCheck: true,
+  //});
+
+  //console.log(password.password);
+  //console.log(password.confirmPassword);
+  //console.log(confirmPassword.password);
+  //console.log(confirmPassword.confirmPassword);
 
   //const [formValid, setFormValid] = useState(false);
   //const [checked, setChecked] = useState(false);
@@ -95,13 +98,13 @@ const SignUpForm = () => {
       )}*/}
 
       <input
-        onBlur={(e) => password.onBlur(e)}
-        onFocus={(e) => password.onFocus(e)}
+        onBlur={(e) => signup.onBlur(e)}
+        onFocus={(e) => signup.onFocus(e)}
         className={style.input}
         name="password"
-        type="password"
+        type="text"
         placeholder="Пароль"
-        value={password.password}
+        value={signup.password}
         onChange={setFirst}
       />
       {/*<span>{password.password}</span>
@@ -115,41 +118,42 @@ const SignUpForm = () => {
         <span className={style.error}>{password.maxLengthErrorMessage}</span>
       )}*/}
 
-      {password.isFocus && (
+      {signup.isFocus && (
         <ul style={{ textAlign: 'start' }}>
           <span>Пароль должен содержать:</span>
           <li>
             От 6 до 8 символов:{' '}
-            {password.isValidLength ? <span>True</span> : <span>False</span>}
+            {signup.isValidLength ? <span>True</span> : <span>False</span>}
           </li>
           <li>
-            Цифры: {password.isNumber ? <span>True</span> : <span>False</span>}
+            Цифры: {signup.isNumber ? <span>True</span> : <span>False</span>}
           </li>
           <li>
             Заглавные буквы:{' '}
-            {password.isUpperCase ? <span>True</span> : <span>False</span>}
+            {signup.isUpperCase ? <span>True</span> : <span>False</span>}
           </li>
           <li>
             Строчные буквы:{' '}
-            {password.isLowerCase ? <span>True</span> : <span>False</span>}
+            {signup.isLowerCase ? <span>True</span> : <span>False</span>}
           </li>
           <li>
             Спец. символы:{' '}
-            {password.isSpecialChar ? <span>True</span> : <span>False</span>}
+            {signup.isSpecialChar ? <span>True</span> : <span>False</span>}
           </li>
           <li>
-            Match: {password.isMatch ? <span>True</span> : <span>False</span>}
+            Match: {signup.isMatch ? <span>True</span> : <span>False</span>}
           </li>
         </ul>
       )}
 
       <input
-        onBlur={(e) => confirmPassword.onBlur(e)}
+        disabled={!signup.isPasswordInputValid}
+        onBlur={(e) => signup.onBlur(e)}
         className={style.input}
         name="confirmPassword"
-        type="password"
+        type="text"
         placeholder="Повторите пароль"
-        value={confirmPassword.confirmPassword}
+        value={signup.confirmPassword}
         onChange={setSecond}
       />
       {/*
@@ -164,33 +168,35 @@ const SignUpForm = () => {
         }
       />*/}
 
-      {confirmPassword.isDirty && confirmPassword.isEmpty && (
+      {/*{confirmPassword.isDirty && confirmPassword.isEmpty && (
         <span className={style.error}>Поле не может быть пустым</span>
       )}
       {confirmPassword.isDirty && confirmPassword.minLengthError && (
         <span className={style.error}>Некорректная длина</span>
-      )}
-      {/*<AppButton
-        isButtonDisabled={!formValid}
+      )}*/}
+      <AppButton
+        isButtonDisabled={!signup.isMatch}
         action={undefined}
-        //className={!formValid ? cn(style.disabled, style.button) : style.button}
+        className={
+          !signup.isMatch ? cn(style.disabled, style.button) : style.button
+        }
         typeClass="secondary"
         type="submit"
       >
         Зарегистрироваться
-      </AppButton>*/}
-      <div className={styleLocal.confirm}>
+      </AppButton>
+      {/*<div className={styleLocal.confirm}>
         {' '}
-        {/*<input
+        <input
           type="checkbox"
           checked={checked}
           onChange={chengeCheckbox}
-        />{' '}*/}
-        {/*<span className={styleLocal.confirm__text}>
+        />{' '}
+        <span className={styleLocal.confirm__text}>
           {' '}
           Я даю согласие на обработку моих персональных данных{' '}
-        </span>*/}
-      </div>
+        </span>
+      </div>*/}
     </AuthForms>
   );
 };

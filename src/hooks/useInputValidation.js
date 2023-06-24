@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import useValidator from './useValidator';
+import useSignupValidator from './useSignupValidator';
 
 const useInputValidation = (validations) => {
   const [isDirty, setDirty] = useState(false);
   const [isFocus, setFocus] = useState(false);
-  const valid = useValidator(validations);
+  const valid = useSignupValidator(validations);
 
   const onBlur = (e) => {
     setDirty(true);
