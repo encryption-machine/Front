@@ -14,7 +14,31 @@ const SignUpForm = () => {
     firstPassword: '',
     secondPassword: '',
   });
-  //console.log(passwordsValue);
+
+  const sumb = '!@#$%^&*()_+-=]{};\':"\\|,.<>?~';
+
+  //const [showPassword, setShowPassword] = useState('password');
+  //const [showConfirmPassword, setShowConfirmPassword] = useState('password');
+  //const [clickShowPassword, setClickShowPassword] = useState(false);
+  //const [clickShowConfirmPassword, setClickShowConfirmPassword] =
+  //  useState(false);
+
+  //const handleShowPassword = (e) => {
+  //  e.preventDefault();
+  //  setClickShowPassword(!clickShowPassword);
+  //};
+
+  //const handleShowConfirmPassword = (e) => {
+  //  e.preventDefault();
+  //  setClickShowConfirmPassword(!clickShowConfirmPassword);
+  //};
+
+  //useEffect(() => {
+  //  clickShowPassword ? setShowPassword('text') : setShowPassword('password');
+  //  clickShowConfirmPassword
+  //    ? setShowConfirmPassword('text')
+  //    : setShowConfirmPassword('password');
+  //}, [clickShowPassword, clickShowConfirmPassword]);
 
   //const email = useInputValidation(
   //  '',
@@ -29,9 +53,9 @@ const SignUpForm = () => {
     maxLength: 8,
   });
 
-  //const confirmPassword = useInputValidation({
-  //  isEmptyInputCheck: true,
-  //});
+  const confirmPassword = useInputValidation({
+    isEmptyInputCheck: true,
+  });
 
   //console.log(password.password);
   //console.log(password.confirmPassword);
@@ -97,16 +121,33 @@ const SignUpForm = () => {
         <span className={style.error}>{email.emailErrorMessage}</span>
       )}*/}
 
-      <input
+      <div
         onBlur={(e) => signup.onBlur(e)}
         onFocus={(e) => signup.onFocus(e)}
-        className={style.input}
-        name="password"
-        type="text"
-        placeholder="Пароль"
-        value={signup.password}
-        onChange={setFirst}
-      />
+        className={styleLocal.input__password}
+      >
+        <input
+          //onBlur={(e) => signup.onBlur(e)}
+          //onFocus={(e) => signup.onFocus(e)}
+          className={style.input}
+          name="password"
+          //type={showPassword}
+          placeholder="Пароль"
+          value={signup.password}
+          onChange={setFirst}
+        />
+
+        {/*<button
+          onBlur={(e) => signup.onBlur(e)}
+          onFocus={(e) => signup.onFocus(e)}
+          onClick={(e) => handleShowPassword(e)}
+          className={
+            !signup.isFocus ? styleLocal.unfocused : styleLocal.focused
+          }
+        >
+          {clickShowPassword ? 'Скрыть' : 'Показать'}
+        </button>*/}
+      </div>
       {/*<span>{password.password}</span>
       {password.isDirty && password.isEmpty && (
         <span className={style.error}>{password.emptyErrorMessage}</span>
@@ -118,44 +159,69 @@ const SignUpForm = () => {
         <span className={style.error}>{password.maxLengthErrorMessage}</span>
       )}*/}
 
-      {signup.isFocus && (
-        <ul style={{ textAlign: 'start' }}>
-          <span>Пароль должен содержать:</span>
-          <li>
-            От 6 до 8 символов:{' '}
-            {signup.isValidLength ? <span>True</span> : <span>False</span>}
+      {/*{signup.isFocus && (*/}
+      <div
+        className={signup.isFocus ? styleLocal.slideUp : styleLocal.slideDown}
+      >
+        <span style={{ textAlign: 'start' }}>Пароль должен содержать:</span>
+        <ul style={{ textAlign: 'start', margin: '0' }}>
+          <li
+            className={signup.isValidLength ? styleLocal.green : styleLocal.red}
+          >
+            <span>От 6 до 8 символов</span>
           </li>
-          <li>
-            Цифры: {signup.isNumber ? <span>True</span> : <span>False</span>}
+          <li className={signup.isNumber ? styleLocal.green : styleLocal.red}>
+            <span>Цифры</span>
           </li>
-          <li>
-            Заглавные буквы:{' '}
-            {signup.isUpperCase ? <span>True</span> : <span>False</span>}
+          <li
+            className={signup.isUpperCase ? styleLocal.green : styleLocal.red}
+          >
+            <span>Заглавные буквы</span>
           </li>
-          <li>
-            Строчные буквы:{' '}
-            {signup.isLowerCase ? <span>True</span> : <span>False</span>}
+          <li
+            className={signup.isLowerCase ? styleLocal.green : styleLocal.red}
+          >
+            <span>Строчные буквы</span>
           </li>
-          <li>
-            Спец. символы:{' '}
-            {signup.isSpecialChar ? <span>True</span> : <span>False</span>}
+          <li
+            className={signup.isSpecialChar ? styleLocal.green : styleLocal.red}
+          >
+            <span>Символы: {sumb}</span>
           </li>
-          <li>
-            Match: {signup.isMatch ? <span>True</span> : <span>False</span>}
-          </li>
+          {/*<li>
+              Match: {signup.isMatch ? <span>True</span> : <span>False</span>}
+            </li>*/}
         </ul>
-      )}
+      </div>
+      {/*)}*/}
 
-      <input
-        disabled={!signup.isPasswordInputValid}
-        onBlur={(e) => signup.onBlur(e)}
-        className={style.input}
-        name="confirmPassword"
-        type="text"
-        placeholder="Повторите пароль"
-        value={signup.confirmPassword}
-        onChange={setSecond}
-      />
+      <div
+        onBlur={(e) => confirmPassword.onBlur(e)}
+        onFocus={(e) => confirmPassword.onFocus(e)}
+        className={styleLocal.input__password}
+      >
+        <input
+          //disabled={!signup.isPasswordInputValid}
+          className={style.input}
+          name="confirmPassword"
+          //type={showConfirmPassword}
+          placeholder="Повторите пароль"
+          value={signup.confirmPassword}
+          onChange={setSecond}
+        />
+
+        {/*<button
+          onBlur={(e) => confirmPassword.onBlur(e)}
+          onFocus={(e) => confirmPassword.onFocus(e)}
+          //onClick={(e) => handleShowConfirmPassword(e)}
+          className={
+            !confirmPassword.isFocus ? styleLocal.unfocused : styleLocal.focused
+          }
+        >
+          {clickShowConfirmPassword ? 'Скрыть' : 'Показать'}
+        </button>*/}
+      </div>
+
       {/*
       <input
         placeholder="test"
