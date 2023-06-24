@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { MainPage, ProfilePage } from '../pages';
+import { MainPage, ProfilePage, SignInPage, SignUpPage } from '../pages';
 import { Footer } from '../components/Footer/Footer';
 import { Header } from '../components/Header/Header';
 
@@ -13,6 +13,8 @@ export const Routers = () => {
       </Routes>
       <Routes>
         <Route path="/profile" exact element={<ProfilePage />} />
+        <Route path="/signin" exact element={<SignInPage />} />
+        <Route path="/signup" exact element={<SignUpPage />} />
       </Routes>
       <Footer />
     </>

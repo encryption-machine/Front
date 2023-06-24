@@ -40,7 +40,7 @@ const ciphersInfo = [
   },
 ];
 
-function AboutCiphers() {
+const AboutCiphers = () => {
   return (
     <section className={style.root}>
       <h2 className={style.title}>О шифрах</h2>
@@ -54,6 +54,6 @@ function AboutCiphers() {
       </div>
     </section>
   );
-}
+};
 
 export default AboutCiphers;
