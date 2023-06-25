@@ -1,0 +1,67 @@
+.confirm {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.confirm__text {
+  text-align: start;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+.input__password {
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  background: #f7f7f7;
+}
+
+.input__password input {
+  //border: 1px solid black;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  width: 100%;
+  outline: none;
+}
+
+.input__password button {
+  //border: 1px solid black;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+:root {
+  --x: fit-content;
+}
+
+.slideUp {
+  height: 120px;
+  transition: all 0.5s cubic-bezier(0, 1, 0.5, 1);
+}
+.slideDown {
+  height: 0;
+  z-index: -99999;
+  transition: all 0.5s cubic-bezier(0, 1, 0.5, 1);
+}
+
+.unfocused {
+  opacity: 0;
+}
+
+.focused {
+  opacity: 1;
+}

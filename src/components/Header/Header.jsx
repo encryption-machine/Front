@@ -1,16 +1,19 @@
 import { useState } from 'react';
+import Modal from '../Modal/Modal';
 import styles from './Header.module.scss';
 
 export const Header = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  //const [loggedIn, setLoggedIn] = useState(false);
 
-  const handleLogin = () => {
-    setLoggedIn(true);
-  };
+  //const handleLogin = () => {
+  //  setLoggedIn(true);
+  //};
 
-  const handleLogout = () => {
-    setLoggedIn(false);
-  };
+  //const handleLogout = () => {
+  //  setLoggedIn(false);
+  //};
+  
+  const [modalOpen, setModalOpen] = useState(false);
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -48,7 +51,7 @@ export const Header = () => {
         </nav>
         <div className={styles.entrance}>
           {/* скорее всего заменить кнопки на Link, когда будут страницы регистрации и авторизации */}
-          {!loggedIn ? (
+          {/*{!loggedIn ? (
             <button type="button" onClick={handleLogin}>
               Войти
             </button>
@@ -60,7 +63,11 @@ export const Header = () => {
                 Выйти
               </button>
             </div>
-          )}
+          )}*/}
+          <button type="button" onClick={setModalOpen}>
+            Войти
+          </button>
+          <Modal isOpen={modalOpen} setIsOpen={setModalOpen}><div>jjjjjmjjjjjjjjjjjj</div></Modal>
           <div className="icon-user"></div>
         </div>
       </div>
