@@ -16,8 +16,8 @@ export const MainPage = () => {
   return (
     <>
       <Machine list={dataMachine} />
-      <AboutProject />
       <AboutCiphers />
+      <AboutProject />
     </>
   );
 };
