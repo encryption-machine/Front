@@ -1,4 +1,3 @@
-
 import styles from './main-layout.module.scss';
 import { Footer } from '../../components/Footer/Footer';
 import { Header } from '../../components/Header/Header';
