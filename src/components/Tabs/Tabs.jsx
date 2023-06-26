@@ -1,21 +1,21 @@
 import cn from 'classnames';
-import './Tabs.module.scss';
+import style from './Tabs.module.scss';
 
 const Tabs = ({ className, onClick, selectedId, tabs }) => {
   return (
-    <div className={cn('Tabs', className)}>
+    <div className={cn(style.tabs, className)}>
       {tabs &&
         tabs.map((tab) => (
           <div
-            className={cn('Tab', {
-              Tab__selected: tab.id === selectedId,
+            className={cn(style.tab, {
+              [`${style.tab__selected}`]: tab.id === selectedId,
             })}
             key={tab.id}
             onClick={() => onClick(tab.id)}
           >
             <div
-              className={cn('TabLabel', {
-                TabLabel__selected: tab.id === selectedId,
+              className={cn(style.tabLabel, {
+                [`${style.tabLabel__selected}`]: tab.id === selectedId,
               })}
             >
               {tab.label}

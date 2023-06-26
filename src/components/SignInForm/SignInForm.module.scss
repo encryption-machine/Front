@@ -1,4 +1,8 @@
+@import '../../styles/colors.scss';
+
 .link {
-  color: #000000;
-  text-decoration: none;
+  color: $green !important;
+  background: $violet;
+  text-align: center;
+  margin-top: 8px;
 }

@@ -68,39 +68,42 @@ const SignInForm = () => {
   };
 
   return (
-    <AuthForms title={'Вход'}>
-      <input
-        onBlur={(e) => blurHandler(e)}
-        className={style.input}
-        name="email"
-        type="text"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => emailHandler(e)}
-      />
+    <AuthForms>
+      <div className={style.inputs}>
+        {' '}
+        <input
+          onBlur={(e) => blurHandler(e)}
+          name="email"
+          type="text"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => emailHandler(e)}
+        />
+      </div>
       {emailDirty && emailError && (
         <span className={style.error}>{emailError}</span>
       )}
-      <input
-        onBlur={(e) => blurHandler(e)}
-        className={style.input}
-        name="password"
-        type="password"
-        placeholder="Пароль"
-        value={password}
-        onChange={(e) => passwordHandler(e)}
-      />
+
+      <div className={style.inputs}>
+        {' '}
+        <input
+          onBlur={(e) => blurHandler(e)}
+          name="password"
+          type="password"
+          placeholder="Пароль"
+          value={password}
+          onChange={(e) => passwordHandler(e)}
+        />
+      </div>
       {passwordDirty && passwordError && (
         <span className={style.error}>{passwordError}</span>
       )}
-      <AppButton disabled={!formValid} type="submit" typeClass="secondary">
-        Вход
-      </AppButton>
-      <AppButton typeClass="secondary" type="link">
-        <Link to="/signup" className={styleLocal.link}>
-          Зарегистрироваться
-        </Link>
-      </AppButton>
+      <button className={style.button} disabled={!formValid} type="submit">
+        Войти
+      </button>
+      <Link to="#" className={styleLocal.link}>
+        Забыли пароль?
+      </Link>
     </AuthForms>
   );
 };

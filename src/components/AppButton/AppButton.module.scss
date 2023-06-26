@@ -2,14 +2,16 @@
 @import '../../styles/mixins';
 
 .appButton {
-  height: 44px;
-  @include font-source-sans(16px, $white, 600, 19px);
-  background-color: $black;
-  border: none;
-  border-radius: 8px;
-  padding: 0 25px;
-  cursor: pointer;
-  box-sizing: border-box;
+  button {
+    height: 44px;
+    @include font-source-sans(16px, $white, 600, 19px);
+    background-color: $black !important;
+    border: none;
+    border-radius: 8px;
+    padding: 0 25px;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
 
   &:disabled {
     cursor: default;

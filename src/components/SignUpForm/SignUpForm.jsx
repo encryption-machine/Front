@@ -6,6 +6,8 @@ import cn from 'classnames';
 import useInputValidation from '../../hooks/useInputValidation';
 //import { usePasswordValidation } from '../../hooks/usePasswordValidation';
 import { AppButton } from '../AppButton/AppButton';
+import viewPassword from '../../assets/icons/view.svg';
+import hidePassword from '../../assets/icons/hide.svg';
 import style from '../AuthForms/AuthForms.module.scss';
 import styleLocal from './SignUpForm.module.scss';
 
@@ -15,7 +17,7 @@ const SignUpForm = () => {
     secondPassword: '',
   });
 
-  const sumb = '!@#$%^&*()_+-=]{};\':"\\|,.<>?~';
+  //const sumb = '!@#$%^&*()_+-=]{};\':"\\|,.<>?~';
 
   const [showPassword, setShowPassword] = useState('password');
   const [showConfirmPassword, setShowConfirmPassword] = useState('password');
@@ -104,17 +106,20 @@ const SignUpForm = () => {
   };
 
   return (
-    <AuthForms title={'Регистрация'}>
-      {/*<input
-        onBlur={(e) => email.onBlur(e)}
-        className={style.input}
-        name="email"
-        type="text"
-        placeholder="Email"
-        value={email.value}
-        onChange={(e) => email.onChange(e)}
-      />
-      {email.isDirty && email.isEmpty && (
+    <AuthForms>
+      <div className={style.inputs}>
+        {' '}
+        <input
+          //onBlur={(e) => email.onBlur(e)}
+          className={style.input}
+          name="email"
+          type="text"
+          placeholder="E-mail"
+          //value={email.value}
+          //onChange={(e) => email.onChange(e)}
+        />
+      </div>
+      {/*{email.isDirty && email.isEmpty && (
         <span className={style.error}>{email.emptyErrorMessage}</span>
       )}
       {email.isDirty && email.isEmailError && !email.isEmpty && (
@@ -124,7 +129,7 @@ const SignUpForm = () => {
       <div
         onBlur={(e) => signup.onBlur(e)}
         onFocus={(e) => signup.onFocus(e)}
-        className={styleLocal.input__password}
+        className={cn(styleLocal.input__password, style.inputs)}
       >
         <input
           //onBlur={(e) => signup.onBlur(e)}
@@ -145,7 +150,11 @@ const SignUpForm = () => {
             !signup.isFocus ? styleLocal.unfocused : styleLocal.focused
           }
         >
-          {clickShowPassword ? 'Скрыть' : 'Показать'}
+          {clickShowPassword ? (
+            <img src={hidePassword} alt="" />
+          ) : (
+            <img src={viewPassword} alt="" />
+          )}
         </button>
       </div>
       {/*<span>{password.password}</span>
@@ -160,7 +169,7 @@ const SignUpForm = () => {
       )}*/}
 
       {/*{signup.isFocus && (*/}
-      <div
+      {/*<div
         className={signup.isFocus ? styleLocal.slideUp : styleLocal.slideDown}
       >
         <span style={{ textAlign: 'start' }}>Пароль должен содержать:</span>
@@ -188,24 +197,22 @@ const SignUpForm = () => {
           >
             <span>Символы: {sumb}</span>
           </li>
-          {/*<li>
-              Match: {signup.isMatch ? <span>True</span> : <span>False</span>}
-            </li>*/}
+
         </ul>
-      </div>
+      </div>*/}
       {/*)}*/}
 
       <div
         onBlur={(e) => confirmPassword.onBlur(e)}
         onFocus={(e) => confirmPassword.onFocus(e)}
-        className={styleLocal.input__password}
+        className={cn(styleLocal.input__password, style.inputs)}
       >
         <input
           //disabled={!signup.isPasswordInputValid}
           className={style.input}
           name="confirmPassword"
           type={showConfirmPassword}
-          placeholder="Повторите пароль"
+          placeholder="Еще раз пароль"
           value={signup.confirmPassword}
           onChange={setSecond}
         />
@@ -218,21 +225,18 @@ const SignUpForm = () => {
             !confirmPassword.isFocus ? styleLocal.unfocused : styleLocal.focused
           }
         >
-          {clickShowConfirmPassword ? 'Скрыть' : 'Показать'}
+          {clickShowConfirmPassword ? (
+            <img src={hidePassword} alt="" />
+          ) : (
+            <img src={viewPassword} alt="" />
+          )}
         </button>
       </div>
 
-      {/*
-      <input
-        placeholder="test"
-        //value={confirmPassword.test}
-        onChange={(e) =>
-          setPasswordsValue({
-            ...passwordsValue,
-            test: e.target.value,
-          })
-        }
-      />*/}
+      <div className={style.inputs}>
+        {' '}
+        <input placeholder="Кодовое слово" />
+      </div>
 
       {/*{confirmPassword.isDirty && confirmPassword.isEmpty && (
         <span className={style.error}>Поле не может быть пустым</span>
@@ -240,17 +244,16 @@ const SignUpForm = () => {
       {confirmPassword.isDirty && confirmPassword.minLengthError && (
         <span className={style.error}>Некорректная длина</span>
       )}*/}
-      <AppButton
-        isButtonDisabled={!signup.isMatch}
+      <button
+        disabled={!signup.isMatch}
         action={undefined}
         className={
-          !signup.isMatch ? cn(style.disabled, style.button) : style.button
+          !signup.isMatch ? cn(style.button) : style.button
         }
-        typeClass="secondary"
         type="submit"
       >
         Зарегистрироваться
-      </AppButton>
+      </button>
       {/*<div className={styleLocal.confirm}>
         {' '}
         <input

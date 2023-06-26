@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Tabs from '../Tabs/Tabs';
 import SignInForm from '../SignInForm/SignInForm';
 import SignUpForm from '../SignUpForm/SignUpForm';
-import './AuthTabs.module.scss';
+import style from './AuthTabs.module.scss';
 
 const AuthTabs = () => {
   const tabs = [
@@ -19,7 +19,7 @@ const AuthTabs = () => {
   return (
     <section className="AuthTabs">
       <Tabs selectedId={selectedTabId} tabs={tabs} onClick={handleTabClick} />
-      <div className="AuthTabs-Content">
+      <div className={style.authTabs__content}>
         {selectedTabId === tabs[0].id && <SignInForm />}
         {selectedTabId === tabs[1].id && <SignUpForm />}
       </div>

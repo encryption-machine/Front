@@ -5,6 +5,10 @@
   gap: 20px;
 }
 
+img {
+  background: #fff;
+}
+
 .confirm__text {
   text-align: start;
 }
@@ -22,7 +26,6 @@
   display: flex;
   justify-content: space-between;
   padding: 0 10px;
-  background: #f7f7f7;
 }
 
 .input__password input {

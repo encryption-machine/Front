@@ -1,6 +1,4 @@
-$violet: #574cb0;
-$white: #ffffff;
-$black-shadow: #10101080;
+@import '../../styles/colors.scss';
 
 .overlay {
   height: 100vh;
@@ -36,7 +34,8 @@ $black-shadow: #10101080;
   right: 0;
   width: 10px;
   height: 10px;
-  background: #000;
+  background: transparent;
+  border: none;
   &::after,
   &::before {
     content: '';
