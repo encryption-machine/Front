@@ -1,9 +1,4 @@
-import React, {
-  useRef,
-  useEffect,
-  useState,
-  useCallback,
-} from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { copyToClipboard } from '../../helpers';
 import { AppButton } from '../AppButton/AppButton';
 import styles from './Machine.module.scss';
@@ -124,7 +119,7 @@ export const Machine = ({ list }) => {
             {selected}
             <div className={styles.select__icon}>
               <div className="icon-check"></div>
-             {/*  <Chevron /> */}
+              {/*  <Chevron /> */}
             </div>
           </div>
           <div className={styles.select__hide} id="hide">
