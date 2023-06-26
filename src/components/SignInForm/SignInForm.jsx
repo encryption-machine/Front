@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AuthForms from '../AuthForms/AuthForms';
-import { AppButton } from '../AppButton/AppButton';
 import style from '../AuthForms/AuthForms.module.scss';
 import styleLocal from './SignInForm.module.scss';
 

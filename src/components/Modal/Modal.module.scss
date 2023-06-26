@@ -40,7 +40,6 @@
   &::before {
     content: '';
     position: absolute;
-    //left: 15px;
     top: 24px;
     right: 34px;
     height: 20px;
@@ -48,11 +47,9 @@
     background-color: $white;
   }
   &::after {
-    //content: '';
     transform: rotate(-45deg);
   }
   &::before {
-    //content: '';
     transform: rotate(45deg);
   }
 }
