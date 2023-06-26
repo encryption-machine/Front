@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './Header.module.scss';
+import logotype from '../../assets/icons/logotype.svg'
 
 export const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -20,7 +21,7 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
-        <div className={styles.logo}>Шифровальная машина</div>
+        <img className={styles.logotype} src={logotype} alt="logo"/>
         <nav>
           <ul>
             <li>
@@ -53,15 +54,10 @@ export const Header = () => {
               Войти
             </button>
           ) : (
-            <div className={styles.userInfo}>
-              <span>mail@mail.ru</span>
-              <hr />
               <button type="button" onClick={handleLogout}>
                 Выйти
               </button>
-            </div>
           )}
-          <div className="icon-user"></div>
         </div>
       </div>
     </header>
