@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import cn from 'classnames';
 import AuthForms from '../AuthForms/AuthForms';
 import style from '../AuthForms/AuthForms.module.scss';
 import styleLocal from './SignInForm.module.scss';
@@ -32,7 +33,9 @@ const SignInForm = () => {
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!re.test(String(e.target.value).toLowerCase())) {
-      setEmailError('Некорректный Email');
+      setEmailError(
+        'Не допустимые символы. Допустимые символы: цифры, латинские буквы, «_», «-», «‎@» и «.»'
+      );
     } else {
       setEmailError('');
     }
@@ -42,7 +45,7 @@ const SignInForm = () => {
     setPassword(e.target.value);
     if (e.target.value.length < 6 || e.target.value.length > 8) {
       setPasswordError(
-        'Пароль должен содержать от 6 до 8 символов, включая, как минимум, один цифровой и один не алфавитно цифровой символ'
+        'Пароль должен содержать от 6 до 8 символов, включая, один цифровой и один не алфавитно цифровой символ'
       );
       if (!e.target.value) {
         setPasswordError('Поле "Пароль" не может быть пустым');
@@ -68,7 +71,7 @@ const SignInForm = () => {
 
   return (
     <AuthForms>
-      <div className={style.inputs}>
+      <div className={emailDirty && emailError ? cn(style.inputs, style.inputs__hint) : style.inputs}>
         {' '}
         <input
           onBlur={(e) => blurHandler(e)}
@@ -80,10 +83,12 @@ const SignInForm = () => {
         />
       </div>
       {emailDirty && emailError && (
-        <span className={style.error}>{emailError}</span>
+        <span className={style.hintError}>{emailError}</span>
       )}
 
-      <div className={style.inputs}>
+      <div
+        className={passwordDirty && passwordError ? cn(style.inputs, style.inputs__hint) : style.inputs}
+      >
         {' '}
         <input
           onBlur={(e) => blurHandler(e)}
@@ -95,9 +100,13 @@ const SignInForm = () => {
         />
       </div>
       {passwordDirty && passwordError && (
-        <span className={style.error}>{passwordError}</span>
+        <span className={style.hintError}>{passwordError}</span>
       )}
-      <button className={style.button} disabled={!formValid} type="submit">
+      <button
+        className={cn(style.button, style.button__wrap)}
+        disabled={!formValid}
+        type="submit"
+      >
         Войти
       </button>
       <Link to="#" className={styleLocal.link}>

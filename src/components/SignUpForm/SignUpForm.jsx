@@ -137,9 +137,10 @@ const SignUpForm = () => {
       </div>
       <button
         disabled={!signup.isMatch}
-        action={undefined}
         className={
-          !signup.isMatch ? cn(style.button) : style.button
+          !signup.isMatch
+            ? cn(style.button, style.button__wrap)
+            : cn(style.button, style.button__wrap)
         }
         type="submit"
       >
