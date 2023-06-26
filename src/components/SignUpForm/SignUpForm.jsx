@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-fallthrough */
 /* eslint-disable default-case */
 import { useState, useEffect } from 'react';
@@ -14,6 +15,8 @@ const SignUpForm = () => {
     firstPassword: '',
     secondPassword: '',
   });
+
+  const [dirtyError, setPasswordError] = useState('');
 
   const [showPassword, setShowPassword] = useState('password');
   const [showConfirmPassword, setShowConfirmPassword] = useState('password');
@@ -37,6 +40,7 @@ const SignUpForm = () => {
       ? setShowConfirmPassword('text')
       : setShowConfirmPassword('password');
   }, [clickShowPassword, clickShowConfirmPassword]);
+
   const signup = useInputValidation({
     isEmptyInputCheck: true,
     password: passwordsValue.firstPassword,
@@ -48,6 +52,12 @@ const SignUpForm = () => {
   const confirmPassword = useInputValidation({
     isEmptyInputCheck: true,
   });
+
+  useEffect(() => {
+    !signup.isDirty || confirmPassword.isDirty
+      ? setPasswordError('Поле не может быть пустым')
+      : setPasswordError('');
+  }, [confirmPassword.isDirty, signup.isDirty]);
 
   const setFirst = (event) => {
     setPasswordsValue({ ...passwordsValue, firstPassword: event.target.value });
@@ -100,6 +110,7 @@ const SignUpForm = () => {
           )}
         </button>
       </div>
+      {signup.isDirty && <span className={style.hintError}>{dirtyError}</span>}
 
       <div
         onBlur={(e) => confirmPassword.onBlur(e)}
@@ -130,11 +141,17 @@ const SignUpForm = () => {
           )}
         </button>
       </div>
+      {confirmPassword.isDirty && (
+        <span className={style.hintError}>{dirtyError}</span>
+      )}
 
       <div className={style.inputs}>
         {' '}
         <input placeholder="Кодовое слово" />
       </div>
+      <span className={style.hintError}>
+        Кодовое слово нужно для дальнейшей смены пароля
+      </span>
       <button
         disabled={!signup.isMatch}
         className={

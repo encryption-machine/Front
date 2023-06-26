@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import AuthForms from '../AuthForms/AuthForms';
+import viewPassword from '../../assets/icons/view.svg';
+import hidePassword from '../../assets/icons/hide.svg';
 import style from '../AuthForms/AuthForms.module.scss';
 import styleLocal from './SignInForm.module.scss';
 
@@ -19,6 +21,18 @@ const SignInForm = () => {
     'Поле "Пароль" не может быть пустым'
   );
   const [formValid, setFormValid] = useState(false);
+
+  const [showPassword, setShowPassword] = useState('password');
+  const [clickShowPassword, setClickShowPassword] = useState(false);
+
+  const handleShowPassword = (e) => {
+    e.preventDefault();
+    setClickShowPassword(!clickShowPassword);
+  };
+
+  useEffect(() => {
+    clickShowPassword ? setShowPassword('text') : setShowPassword('password');
+  }, [clickShowPassword]);
 
   useEffect(() => {
     if (!emailError && !passwordError) {
@@ -71,7 +85,13 @@ const SignInForm = () => {
 
   return (
     <AuthForms>
-      <div className={emailDirty && emailError ? cn(style.inputs, style.inputs__hint) : style.inputs}>
+      <div
+        className={
+          emailDirty && emailError
+            ? cn(style.inputs, style.inputs__hint)
+            : style.inputs
+        }
+      >
         {' '}
         <input
           onBlur={(e) => blurHandler(e)}
@@ -87,17 +107,35 @@ const SignInForm = () => {
       )}
 
       <div
-        className={passwordDirty && passwordError ? cn(style.inputs, style.inputs__hint) : style.inputs}
+        className={
+          passwordDirty && passwordError
+            ? cn(styleLocal.input__password, style.inputs, style.inputs__hint)
+            : cn(styleLocal.input__password, style.inputs)
+        }
       >
         {' '}
         <input
           onBlur={(e) => blurHandler(e)}
           name="password"
-          type="password"
+          type={showPassword}
           placeholder="Пароль"
           value={password}
           onChange={(e) => passwordHandler(e)}
         />
+        <button
+          onBlur={(e) => blurHandler(e)}
+          //onFocus={(e) => e.target.value}
+          onClick={(e) => handleShowPassword(e)}
+          //className={
+          //  styleLocal.unfocused
+          //}
+        >
+          {clickShowPassword ? (
+            <img src={hidePassword} alt="" />
+          ) : (
+            <img src={viewPassword} alt="" />
+          )}
+        </button>
       </div>
       {passwordDirty && passwordError && (
         <span className={style.hintError}>{passwordError}</span>
