@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Modal from '../Modal/Modal';
+import AuthTabs from '../AuthTabs/AuthTabs';
 import styles from './Header.module.scss';
 
 export const Header = () => {
@@ -67,7 +68,7 @@ export const Header = () => {
           <button type="button" onClick={setModalOpen}>
             Войти
           </button>
-          <Modal isOpen={modalOpen} setIsOpen={setModalOpen}><div>jjjjjmjjjjjjjjjjjj</div></Modal>
+          <Modal isOpen={modalOpen} setIsOpen={setModalOpen}><AuthTabs/></Modal>
           <div className="icon-user"></div>
         </div>
       </div>
