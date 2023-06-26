@@ -8,7 +8,7 @@ export default function MainLayout() {
   return (
     <div className={styles.main_layout}>
       <Header />
-      <section className={styles.content}>
+      <section>
         <Outlet />
       </section>
       <Footer />

@@ -3,17 +3,18 @@
 
 .aboutProject {
   padding: 100px 130px 140px;
+  margin: 0 auto;
   max-width: 1440px;
   width: 100%;
-  background-color: black;
+  background-color: $black;
   &_title {
-    @include font-source-sans(50px, $white, 900);
+    @include font-source-sans(50px, $white, 900, 62px, 'Rubik Mono One');
     text-align: left;
     margin-bottom: 52px;
   }
 
   &_subtitle {
-    @include font-source-sans(28px, $white, 600);
+    @include font-source-sans(28px, $white, 600, 32px);
     text-align: left;
     margin-bottom: 44px;
   }
@@ -26,8 +27,8 @@
     gap: 40px;
   }
   &_item {
-    border: 2px solid #D7FC52;
-    border-radius: 10px;
+    border: 1px solid $green ;
+    border-radius: 8px;
     padding: 40px;
     width: 100%;
     display: flex;
@@ -62,12 +63,12 @@
   }
 
   &_titleItem {
-    @include font-source-sans(32px, $white, 900);
+    @include font-source-sans(32px, $white, 700, 36px);
     text-align: start;
     margin-bottom: 20px;
   }
   &_description {
-    @include font-source-sans(28px, $white, 600);
+    @include font-source-sans(28px, $white, 400, 32px);
     text-align: start;
   }
 }
