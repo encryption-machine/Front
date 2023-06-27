@@ -3,46 +3,52 @@
 
 .header {
   position: fixed;
-  padding: 30px 0 20px 0;
+  padding: 0;
   z-index: 5;
   top: 0;
   left: 0;
   width: 100%;
-  border-bottom: 2px solid $grey_dark;
+  height: 80px;
+  background-color: $black;
 }
 
 .header_container {
-  max-width: 1140px;
+  max-width: calc(100% - 130px * 2);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr min-content;
+  grid-template-columns: repeat(3, 1fr);
   justify-content: space-between;
   align-items: center;
-  gap: 60px;
 
   ul {
     margin: 0;
     padding: 0;
     list-style: none;
     display: flex;
-    justify-content: space-between;
+  }
+
+  li {
+    padding-right: 32px;
+    text-align: center;
+  }
+
+  li:last-of-type {
+    padding-right: 0;
   }
 
   a {
     text-decoration: none;
-    color: black;
+    @include font-source-sans(18px, $white, 500, 20px);
     font-style: normal;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 22px;
   }
   a:hover {
-    text-decoration: underline;
+    color: $green;
   }
-}
 
-.logo {
-  @include font-source-sans(30px, $black, 900);
+  img {
+    height: 80px;
+    width: 80px;
+  }
 }
 
 .entrance {
@@ -58,52 +64,15 @@
 
   button {
     height: 24px;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 22px;
+    @include font-source-sans(18px, $white, 500, 20px);
     background-color: transparent;
     cursor: pointer;
     border: none;
     padding: 0;
     margin: 0;
   }
-}
 
-.userInfo {
-  background-color: #ebebeb;
-  border-radius: 14px;
-  width: 302px;
-  height: 88px;
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  position: absolute;
-  right: 0;
-  top: 55px;
-  display: none !important;
-
-  hr {
-    color: #aeadad;
-    size: 1px;
-    width: 100%;
+  button:hover {
+    color: $green;
   }
-  span {
-    padding: 0 0 0 16px;
-  }
-  button {
-    padding: 0 0 0 16px;
-  }
-}
-
-.entrance:hover .userInfo {
-  display: flex !important;
-  flex-direction: column;
-  align-items: flex-start !important;
-  justify-content: center;
-}
-
-.img {
-  margin-left: 8px;
-  height: 32px;
-  width: 32px;
 }
