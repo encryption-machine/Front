@@ -3,40 +3,51 @@
 
 .machine {
   padding-top: 180px;
+  padding-bottom: 140px;
+  background-color: $grey_light;
+  &__button{
+    width: 300px;
+  }
+}
+.content{
+  width: 1140px;
+  margin: 0 auto;
   display: grid;
-  gap: 15px 20px;
+  gap: 20px 20px;
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
 }
 .switch {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 .tab {
   background: none;
-  @include font-source-sans(16px, $black, 600, 19px);
+  @include font-source-sans(18px, $black, 700, 20px);
   border-radius: 0;
   border: none;
   cursor: pointer;
+  display: flex;
+  height: 48px;
+  align-items: center;
+  padding: 0 12px;
   &Active {
-    border-bottom: 1px solid $black;
+    color: $violet;
   }
 }
 .select {
   position: relative;
   display: block;
   &__title {
-    width: 316px;
+    width: 380px;
     height: 40px;
     padding: 0 12px;
-    @include font-source-sans(16px, $black, 600, 19px);
-    background: $background_select;
-    border: 1.5px solid $black;
+    @include font-source-sans(16px, $violet, 600, 20px);
+    border-bottom: 1.5px solid $violet;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 5px;
     cursor: pointer;
   }
   &__icon {
@@ -53,16 +64,16 @@
     transition: 0.5s ease-in;
     overflow: hidden;
     z-index: 3;
-    border-radius: 0 0 5px 5px;
   }
   &__list {
-    width: 316px;
+    width: 380px;
     display: grid;
     align-items: flex-start;
     padding: 0;
     margin: 0;
-    border: 1.5px solid $black;
+    border: 1.5px solid $violet;
     border-top: 0;
+    box-sizing: border-box;
     li {
       list-style-type: none;
       height: 40px;
@@ -70,11 +81,15 @@
       align-items: center;
       justify-content: flex-start;
       padding: 0 12px;
-      background: $background_select;
-      border-top: 1.5px solid $black;
+      background: $white;
+      // border-top: 1.5px solid $black;
       cursor: pointer;
+      @include font-source-sans(16px, $grey_dark, 600, 20px);
       &:first-child {
         border-top: 0;
+      }
+      &:last-child {
+        border-bottom: 1.5px solid $violet;
       }
     }
   }
@@ -95,27 +110,32 @@
   width: 100% !important;
   height: 250px !important;
   padding: 20px;
-  background: $background_text;
-  border-radius: 20px;
+  background: $white;
+  // border-radius: 20px;
   resize: none;
   border: none;
   @include font-source-sans(16px, $grey_light, 600, 19px);
+  &:focus-visible {
+    outline: none;
+    border: 1.5px solid $violet;
+    border-radius: 8px;
+  }
 }
 .copy {
   &__cont {
     position: relative;
-    border-radius: 20px;
+    border-radius: 8px;
     overflow: hidden;
   }
   &__button {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 12px;
+    left: 12px;
     border: none;
     cursor: pointer;
     color: $grey_secondary;
     z-index: 3;
-    background-color: $background_text;
+    background-color: $white;
     svg {
       stroke: currentColor;
     }
@@ -142,3 +162,10 @@
   justify-content: flex-start;
   gap: 0 20px;
 }
+.count{
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  color: $grey_dark;
+}
+
