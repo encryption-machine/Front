@@ -2,14 +2,16 @@
 @import '../../styles/mixins';
 
 .appButton {
+  width: 100%;
   height: 44px;
   @include font-source-sans(16px, $white, 600, 19px);
-  background-color: $black;
+  background-color: $green_light;
   border: none;
   border-radius: 8px;
   padding: 0 25px;
   cursor: pointer;
   box-sizing: border-box;
+  color: $black;
 
   &:disabled {
     cursor: default;
@@ -22,8 +24,8 @@
   }
 
   &__outlined {
-    background: none;
-    border: 1.5px solid $grey_light;
-    color: $grey_light;
+    background: $white;
+    border: 1.5px solid $green_light;
+    color: $black;
   }
 }
