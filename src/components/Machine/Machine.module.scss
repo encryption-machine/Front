@@ -4,7 +4,7 @@
 .machine {
   padding-top: 180px;
   padding-bottom: 140px;
-  background-color: $grey_light;
+  background-color: $gray_light;
   &__button{
     width: 300px;
   }
@@ -84,7 +84,7 @@
       background: $white;
       // border-top: 1.5px solid $black;
       cursor: pointer;
-      @include font-source-sans(16px, $grey_dark, 600, 20px);
+      @include font-source-sans(16px, $gray_dark, 600, 20px);
       &:first-child {
         border-top: 0;
       }
@@ -114,7 +114,7 @@
   // border-radius: 20px;
   resize: none;
   border: none;
-  @include font-source-sans(16px, $grey_light, 600, 19px);
+  @include font-source-sans(16px, $gray_light, 600, 19px);
   &:focus-visible {
     outline: none;
     border: 1.5px solid $violet;
@@ -133,7 +133,7 @@
     left: 12px;
     border: none;
     cursor: pointer;
-    color: $grey_secondary;
+    color: $gray_secondary;
     z-index: 3;
     background-color: $white;
     svg {
@@ -166,6 +166,6 @@
   position: absolute;
   bottom: 12px;
   left: 12px;
-  color: $grey_dark;
+  color: $gray_dark;
 }
 
