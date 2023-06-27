@@ -8,7 +8,7 @@
   width: 100%;
   background-color: $black;
   &_title {
-    @include font-source-sans(50px, $white, 900, 62px, 'Rubik Mono One');
+    @include font-source-sans(50px, $white, 400, 62px, 'Rubik Mono One');
     text-align: left;
     margin-bottom: 52px;
   }
