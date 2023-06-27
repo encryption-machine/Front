@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Modal from '../Modal/Modal';
 import AuthTabs from '../AuthTabs/AuthTabs';
 import styles from './Header.module.scss';
+import logotype from '../../assets/icons/logotype.svg';
 
 export const Header = () => {
   //const [loggedIn, setLoggedIn] = useState(false);
@@ -24,7 +25,7 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
-        <div className={styles.logo}>Шифровальная машина</div>
+        <img className={styles.logotype} src={logotype} alt="logo" />
         <nav>
           <ul>
             <li>
@@ -70,6 +71,7 @@ export const Header = () => {
           </button>
           <Modal isOpen={modalOpen} setIsOpen={setModalOpen}><AuthTabs/></Modal>
           <div className="icon-user"></div>
+
         </div>
       </div>
     </header>

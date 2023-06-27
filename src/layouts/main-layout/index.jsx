@@ -1,4 +1,3 @@
-
 import styles from './main-layout.module.scss';
 import { Footer } from '../../components/Footer/Footer';
 import { Header } from '../../components/Header/Header';
@@ -8,7 +7,7 @@ export default function MainLayout() {
   return (
     <div className={styles.main_layout}>
       <Header />
-      <section className={styles.content}>
+      <section>
         <Outlet />
       </section>
       <Footer />
