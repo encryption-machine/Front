@@ -4,7 +4,7 @@
 .machine {
   padding-top: 180px;
   padding-bottom: 140px;
-  background-color: $grey_bgc;
+  background-color: $grey_light;
   &__button{
     width: 300px;
   }
@@ -24,7 +24,7 @@
 }
 .tab {
   background: none;
-  @include font-source-sans(16px, $violet, 700, 19px);
+  @include font-source-sans(18px, $black, 700, 20px);
   border-radius: 0;
   border: none;
   cursor: pointer;
@@ -33,7 +33,7 @@
   align-items: center;
   padding: 0 12px;
   &Active {
-    color:$black;
+    color: $violet;
   }
 }
 .select {
@@ -43,8 +43,8 @@
     width: 380px;
     height: 40px;
     padding: 0 12px;
-    @include font-source-sans(16px, $grey_dark, 600, 19px);
-    border-bottom: 1.5px solid $grey_dark;
+    @include font-source-sans(16px, $violet, 600, 20px);
+    border-bottom: 1.5px solid $violet;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -71,8 +71,9 @@
     align-items: flex-start;
     padding: 0;
     margin: 0;
-    border: 1.5px solid $black;
+    border: 1.5px solid $violet;
     border-top: 0;
+    box-sizing: border-box;
     li {
       list-style-type: none;
       height: 40px;
@@ -80,11 +81,15 @@
       align-items: center;
       justify-content: flex-start;
       padding: 0 12px;
-      background: $background_select;
-      border-top: 1.5px solid $black;
+      background: $white;
+      // border-top: 1.5px solid $black;
       cursor: pointer;
+      @include font-source-sans(16px, $grey_dark, 600, 20px);
       &:first-child {
         border-top: 0;
+      }
+      &:last-child {
+        border-bottom: 1.5px solid $violet;
       }
     }
   }
@@ -106,15 +111,20 @@
   height: 250px !important;
   padding: 20px;
   background: $white;
-  border-radius: 20px;
+  // border-radius: 20px;
   resize: none;
   border: none;
   @include font-source-sans(16px, $grey_light, 600, 19px);
+  &:focus-visible {
+    outline: none;
+    border: 1.5px solid $violet;
+    border-radius: 8px;
+  }
 }
 .copy {
   &__cont {
     position: relative;
-    border-radius: 20px;
+    border-radius: 8px;
     overflow: hidden;
   }
   &__button {

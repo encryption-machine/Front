@@ -8,6 +8,7 @@ import React, {
 import { copyToClipboard } from '../../helpers';
 import { AppButton } from '../AppButton/AppButton';
 import styles from './Machine.module.scss';
+import CopyMark from '../CopyMark/CopyMark';
 
 export const Machine = ({ list }) => {
   const [current, setCurrent] = React.useState('encryption');
@@ -173,7 +174,8 @@ export const Machine = ({ list }) => {
             onClick={copyCode}
             className={styles.copy__button}
           >
-            <div className="icon-copy"></div>
+            {/* <div className="icon-copy"></div> */}
+            <CopyMark/>
             {/* <Copy /> */}
           </button>
         </div>
