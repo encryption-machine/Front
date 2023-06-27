@@ -1,0 +1,9 @@
+@import '../../styles/colors.scss';
+
+.authTabs {
+  &__content {
+    display: flex;
+    justify-content: center;
+    background: $violet;
+  }
+}
