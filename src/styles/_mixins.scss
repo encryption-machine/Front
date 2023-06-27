@@ -2,9 +2,10 @@
   $size: false,
   $colour: false,
   $weight: false,
-  $lh: false
+  $lh: false,
+  $ff: false
 ) {
-  font-family: 'Inter', 'Glyphter', 'Arial', sans-serif;
+  font-family: 'Inter', 'Rubik Mono One', 'Glyphter', 'Arial', sans-serif;
   @if $size {
     font-size: $size;
   }
@@ -16,5 +17,8 @@
   }
   @if $lh {
     line-height: $lh;
+  }
+  @if $ff {
+    font-family: $ff;
   }
 }
