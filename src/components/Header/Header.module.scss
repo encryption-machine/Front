@@ -50,11 +50,6 @@
   a:hover {
     color: $green;
   }
-
-  img {
-    height: 80px;
-    width: 80px;
-  }
 }
 
 .entrance {
@@ -68,7 +63,7 @@
     align-items: center;
   }
 
-  button {
+  .button_header {
     height: 24px;
     @include font-source-sans(18px, $white, 500, 20px);
     background-color: transparent;
@@ -78,7 +73,7 @@
     margin: 0;
   }
 
-  button:hover {
+  .button_header:hover {
     color: $green;
   }
 }
