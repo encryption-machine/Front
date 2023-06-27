@@ -2,32 +2,61 @@
 @import '../../styles/mixins';
 
 .aboutCiphers {
+  background-color: $violet;
+  padding: 100px 130px 140px;
   &_title {
-    @include font-source-sans(38px, $black, 900);
-    margin-bottom: 46px;
+    @include font-source-sans(52px, $white, 400, 62px, 'Rubik Mono One');
+    margin-bottom: 52px;
     text-align: left;
   }
 
+  &_ciphers {
+    list-style-type: none;
+  }
+
   &_cipher {
-    display: grid;
-    grid-template-columns: minmax(100px, 1fr) minmax(200px, 72%);
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid $border;
-    &:last-child {
-      border: none;
+    gap: 35px;
+    border-bottom: 1px solid $green;
+    padding: 12px 0;
+    margin-top: 40px;
+/*     &:first-of-type {
+      margin-top: 0;
+    } */
+
+    &_svg {
+      width: 80px;
+      height: 80px;
     }
+  }
+  ul {
+    margin: 0;
+    padding: 0;
   }
 
   &_name {
-    @include font-source-sans(30px, $black, 800);
-    max-width: 367px;
-    text-align: initial;
+    @include font-source-sans(32px, $white, 700, 36px);
+    margin-right: auto;
+  }
+
+  &_img {
+    content: '\0042';
+    font-family: 'Glyphter';
   }
 
   &_description {
-    @include font-source-sans(24px, $black, 600);
+    @include font-source-sans(28px, $white, 600, 32px);
     text-align: initial;
-    padding: 20px 0 20px 20px;
-    border-left: 2px solid $border;
+    overflow: hidden;
+    max-height: 0;
+
+    &_show {
+      margin-top: 20px;
+      @include font-source-sans(28px, $white, 600, 32px);
+      text-align: initial;
+      transition: all 0.5s;
+    }
   }
 }
