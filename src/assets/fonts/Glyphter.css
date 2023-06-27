@@ -23,14 +23,10 @@
 
 .icon-check::before {
   content: 'A';
-  background-color: $background_select;
-  height: 20px;
 }
 
 .icon-copy::before {
   content: 'B';
-  background-color: $background_text;
-  height: 20px;
   box-sizing: border-box;
 }
 
