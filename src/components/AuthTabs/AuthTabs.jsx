@@ -5,23 +5,34 @@ import SignUpForm from '../SignUpForm/SignUpForm';
 import style from './AuthTabs.module.scss';
 
 const AuthTabs = () => {
-  const tabs = [
+  const tabsBar = [
     { id: '1', label: 'Войти' },
     { id: '2', label: 'Зарегистрироваться' },
   ];
 
-  const [selectedTabId, setSelectedTabId] = useState(tabs[0].id);
+  const propStyles = {
+    //tabs: '',
+    bar: [style.tab, { selected: '' }],
+    label: [style.tabLabel, { selected: style.tabLabel__selected }],
+  };
+
+  const [selectedTabId, setSelectedTabId] = useState(tabsBar[0].id);
 
   const handleTabClick = (id) => {
     setSelectedTabId(id);
   };
 
   return (
-    <section className="AuthTabs">
-      <Tabs selectedId={selectedTabId} tabs={tabs} onClick={handleTabClick} />
+    <section>
+      <Tabs
+        className={propStyles}
+        selectedId={selectedTabId}
+        tabs={tabsBar}
+        onClick={handleTabClick}
+      />
       <div className={style.authTabs__content}>
-        {selectedTabId === tabs[0].id && <SignInForm />}
-        {selectedTabId === tabs[1].id && <SignUpForm />}
+        {selectedTabId === tabsBar[0].id && <SignInForm />}
+        {selectedTabId === tabsBar[1].id && <SignUpForm />}
       </div>
     </section>
   );
