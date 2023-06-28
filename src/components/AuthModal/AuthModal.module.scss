@@ -30,18 +30,19 @@
 
 .close {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 10px;
-  height: 10px;
+  top: 24px;
+  right: 34px;
+  width: 20px;
+  height: 20px;
   background: transparent;
+  cursor: pointer;
   border: none;
   &::after,
   &::before {
     content: '';
     position: absolute;
-    top: 24px;
-    right: 34px;
+    top: 0;
+    left: 10px;
     height: 20px;
     width: 1px;
     background-color: $white;

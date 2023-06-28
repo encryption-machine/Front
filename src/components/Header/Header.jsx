@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import Modal from '../Modal/Modal';
-import AuthTabs from '../AuthTabs/AuthTabs';
+import AuthModal from '../AuthModal/AuthModal';
 import styles from './Header.module.scss';
 import logotype from '../../assets/icons/logotype.svg';
 
@@ -14,7 +13,7 @@ export const Header = () => {
   // const handleLogout = () => {
   //  setLoggedIn(false);
   // };
-  
+
   const [modalOpen, setModalOpen] = useState(false);
 
   const scrollToSection = (id) => {
@@ -66,12 +65,15 @@ export const Header = () => {
               </button>
             </div>
           )} */}
-          <button className={styles.button_header}type="button" onClick={setModalOpen}>
+          <button
+            className={styles.button_header}
+            type="button"
+            onClick={setModalOpen}
+          >
             Войти
           </button>
-          <Modal isOpen={modalOpen} setIsOpen={setModalOpen}><AuthTabs/></Modal>
+          <AuthModal isOpen={modalOpen} setIsOpen={setModalOpen} />
           {/* <div className="icon-user"></div> */}
-
         </div>
       </div>
     </header>
