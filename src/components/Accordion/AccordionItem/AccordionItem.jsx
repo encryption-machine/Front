@@ -3,7 +3,7 @@ import SvgSelector from '../../SvgSelector/SvgSelector';
 import CheckMark from '../../CheckMark/CheckMark';
 import styles from './AccordionItem.module.scss';
 
-export default function accordionItem({
+export default function AccordionItem({
   id,
   name,
   description,
