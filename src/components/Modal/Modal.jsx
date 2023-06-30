@@ -1,19 +1,40 @@
 import React from 'react';
-import cn from 'classnames';
-import style from './Modal.module.scss';
 
-const Modal = ({ isOpen, setIsOpen, children }) => {
+const Overlay = ({ onClose, children, ...props }) => {
+  const handleIsOpen = () => onClose(false);
   return (
-    <div
-      className={isOpen ? cn(style.overlay, style.active) : style.overlay}
-      onClick={() => setIsOpen(false)}
-    >
-      <div className={style.modal} onClick={(e) => e.stopPropagation()}>
-        {children}
-        <button className={style.close} onClick={() => setIsOpen(false)} />
-      </div>
+    <div {...props} onClick={handleIsOpen}>
+      {children}
     </div>
   );
 };
 
-export default Modal;
+const Window = ({ children, ...props }) => {
+  const handleStopPropagation = (e) => e.stopPropagation();
+  return (
+    <section {...props} onClick={handleStopPropagation}>
+      {children}
+    </section>
+  );
+};
+
+const CloseButton = ({ onClose, children, ...props }) => {
+  const handleIsOpen = () => onClose(false);
+  return (
+    <button {...props} onClick={handleIsOpen}>
+      {children}
+    </button>
+  );
+};
+
+let window = Window;
+let overlay = Overlay;
+let close = CloseButton;
+
+export let Modal = Object.assign(
+  { window },
+  {
+    overlay,
+    close,
+  }
+);
