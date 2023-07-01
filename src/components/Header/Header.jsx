@@ -4,16 +4,6 @@ import styles from './Header.module.scss';
 import logotype from '../../assets/icons/logotype.svg';
 
 export const Header = () => {
-  // const [loggedIn, setLoggedIn] = useState(false);
-
-  // const handleLogin = () => {
-  //  setLoggedIn(true);
-  // };
-
-  // const handleLogout = () => {
-  //  setLoggedIn(false);
-  // };
-
   const [modalOpen, setModalOpen] = useState(false);
 
   const scrollToSection = (id) => {
@@ -51,20 +41,6 @@ export const Header = () => {
           </ul>
         </nav>
         <div className={styles.entrance}>
-          {/* скорее всего заменить кнопки на Link, когда будут страницы регистрации и авторизации */}
-          {/* {!loggedIn ? (
-            <button type="button" onClick={handleLogin}>
-              Войти
-            </button>
-          ) : (
-            <div className={styles.userInfo}>
-              <span>mail@mail.ru</span>
-              <hr />
-              <button type="button" onClick={handleLogout}>
-                Выйти
-              </button>
-            </div>
-          )} */}
           <button
             className={styles.button_header}
             type="button"
@@ -73,7 +49,6 @@ export const Header = () => {
             Войти
           </button>
           <AuthModal isOpen={modalOpen} setIsOpen={setModalOpen} />
-          {/* <div className="icon-user"></div> */}
         </div>
       </div>
     </header>
