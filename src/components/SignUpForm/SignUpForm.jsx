@@ -3,6 +3,7 @@ import AuthForms from '../AuthForms/AuthForms';
 import cn from 'classnames';
 import { nanoid } from 'nanoid';
 import useInputValidation from '../../hooks/useInputValidation';
+import { secretWordRegExp } from '../../constants/regExp';
 import viewPassword from '../../assets/icons/view.svg';
 import hidePassword from '../../assets/icons/hide.svg';
 import style from '../AuthForms/AuthForms.module.scss';
@@ -65,8 +66,7 @@ const SignUpForm = () => {
 
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const regExp =
-    /^[^\s<>()[\]\\.,;:@'\-+=*&?/^!#$№`~|"0-9]*[a-zA-Zа-яА-Я]+[^\s<>()[\]\\.,;:@'\-+=*&?/^!#$№`~|"0-9]*$/;
+  const regExp = secretWordRegExp;
 
   const passwordInput = useInputValidation({
     checkInputIsEmpty: passwordsValue.firstPassword,

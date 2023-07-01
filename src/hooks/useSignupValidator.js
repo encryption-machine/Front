@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable default-case */
 import { useEffect, useState } from 'react';
+import { emailRegExp, specialCharRegExp } from '../constants/regExp';
 
 const useSignupValidator = ({
   password = '',
@@ -59,8 +60,7 @@ const useSignupValidator = ({
 
     numberCheck && setIsNumber(/\d/.test(password));
 
-    specialCharCheck &&
-      setSpecialChar(/[ `!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/.test(password));
+    specialCharCheck && setSpecialChar(specialCharRegExp.test(password));
 
     setMatch(password && password === confirmPassword);
   }, [
@@ -78,12 +78,7 @@ const useSignupValidator = ({
   ]);
 
   useEffect(() => {
-    email &&
-      setIsEmailValid(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-          String(email).toLowerCase()
-        )
-      );
+    email && setIsEmailValid(emailRegExp.test(String(email).toLowerCase()));
   }, [isEmailValid, email]);
 
   useEffect(() => {
