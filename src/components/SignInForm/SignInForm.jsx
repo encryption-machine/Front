@@ -83,8 +83,15 @@ const SignInForm = () => {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setEmail('');
+    setPassword('');
+    setFormValid(false);
+  };
+
   return (
-    <AuthForms>
+    <AuthForms onSubmit={handleSubmit}>
       <div
         className={
           emailDirty && emailError
@@ -105,7 +112,6 @@ const SignInForm = () => {
       {emailDirty && emailError && (
         <span className={style.hintError}>{emailError}</span>
       )}
-
       <div
         className={
           passwordDirty && passwordError

@@ -10,7 +10,7 @@ import style from '../AuthForms/AuthForms.module.scss';
 import styleLocal from './SignUpForm.module.scss';
 
 const SignUpForm = () => {
-  const [secretWord, setSecretWord] = useState('');
+  const [secretWordValue, setSecretWordValue] = useState('');
 
   // Set values
   const [passwordsValue, setPasswordsValue] = useState({
@@ -61,7 +61,7 @@ const SignUpForm = () => {
   };
 
   const handleSecretWordValue = (e) => {
-    setSecretWord(e.target.value);
+    setSecretWordValue(e.target.value);
   };
 
   const [isFormValid, setIsFormValid] = useState(false);
@@ -85,10 +85,10 @@ const SignUpForm = () => {
   });
 
   const secretWordInput = useInputValidation({
-    checkInputIsEmpty: secretWord,
+    checkInputIsEmpty: secretWordValue,
     custom: {
       regExp: regExp,
-      value: secretWord,
+      value: secretWordValue,
     },
     length: { min: 3, max: 4 },
   });
@@ -174,15 +174,26 @@ const SignUpForm = () => {
     passwordInput.isMatch,
   ]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setEmailValue('');
+    setPasswordsValue({
+      firstPassword: '',
+      secondPassword: '',
+    });
+    setSecretWordValue('');
+    setIsFormValid(false);
+  };
+
   return (
-    <AuthForms>
+    <AuthForms onSubmit={handleSubmit}>
       <div onBlur={(e) => emailInput.onBlur(e)} className={style.inputs}>
         <input
           className={style.input}
           name="email"
           type="text"
           placeholder="E-mail"
-          value={passwordInput.email}
+          value={emailValue}
           onChange={handleEmailValue}
         />
       </div>
@@ -222,7 +233,7 @@ const SignUpForm = () => {
           name="password"
           type={showPassword}
           placeholder="Пароль"
-          value={passwordInput.password}
+          value={passwordsValue.firstPassword}
           onChange={handleFirstPasswordValue}
         />
 
@@ -248,7 +259,7 @@ const SignUpForm = () => {
       !passwordInput.isPasswordInputValid &&
       !passwordInput.isEmpty ? (
         <div className={cn(style.hintError, style.hintError__wrap)}>
-          {passwordValidError.map(function (error) {
+          {passwordValidError.map((error) => {
             return (
               <ul key={nanoid()} className={style.hintError__list}>
                 {error.list_title}
@@ -273,7 +284,7 @@ const SignUpForm = () => {
           name="confirmPassword"
           type={showConfirmPassword}
           placeholder="Еще раз пароль"
-          value={passwordInput.confirmPassword}
+          value={passwordsValue.secondPassword}
           onChange={handleSecondPasswordValue}
         />
 
@@ -310,7 +321,7 @@ const SignUpForm = () => {
       >
         <input
           placeholder="Секретное слово"
-          value={secretWordInput.value}
+          value={secretWordValue}
           onChange={handleSecretWordValue}
         />
       </div>
