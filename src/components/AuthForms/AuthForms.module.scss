@@ -41,17 +41,28 @@
     & input {
       color: $red;
     }
-    &::after {
-      content: 'Hint';
+    &_email::after,
+    &_password::after,
+    &_dafault::after {
       color: $red;
       font-size: 12px;
       font-weight: 700;
       background: $white;
       border-radius: 4px;
-      padding: 0px 4px;
+      padding: 1px 5px;
       position: absolute;
       left: 8px;
       top: -8px;
+    }
+    &_email::after {
+      content: 'Логин';
+    }
+    &_password::after {
+      content: 'Пароль';
+    }
+    &_dafault::after {
+      content: 'Hint';
+      color: $violet;
     }
   }
 }

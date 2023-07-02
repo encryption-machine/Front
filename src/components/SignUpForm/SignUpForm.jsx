@@ -25,7 +25,15 @@ const SignUpForm = () => {
   const [emailEmptyError, setEmailEmptyError] = useState('');
   const [secretWordEmptyError, setSecretWordEmptyError] = useState('');
   const [secretWordValidError, setSecretWordValidError] = useState('');
-  const [emailValidError, setEmailValidError] = useState([]);
+  const emailValidError = [
+    {
+      error_title: 'Недопустимые символы.',
+      list_title: 'Допустимые символы:',
+      item_1: 'цифры',
+      item_2: 'латинские буквы',
+      item_3: '«_», «-», «@» и «.»',
+    },
+  ];
   const [firstPasswordError, setFirstPasswordError] = useState('');
   const [secondPasswordError, setSecondPasswordError] = useState('');
   const [passwordValidError, setPasswordValidError] = useState([]);
@@ -131,17 +139,6 @@ const SignUpForm = () => {
     secretWordInput.isDirty && secretWordInput.isEmpty
       ? setSecretWordEmptyError('Поле "Секретное слово" не может быть пустым')
       : setSecretWordEmptyError('');
-    emailInput.isEmailValid
-      ? setEmailValidError('')
-      : setEmailValidError([
-          {
-            error_title: 'Недопустимые символы.',
-            list_title: 'Допустимые символы:',
-            item_1: 'цифры',
-            item_2: 'латинские буквы',
-            item_3: '«_», «-», «@» и «.»',
-          },
-        ]);
     secretWordInput.isCustomValid
       ? setSecretWordValidError('')
       : setSecretWordValidError(

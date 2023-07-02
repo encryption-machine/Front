@@ -17,7 +17,14 @@ export const EmailInput = ({
 }) => {
   return (
     <>
-      <div onBlur={onBlur} className={style.inputs}>
+      <div
+        onBlur={onBlur}
+        className={
+          (isDirty && isEmpty) || (isDirty && !isEmailValid)
+            ? cn(style.inputs, style.inputs__hint_email)
+            : style.inputs
+        }
+      >
         <input
           className={style.input}
           name="email"
@@ -78,7 +85,15 @@ export const PasswordInput = ({
       <div
         onBlur={onBlur}
         onFocus={onFocus}
-        className={cn(styleLocal.input__password, style.inputs)}
+        className={
+          (isDirty && isEmpty) || (isDirty && !isPasswordInputValid)
+            ? cn(
+                style.inputs,
+                style.inputs__hint_password,
+                styleLocal.input__password
+              )
+            : cn(styleLocal.input__password, style.inputs)
+        }
       >
         <input
           className={style.input}
@@ -145,7 +160,15 @@ export const ConfirmPasswordInput = ({
       <div
         onBlur={onBlur}
         onFocus={onFocus}
-        className={cn(styleLocal.input__password, style.inputs)}
+        className={
+          (isDirty && isEmpty) || (isDirty && !isMatch)
+            ? cn(
+                style.inputs,
+                style.inputs__hint_password,
+                styleLocal.input__password
+              )
+            : cn(styleLocal.input__password, style.inputs)
+        }
       >
         <input
           className={style.input}
@@ -192,7 +215,19 @@ export const SecretWordInput = ({
 }) => {
   return (
     <>
-      <div onBlur={onBlur} onFocus={onFocus} className={style.inputs}>
+      <div
+        onBlur={onBlur}
+        onFocus={onFocus}
+        className={
+          (isDirty && isEmpty) || (isDirty && !isCustomValid)
+            ? cn(
+                style.inputs,
+                style.inputs__hint_dafault,
+                styleLocal.input__password
+              )
+            : cn(styleLocal.input__password, style.inputs)
+        }
+      >
         <input
           placeholder="Секретное слово"
           value={value}

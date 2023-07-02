@@ -13,7 +13,15 @@ const SignInForm = () => {
 
   // errors
   const [emailEmptyError, setEmailEmptyError] = useState('');
-  const [emailValidError, setEmailValidError] = useState([]);
+  const emailValidError = [
+    {
+      error_title: 'Недопустимые символы.',
+      list_title: 'Допустимые символы:',
+      item_1: 'цифры',
+      item_2: 'латинские буквы',
+      item_3: '«_», «-», «@» и «.»',
+    },
+  ];
   const [firstPasswordError, setFirstPasswordError] = useState('');
   const [passwordValidError, setPasswordValidError] = useState([]);
 
@@ -65,17 +73,17 @@ const SignInForm = () => {
     emailInput.isDirty && emailInput.isEmpty
       ? setEmailEmptyError('Поле "E-mail" не может быть пустым')
       : setEmailEmptyError('');
-    emailInput.isEmailValid
-      ? setEmailValidError('')
-      : setEmailValidError([
-          {
-            error_title: 'Недопустимые символы.',
-            list_title: 'Допустимые символы:',
-            item_1: 'цифры',
-            item_2: 'латинские буквы',
-            item_3: '«_», «-», «@» и «.»',
-          },
-        ]);
+    //emailInput.isEmailValid
+    //  ? setEmailValidError('')
+    //  : setEmailValidError([
+    //      {
+    //        error_title: 'Недопустимые символы.',
+    //        list_title: 'Допустимые символы:',
+    //        item_1: 'цифры',
+    //        item_2: 'латинские буквы',
+    //        item_3: '«_», «-», «@» и «.»',
+    //      },
+    //    ]);
     passwordInput.isPasswordInputValid
       ? setPasswordValidError('')
       : setPasswordValidError([
