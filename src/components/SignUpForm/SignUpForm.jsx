@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import AuthForms from '../AuthForms/AuthForms';
 import cn from 'classnames';
-import { nanoid } from 'nanoid';
 import useInputValidation from '../../hooks/useInputValidation';
+import {
+  EmailInput,
+  PasswordInput,
+  ConfirmPasswordInput,
+  SecretWordInput,
+} from '../AuthFormsInputs/AuthFormsInputs';
 import { secretWordRegExp } from '../../constants/regExp';
-import viewPassword from '../../assets/icons/view.svg';
-import hidePassword from '../../assets/icons/hide.svg';
 import style from '../AuthForms/AuthForms.module.scss';
-import styleLocal from './SignUpForm.module.scss';
 
 const SignUpForm = () => {
   const [secretWordValue, setSecretWordValue] = useState('');
@@ -174,8 +176,7 @@ const SignUpForm = () => {
     passwordInput.isMatch,
   ]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const resetForm = () => {
     setEmailValue('');
     setPasswordsValue({
       firstPassword: '',
@@ -185,163 +186,72 @@ const SignUpForm = () => {
     setIsFormValid(false);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    resetForm();
+  };
+
   return (
     <AuthForms onSubmit={handleSubmit}>
-      <div onBlur={(e) => emailInput.onBlur(e)} className={style.inputs}>
-        <input
-          className={style.input}
-          name="email"
-          type="text"
-          placeholder="E-mail"
-          value={emailValue}
-          onChange={handleEmailValue}
-        />
-      </div>
-      {emailInput.isDirty && emailInput.isEmpty ? (
-        <span className={style.hintError}>{emailEmptyError}</span>
-      ) : null}
-      {emailInput.isDirty && !emailInput.isEmailValid && !emailInput.isEmpty ? (
-        <>
-          {emailValidError.map((error) => {
-            return (
-              <div
-                className={cn(style.hintError, style.hintError__wrap)}
-                key={nanoid()}
-              >
-                <span className={style.hintError__title}>
-                  {error.error_title}
-                </span>
-                <ul className={style.hintError__list}>
-                  {error.list_title}
-                  <li className={style.hintError__item}>{error.item_1}</li>
-                  <li className={style.hintError__item}>{error.item_2}</li>
-                  <li className={style.hintError__item}>{error.item_3}</li>
-                </ul>
-              </div>
-            );
-          })}
-        </>
-      ) : null}
+      <EmailInput
+        value={emailValue}
+        onBlur={(e) => emailInput.onBlur(e)}
+        isDirty={emailInput.isDirty}
+        isEmpty={emailInput.isEmpty}
+        isEmailValid={emailInput.isEmailValid}
+        emptyError={emailEmptyError}
+        onChange={handleEmailValue}
+        emailValidError={emailValidError}
+      />
 
-      <div
-        onBlur={(e) => passwordInput.onBlur(e)}
-        onFocus={(e) => passwordInput.onFocus(e)}
-        className={cn(styleLocal.input__password, style.inputs)}
-      >
-        <input
-          className={style.input}
-          name="password"
-          type={showPassword}
-          placeholder="Пароль"
-          value={passwordsValue.firstPassword}
-          onChange={handleFirstPasswordValue}
-        />
+      <PasswordInput
+        value={passwordsValue.firstPassword}
+        onBlur={passwordInput.onBlur}
+        onClick={(e) => handleShowPassword(e)}
+        onFocus={passwordInput.onFocus}
+        isFocus={passwordInput.isFocus}
+        isDirty={passwordInput.isDirty}
+        isEmpty={passwordInput.isEmpty}
+        onChange={handleFirstPasswordValue}
+        passwordValidError={passwordValidError}
+        isPasswordInputValid={passwordInput.isPasswordInputValid}
+        emptyError={firstPasswordError}
+        showPassword={showPassword}
+        clickShowPassword={clickShowPassword}
+      />
 
-        <button
-          onBlur={(e) => passwordInput.onBlur(e)}
-          onFocus={(e) => passwordInput.onFocus(e)}
-          onClick={(e) => handleShowPassword(e)}
-          className={
-            !passwordInput.isFocus ? styleLocal.unfocused : styleLocal.focused
-          }
-        >
-          {clickShowPassword ? (
-            <img src={hidePassword} alt="" />
-          ) : (
-            <img src={viewPassword} alt="" />
-          )}
-        </button>
-      </div>
-      {passwordInput.isDirty && passwordInput.isEmpty ? (
-        <span className={style.hintError}>{firstPasswordError}</span>
-      ) : null}
-      {passwordInput.isDirty &&
-      !passwordInput.isPasswordInputValid &&
-      !passwordInput.isEmpty ? (
-        <div className={cn(style.hintError, style.hintError__wrap)}>
-          {passwordValidError.map((error) => {
-            return (
-              <ul key={nanoid()} className={style.hintError__list}>
-                {error.list_title}
-                <li className={style.hintError__item}>{error.item_1}</li>
-                <li className={style.hintError__item}>{error.item_2}</li>
-                <li className={style.hintError__item}>{error.item_3}</li>
-                <li className={style.hintError__item}>{error.item_4}</li>
-                <li className={style.hintError__item}>{error.item_5}</li>
-              </ul>
-            );
-          })}
-        </div>
-      ) : null}
+      <ConfirmPasswordInput
+        value={passwordsValue.secondPassword}
+        onBlur={confirmPasswordInput.onBlur}
+        onClick={(e) => handleShowConfirmPassword(e)}
+        onFocus={confirmPasswordInput.onFocus}
+        isFocus={confirmPasswordInput.isFocus}
+        isDirty={confirmPasswordInput.isDirty}
+        isEmpty={confirmPasswordInput.isEmpty}
+        isMatch={passwordInput.isMatch}
+        onChange={handleSecondPasswordValue}
+        emptyError={secondPasswordError}
+        matchError={passwordsIsMatchError}
+        showPassword={showConfirmPassword}
+        clickShowPassword={clickShowConfirmPassword}
+      />
 
-      <div
-        onBlur={(e) => confirmPasswordInput.onBlur(e)}
-        onFocus={(e) => confirmPasswordInput.onFocus(e)}
-        className={cn(styleLocal.input__password, style.inputs)}
-      >
-        <input
-          className={style.input}
-          name="confirmPassword"
-          type={showConfirmPassword}
-          placeholder="Еще раз пароль"
-          value={passwordsValue.secondPassword}
-          onChange={handleSecondPasswordValue}
-        />
+      <SecretWordInput
+        value={secretWordValue}
+        onBlur={secretWordInput.onBlur}
+        onFocus={secretWordInput.onFocus}
+        isDirty={secretWordInput.isDirty}
+        isEmpty={secretWordInput.isEmpty}
+        onChange={handleSecretWordValue}
+        emptyError={secretWordEmptyError}
+        validError={secretWordValidError}
+        isCustomValid={secretWordInput.isCustomValid}
+      />
 
-        <button
-          onBlur={(e) => confirmPasswordInput.onBlur(e)}
-          onFocus={(e) => confirmPasswordInput.onFocus(e)}
-          onClick={(e) => handleShowConfirmPassword(e)}
-          className={
-            !confirmPasswordInput.isFocus
-              ? styleLocal.unfocused
-              : styleLocal.focused
-          }
-        >
-          {clickShowConfirmPassword ? (
-            <img src={hidePassword} alt="" />
-          ) : (
-            <img src={viewPassword} alt="" />
-          )}
-        </button>
-      </div>
-      {confirmPasswordInput.isDirty && confirmPasswordInput.isEmpty ? (
-        <span className={style.hintError}>{secondPasswordError}</span>
-      ) : null}
-      {!passwordInput.isMatch &&
-      confirmPasswordInput.isDirty &&
-      !confirmPasswordInput.isEmpty ? (
-        <span className={style.hintError}>{passwordsIsMatchError}</span>
-      ) : null}
-
-      <div
-        onBlur={(e) => secretWordInput.onBlur(e)}
-        onFocus={(e) => secretWordInput.onFocus(e)}
-        className={style.inputs}
-      >
-        <input
-          placeholder="Секретное слово"
-          value={secretWordValue}
-          onChange={handleSecretWordValue}
-        />
-      </div>
-      {secretWordInput.isDirty && secretWordInput.isEmpty ? (
-        <span className={style.hintError}>{secretWordEmptyError}</span>
-      ) : null}
-      {!secretWordInput.isCustomValid && !secretWordInput.isEmpty ? (
-        <span className={style.hintError}>{secretWordValidError}</span>
-      ) : null}
-      <span className={style.hintError}>
-        Секретное слово нужно для дальнейшей смены пароля
-      </span>
       <button
         onSubmit={(e) => e.preventDefault()}
         disabled={!isFormValid}
-        className={
-          !passwordInput.isMatch
-            ? cn(style.button, style.button__wrap)
-            : cn(style.button, style.button__wrap)
-        }
+        className={cn(style.button, style.button__wrap)}
         type="submit"
       >
         Зарегистрироваться

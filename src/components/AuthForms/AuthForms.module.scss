@@ -74,6 +74,13 @@
   }
 }
 
+.link {
+  color: $green !important;
+  background: $violet;
+  text-align: center;
+  margin-top: 8px;
+}
+
 .hintError {
   font-size: 16px;
   margin: 8px 0 0 0;

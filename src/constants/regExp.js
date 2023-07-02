@@ -5,3 +5,5 @@ export const secretWordRegExp =
   /^[^\s<>()[\]\\.,;:@'\-+=*&?/^!#$№`~|"0-9]*[a-zA-Zа-яА-Я]+[^\s<>()[\]\\.,;:@'\-+=*&?/^!#$№`~|"0-9]*$/;
 
 export const specialCharRegExp = /[ `!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/;
+
+export const numberRegExp = /\d/;

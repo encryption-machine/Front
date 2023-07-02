@@ -6,13 +6,13 @@ const useInputValidation = (validations) => {
   const [isFocus, setFocus] = useState(false);
   const valid = useSignupValidator(validations);
 
-  const onBlur = (e) => {
+  const onBlur = () => {
     setDirty(true);
     setFocus(false);
   };
 
-  const onFocus = (e) => {
-    setFocus(true);
+  const onFocus = (value) => {
+    setFocus(value);
   };
 
   return {

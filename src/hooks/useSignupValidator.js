@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable default-case */
 import { useEffect, useState } from 'react';
-import { emailRegExp, specialCharRegExp } from '../constants/regExp';
+import { emailRegExp, specialCharRegExp, numberRegExp } from '../constants/regExp';
 
 const useSignupValidator = ({
   password = '',
@@ -55,13 +55,9 @@ const useSignupValidator = ({
     }
 
     uppercaseCheck && setUpperCase(password.toLowerCase() !== password);
-
     lowercaseCheck && setLowerCase(password.toUpperCase() !== password);
-
-    numberCheck && setIsNumber(/\d/.test(password));
-
+    numberCheck && setIsNumber(numberRegExp.test(password));
     specialCharCheck && setSpecialChar(specialCharRegExp.test(password));
-
     setMatch(password && password === confirmPassword);
   }, [
     password,
