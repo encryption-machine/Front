@@ -9,7 +9,7 @@ export const Footer = () => {
             <a href="tel:8(800)234-12-36">8(800)234-12-36</a>
           </li>
           <li>
-            <a href="#" target="_blank">
+            <a href="#ciphers" target="_blank">
               Политика конфиденциальности
             </a>
           </li>
