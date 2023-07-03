@@ -7,12 +7,12 @@ export const ciphersInfo = [
     description:
       'Симметричное блочное шифрование, широко применяемое для защиты данных.',
   },
-  {
+/*   {
     id: nanoid(),
     name: 'DSA (Digital Signature Algorithm)',
     description:
       'Алгоритм цифровой подписи для проверки подлинности данных и обеспечения их целостности.',
-  },
+  }, */
   {
     id: nanoid(),
     name: 'Шифр Виженера',
