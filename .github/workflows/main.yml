@@ -44,7 +44,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ./frontend
+          context: ./
           # изменить тэг - уточнить правила нейминга
           tags: ${{ secrets.DOCKER_USERNAME }}/encryption_frontend:latest
 
