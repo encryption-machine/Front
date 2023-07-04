@@ -41,17 +41,28 @@
     & input {
       color: $red;
     }
-    &::after {
-      content: 'Hint';
+    &_email::after,
+    &_password::after,
+    &_dafault::after {
       color: $red;
       font-size: 12px;
       font-weight: 700;
       background: $white;
       border-radius: 4px;
-      padding: 0px 4px;
+      padding: 1px 5px;
       position: absolute;
       left: 8px;
       top: -8px;
+    }
+    &_email::after {
+      content: 'Логин';
+    }
+    &_password::after {
+      content: 'Пароль';
+    }
+    &_dafault::after {
+      content: 'Hint';
+      color: $violet;
     }
   }
 }
@@ -74,6 +85,13 @@
   }
 }
 
+.link {
+  color: $green !important;
+  background: $violet;
+  text-align: center;
+  margin-top: 8px;
+}
+
 .hintError {
   font-size: 16px;
   margin: 8px 0 0 0;
@@ -83,4 +101,25 @@
   text-align: start;
   font-weight: normal;
   padding: 0 12px 8px 12px;
+}
+
+.hintError__wrap {
+  display: flex !important;
+  flex-direction: column;
+}
+
+.hintError__title {
+  width: 100%;
+}
+
+.hintError__list {
+  width: 100%;
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.hintError__item {
+  list-style: disc;
+  margin-left: 28px;
 }
