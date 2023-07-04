@@ -5,11 +5,11 @@
   padding-top: 180px;
   padding-bottom: 140px;
   background-color: $gray_light;
-  &__button{
+  &__button {
     width: 300px;
   }
 }
-.content{
+.content {
   width: 1140px;
   margin: 0 auto;
   display: grid;
@@ -162,10 +162,9 @@
   justify-content: flex-start;
   gap: 0 20px;
 }
-.count{
+.count {
   position: absolute;
   bottom: 12px;
   left: 12px;
   color: $gray_dark;
 }
-

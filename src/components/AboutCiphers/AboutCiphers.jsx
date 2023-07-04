@@ -6,7 +6,7 @@ const AboutCiphers = () => {
   return (
     <section className={styles.aboutCiphers} id="aboutCiphers">
       <h2 className={styles.aboutCiphers_title}>О шифрах</h2>
-      <Accordion ciphersInfo={ciphersInfo}/>
+      <Accordion ciphersInfo={ciphersInfo} />
     </section>
   );
 };

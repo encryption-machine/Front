@@ -1,7 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable default-case */
 import { useEffect, useState } from 'react';
-import { emailRegExp, specialCharRegExp, numberRegExp } from '../constants/regExp';
+import {
+  emailRegExp,
+  specialCharRegExp,
+  numberRegExp,
+} from '../constants/regExp';
 
 const useSignupValidator = ({
   password = '',
