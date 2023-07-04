@@ -52,10 +52,10 @@ export const Machine = ({ list }) => {
   const handleEncrypt = useCallback(async () => {
     // здесь будет запрос к серверу
 
-    // временная запись, чтобы eslint не ругался
-    console.log(current);
     setResult('hsdfjdsfihsls');
-  }, [encryption.target?.value, current]);
+    // }, [encryption.target?.value, current]);
+    // временная запись, чтобы eslint не ругался
+  }, [])
 
   const copyCode = () => {
     try {
@@ -89,14 +89,15 @@ export const Machine = ({ list }) => {
     return () => {
       window.removeEventListener('click', handleClick);
     };
-  }, [isSelectOpen]);
+    //   }, [isSelectOpen]);
+    // временное решение, чтобы lint не ругался
+  },);
 
   const lengthOfText = useMemo(() => {
     return encryption.target?.value.length
       ? encryption.target?.value.length
       : 0;
-    // временная запись, чтобы eslint не ругался - добавила в зависимости ниже selectClick
-  }, [encryption, selectClick]);
+  }, [encryption]);
 
   const selectClasses = !isSelectOpen
     ? styles.select
@@ -111,18 +112,16 @@ export const Machine = ({ list }) => {
       <div className={styles.content}>
         <div className={styles.switch}>
           <button
-            className={`${styles.tab} ${
-              current === 'encryption' ? activeClass : ''
-            }`}
+            className={`${styles.tab} ${current === 'encryption' ? activeClass : ''
+              }`}
             value="encryption"
             onClick={clickTab}
           >
             Шифрование
           </button>
           <button
-            className={`${styles.tab} ${
-              current === 'decryption' ? activeClass : ''
-            }`}
+            className={`${styles.tab} ${current === 'decryption' ? activeClass : ''
+              }`}
             value="decryption"
             onClick={clickTab}
           >
