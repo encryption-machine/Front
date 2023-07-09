@@ -120,17 +120,26 @@ const SignInForm = () => {
     e.preventDefault();
 
     // тест по отправке запросов на сервера по восстановлению пароля
-
     apiPasswordRecovery.sendEmail(emailValue)
-      .then((result) => {
-        if (result) {
-          console.log('result', result)
+      .then((res) => {
+        if (res) {
+          // ответ с сервера, который надо вставить в placeholder формы
+          const question = res;
+          console.log('question', question)
         } else {
           console.log('ERR 1')
         }
       })
       .catch((err) => {
-        console.log('ERR 2', err)
+
+        if (err === 400) {
+          console.log('Пользователь с таким Email не найден')
+        } else {
+          console.log('ERR 2', err)
+        }
+
+        // должна падать ошибка - Пользователь с таким Email не найден
+
       })
 
 
