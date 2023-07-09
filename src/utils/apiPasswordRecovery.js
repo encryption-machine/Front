@@ -9,8 +9,7 @@ function handleResponce(res) {
 };
 
 export const sendEmail = (data) => {
-    console.log('data', data)
-    return fetch(`http://127.0.0.1:8000/api/v1/users/reset_password/`, {
+    return fetch(`${BASE_URL}users/reset_password/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -23,3 +22,17 @@ export const sendEmail = (data) => {
 }
 
 
+export const sendSecretQuestion = (id, answer) => {
+
+    return fetch(`${BASE_URL}users/reset_password_question/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id,
+            answer: answer
+        })
+    })
+        .then(handleResponce)
+}

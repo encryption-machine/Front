@@ -15,6 +15,11 @@ const SignInForm = () => {
   const [emailValue, setEmailValue] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
 
+
+  // тест по отправке апи запроса для восстановления пароля
+  const [idUser, setIdUser] = useState('')
+  const [answer, setAnswer] = useState('one')
+
   // errors
   const [emailEmptyError, setEmailEmptyError] = useState('');
   const emailValidError = [
@@ -124,21 +129,38 @@ const SignInForm = () => {
       .then((res) => {
         if (res) {
           // ответ с сервера, который надо вставить в placeholder формы
-          const question = res;
+          const question = res.question;
+          const idUser = res.id;
+          console.log('res', res)
           console.log('question', question)
+          console.log('idUser', idUser)
+          setIdUser(idUser)
+          // return question
         } else {
           console.log('ERR 1')
         }
       })
       .catch((err) => {
-
         if (err === 400) {
           console.log('Пользователь с таким Email не найден')
         } else {
           console.log('ERR 2', err)
         }
+      })
 
-        // должна падать ошибка - Пользователь с таким Email не найден
+    apiPasswordRecovery.sendSecretQuestion(idUser, answer)
+      .then((result) => {
+        if (result) {
+          // ответ с сервера, который надо вставить в placeholder формы
+          console.log('result', result)
+          const token = result.token
+          console.log('token', token)
+        } else {
+          console.log('ERR 3')
+        }
+      })
+      .catch((err) => {
+        console.log('ERR 4', err)
 
       })
 
