@@ -24,18 +24,18 @@ export const Header = () => {
             </li>
             <li>
               <a
-                href="#aboutProject"
-                onClick={() => scrollToSection('aboutProject')}
+                href="#aboutCiphers"
+                onClick={() => scrollToSection('aboutCiphers')}
               >
-                О проекте
+                О&nbsp;шифрах
               </a>
             </li>
             <li>
               <a
-                href="#aboutCiphers"
-                onClick={() => scrollToSection('aboutCiphers')}
+                href="#aboutProject"
+                onClick={() => scrollToSection('aboutProject')}
               >
-                О шифрах
+                О&nbsp;проекте
               </a>
             </li>
           </ul>
