@@ -6,6 +6,10 @@ import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
 import useInputValidation from '../../hooks/useInputValidation';
 import style from '../AuthForms/AuthForms.module.scss';
 
+// тест по отправке апи запроса для восстановления пароля
+import * as apiPasswordRecovery from '../../utils/apiPasswordRecovery';
+
+
 const SignInForm = () => {
   const [passwordValue, setPasswordValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
@@ -87,15 +91,15 @@ const SignInForm = () => {
     passwordInput.isPasswordInputValid
       ? setPasswordValidError('')
       : setPasswordValidError([
-          {
-            list_title: 'Пароль должен содержать:',
-            item_1: 'от 6 до 8 символов',
-            item_2: 'цифры',
-            item_3: 'заглавные буквы',
-            item_4: 'строчные буквы ',
-            item_5: 'специальные символы',
-          },
-        ]);
+        {
+          list_title: 'Пароль должен содержать:',
+          item_1: 'от 6 до 8 символов',
+          item_2: 'цифры',
+          item_3: 'заглавные буквы',
+          item_4: 'строчные буквы ',
+          item_5: 'специальные символы',
+        },
+      ]);
   }, [
     emailInput.isDirty,
     emailInput.isEmailValid,
@@ -114,6 +118,22 @@ const SignInForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // тест по отправке запросов на сервера по восстановлению пароля
+
+    apiPasswordRecovery.sendEmail(emailValue)
+      .then((result) => {
+        if (result) {
+          console.log('result', result)
+        } else {
+          console.log('ERR 1')
+        }
+      })
+      .catch((err) => {
+        console.log('ERR 2', err)
+      })
+
+
     resetForm();
   };
 
