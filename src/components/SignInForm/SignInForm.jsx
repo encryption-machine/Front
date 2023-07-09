@@ -19,6 +19,9 @@ const SignInForm = () => {
   // тест по отправке апи запроса для восстановления пароля
   const [idUser, setIdUser] = useState('')
   const [answer, setAnswer] = useState('one')
+  const [token, setToken] = useState('')
+  const [newPassword, setNewPassword] = useState('!One0987');
+  const [newPasswordConfirm, setNewPasswordConfirm] = useState('!One0987');
 
   // errors
   const [emailEmptyError, setEmailEmptyError] = useState('');
@@ -154,6 +157,7 @@ const SignInForm = () => {
           // ответ с сервера, который надо вставить в placeholder формы
           console.log('result', result)
           const token = result.token
+          setToken(token)
           console.log('token', token)
         } else {
           console.log('ERR 3')
@@ -161,6 +165,20 @@ const SignInForm = () => {
       })
       .catch((err) => {
         console.log('ERR 4', err)
+
+      })
+
+    apiPasswordRecovery.sendNewPassword(idUser, token, newPassword, newPasswordConfirm)
+      .then((result) => {
+        if (result) {
+          // ответ с сервера, который надо вставить в placeholder формы
+          console.log('!!!result', result)
+        } else {
+          console.log('!!!ERR 5')
+        }
+      })
+      .catch((err) => {
+        console.log('!!!ERR 6', err)
 
       })
 
