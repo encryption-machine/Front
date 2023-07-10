@@ -5,6 +5,10 @@ import AuthForms from '../AuthForms/AuthForms';
 import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
 import useInputValidation from '../../hooks/useInputValidation';
 import style from '../AuthForms/AuthForms.module.scss';
+/////////Авторизация//////
+import { authorize, authorizeRefresh } from '../../utils/Auth.js';
+import { useNavigate } from 'react-router-dom';
+/////////////////////////
 
 const SignInForm = () => {
   const [passwordValue, setPasswordValue] = useState('');
@@ -105,6 +109,49 @@ const SignInForm = () => {
     passwordInput.isPasswordInputValid,
     passwordInput.isMatch,
   ]);
+   /////////Авторизация//////
+  const navigate = useNavigate();
+  function handleLogin(email, password) {
+    console.log(email, password, '--authorize,email, password');
+    return authorize(email, password)
+    .then((data) =>{
+      //в (data) должны прийти два токена access и refresh
+      console.log(data, '--authorize,data');
+        if(data.access) {
+          //если получили токен доступа access
+          // сохранили в куке:  (document.cookie = "название=значение";)
+          document.cookie = "access=" + data.access;
+          const access = document.cookie;
+            console.log(access.slice(7), 'access-cookie');
+
+          // и отправляем на главную страницу?
+          navigate('/');
+        } if(!data.access) {
+          //если не получили токен доступа access
+          //отправляем токен обновления на сервер
+          /////Принимает веб-токен JSON типа обновления и возвращает веб-токен JSON типа доступа 
+          authorizeRefresh(data.refresh)
+          .then((data) =>{
+            // получили токен доступа access
+            if(data.access) {
+              //если получили токен доступа access
+              // сохранили в куке:  (document.cookie = "название=значение";)
+              document.cookie = "access=" + data.access;
+              const access = document.cookie;
+                console.log(access.slice(7), 'access-cookie');
+    
+              // и отправляем на главную страницу?
+              navigate('/');
+            }
+          }).catch(err => {
+            console.log(err, '--authorizeRefresh,err');
+          });
+        }
+      }).catch(err => {
+        console.log(err, '--authorize,err');
+      });
+    }
+  /////////////////////////
 
   const resetForm = () => {
     setEmailValue('');
@@ -114,6 +161,12 @@ const SignInForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    /////////Авторизация//////
+    if(!emailValue || !passwordValue) return;
+    handleLogin(emailValue, passwordValue);
+    /////////////////////////
+
     resetForm();
   };
 
