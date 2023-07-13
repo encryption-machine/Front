@@ -45,7 +45,7 @@ const useSignupValidator = ({
         setMinLengthError(true);
       }
 
-      if (password.length < length.max) {
+      if (password.length <= length.max) {
         setMaxLengthValid(true);
         setMaxLengthError(false);
       } else {

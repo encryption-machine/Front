@@ -6,7 +6,7 @@ import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
 import useInputValidation from '../../hooks/useInputValidation';
 import style from '../AuthForms/AuthForms.module.scss';
 
-const SignInForm = () => {
+const SignInForm = ({ onLogin, textError, loggedIn }) => {
   const [passwordValue, setPasswordValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
@@ -105,7 +105,7 @@ const SignInForm = () => {
     passwordInput.isPasswordInputValid,
     passwordInput.isMatch,
   ]);
-
+  
   const resetForm = () => {
     setEmailValue('');
     setPasswordValue('');
@@ -114,6 +114,12 @@ const SignInForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    /////////Авторизация//////
+    if(!emailValue || !passwordValue) return;
+    onLogin(emailValue, passwordValue);
+    /////////////////////////
+
     resetForm();
   };
 
@@ -145,6 +151,9 @@ const SignInForm = () => {
         showPassword={showPassword}
         clickShowPassword={clickShowPassword}
       />
+      {!loggedIn && <span className={style.textError}>
+        {textError}
+      </span>}
 
       <button
         className={cn(style.button, style.button__wrap)}

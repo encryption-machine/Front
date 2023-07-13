@@ -3,7 +3,7 @@ import AuthModal from '../AuthModal/AuthModal';
 import styles from './Header.module.scss';
 import logotype from '../../assets/icons/logotype.svg';
 
-export const Header = () => {
+export const Header = ({ loggedIn, onLogin, textError, isModalClose, signOut }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const scrollToSection = (id) => {
@@ -41,14 +41,22 @@ export const Header = () => {
           </ul>
         </nav>
         <div className={styles.entrance}>
-          <button
+          {!loggedIn && <button
             className={styles.button_header}
             type="button"
             onClick={setModalOpen}
           >
             Войти
-          </button>
-          <AuthModal isOpen={modalOpen} setIsOpen={setModalOpen} />
+          </button>}
+          {/* /////////Авторизация////// */}
+          {loggedIn && <button
+            className={styles.button_header}
+            type="button"
+            onClick={signOut}
+          >
+            Выйти
+          </button>}
+          <AuthModal isOpen={modalOpen} setIsOpen={setModalOpen} isModalClose={isModalClose} loggedIn={loggedIn} onLogin={onLogin} textError={textError}/>
         </div>
       </div>
     </header>

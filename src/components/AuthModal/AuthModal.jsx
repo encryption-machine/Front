@@ -4,15 +4,20 @@ import { Modal } from '../Modal/Modal';
 import AuthTabs from '../AuthTabs/AuthTabs';
 import styles from './AuthModal.module.scss';
 
-const AuthModal = ({ isOpen, setIsOpen }) => {
+const AuthModal = ({ isOpen, setIsOpen, onLogin, textError, loggedIn, isModalClose }) => {
+   console.log(isModalClose, 'modalClose-model');
+   console.log(isOpen, 'isOpen-model');
+   console.log(setIsOpen, 'setIsOpen-model');
+   
   return (
     <Modal.overlay
-      className={isOpen ? cn(styles.overlay, styles.active) : styles.overlay}
+      //TODO представляла, что добавлю сюда (|| !isModalClose) состояние стейта и попап закроется 
+      className={isOpen || !isModalClose ? cn(styles.overlay, styles.active) : styles.overlay}
       onClose={setIsOpen}
     >
       <Modal.window className={styles.modal}>
         <Modal.close className={styles.close} onClose={setIsOpen} />
-        <AuthTabs />
+        <AuthTabs loggedIn={loggedIn} onLogin={onLogin} textError={textError}/>
       </Modal.window>
     </Modal.overlay>
   );

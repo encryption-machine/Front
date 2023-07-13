@@ -4,7 +4,7 @@ import SignInForm from '../SignInForm/SignInForm';
 import SignUpForm from '../SignUpForm/SignUpForm';
 import style from './AuthTabs.module.scss';
 
-const AuthTabs = () => {
+const AuthTabs = ({ onLogin, textError, loggedIn }) => {
   const tabsBar = [
     { id: '1', label: 'Войти' },
     { id: '2', label: 'Зарегистрироваться' },
@@ -31,7 +31,7 @@ const AuthTabs = () => {
         onClick={handleTabClick}
       />
       <div className={style.authTabs__content}>
-        {selectedTabId === tabsBar[0].id && <SignInForm />}
+        {selectedTabId === tabsBar[0].id && <SignInForm onLogin={onLogin}  loggedIn={loggedIn} textError={textError}/>}
         {selectedTabId === tabsBar[1].id && <SignUpForm />}
       </div>
     </section>
