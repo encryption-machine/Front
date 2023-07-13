@@ -73,17 +73,6 @@ const SignInForm = () => {
     emailInput.isDirty && emailInput.isEmpty
       ? setEmailEmptyError('Поле "E-mail" не может быть пустым')
       : setEmailEmptyError('');
-    //emailInput.isEmailValid
-    //  ? setEmailValidError('')
-    //  : setEmailValidError([
-    //      {
-    //        error_title: 'Недопустимые символы.',
-    //        list_title: 'Допустимые символы:',
-    //        item_1: 'цифры',
-    //        item_2: 'латинские буквы',
-    //        item_3: '«_», «-», «@» и «.»',
-    //      },
-    //    ]);
     passwordInput.isPasswordInputValid
       ? setPasswordValidError('')
       : setPasswordValidError([
@@ -121,12 +110,14 @@ const SignInForm = () => {
     <AuthForms onSubmit={handleSubmit}>
       <EmailInput
         value={emailValue}
-        onBlur={(e) => emailInput.onBlur(e)}
+        onBlur={emailInput.onBlur}
+        onFocus={emailInput.onFocus}
+        onChange={handleEmailValue}
         isDirty={emailInput.isDirty}
         isEmpty={emailInput.isEmpty}
+        isFocus={emailInput.isFocus}
         isEmailValid={emailInput.isEmailValid}
         emptyError={emailEmptyError}
-        onChange={handleEmailValue}
         emailValidError={emailValidError}
       />
 

@@ -36,6 +36,34 @@
     color: $dark-gray;
     font-size: 16px;
   }
+  &__label {
+    &_email::after,
+    &_password::after,
+    &_secretQuestion::after,
+    &_secretWord::after {
+      color: $violet;
+      font-size: 12px;
+      font-weight: 700;
+      background: $white;
+      border-radius: 4px;
+      padding: 1px 5px;
+      position: absolute;
+      left: 8px;
+      top: -8px;
+    }
+    &_email::after {
+      content: 'E-mail';
+    }
+    &_password::after {
+      content: 'Пароль';
+    }
+    &_secretQuestion::after {
+      content: 'Секретный вопрос';
+    }
+    &_secretWord::after {
+      content: 'Секретное слово';
+    }
+  }
   &__hint {
     border: 1px solid $red;
     & input {
@@ -43,7 +71,8 @@
     }
     &_email::after,
     &_password::after,
-    &_dafault::after {
+    &_secretQuestion::after,
+    &_secretWord::after {
       color: $red;
       font-size: 12px;
       font-weight: 700;
@@ -55,14 +84,16 @@
       top: -8px;
     }
     &_email::after {
-      content: 'Логин';
+      content: 'E-mail';
     }
     &_password::after {
       content: 'Пароль';
     }
-    &_dafault::after {
-      content: 'Hint';
-      color: $violet;
+    &_secretQuestion::after {
+      content: 'Секретный вопрос';
+    }
+    &_secretWord::after {
+      content: 'Секретное слово';
     }
   }
 }
@@ -86,7 +117,6 @@
 }
 
 .link {
-  color: $green !important;
   background: $violet;
   text-align: center;
   margin-top: 8px;

@@ -192,12 +192,14 @@ const SignUpForm = () => {
     <AuthForms onSubmit={handleSubmit}>
       <EmailInput
         value={emailValue}
-        onBlur={(e) => emailInput.onBlur(e)}
+        onBlur={emailInput.onBlur}
+        onFocus={emailInput.onFocus}
+        onChange={handleEmailValue}
         isDirty={emailInput.isDirty}
         isEmpty={emailInput.isEmpty}
+        isFocus={emailInput.isFocus}
         isEmailValid={emailInput.isEmailValid}
         emptyError={emailEmptyError}
-        onChange={handleEmailValue}
         emailValidError={emailValidError}
       />
 
@@ -206,10 +208,10 @@ const SignUpForm = () => {
         onBlur={passwordInput.onBlur}
         onClick={(e) => handleShowPassword(e)}
         onFocus={passwordInput.onFocus}
+        onChange={handleFirstPasswordValue}
         isFocus={passwordInput.isFocus}
         isDirty={passwordInput.isDirty}
         isEmpty={passwordInput.isEmpty}
-        onChange={handleFirstPasswordValue}
         passwordValidError={passwordValidError}
         isPasswordInputValid={passwordInput.isPasswordInputValid}
         emptyError={firstPasswordError}
@@ -237,9 +239,10 @@ const SignUpForm = () => {
         value={secretWordValue}
         onBlur={secretWordInput.onBlur}
         onFocus={secretWordInput.onFocus}
+        onChange={handleSecretWordValue}
         isDirty={secretWordInput.isDirty}
         isEmpty={secretWordInput.isEmpty}
-        onChange={handleSecretWordValue}
+        isFocus={secretWordInput.isFocus}
         emptyError={secretWordEmptyError}
         validError={secretWordValidError}
         isCustomValid={secretWordInput.isCustomValid}
