@@ -5,12 +5,8 @@ import AuthForms from '../AuthForms/AuthForms';
 import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
 import useInputValidation from '../../hooks/useInputValidation';
 import style from '../AuthForms/AuthForms.module.scss';
-/////////Авторизация//////
-import { postApiAutorisation, postApiAuthorizeRefresh, postApiAuthorizeVerify, getCookie } from '../../utils/Auth.js';
-import { useNavigate } from 'react-router-dom';
-/////////////////////////
 
-const SignInForm = () => {
+const SignInForm = ({ onLogin, textError, loggedIn }) => {
   const [passwordValue, setPasswordValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
@@ -109,60 +105,6 @@ const SignInForm = () => {
     passwordInput.isPasswordInputValid,
     passwordInput.isMatch,
   ]);
-   /////////Авторизация//////
-  const navigate = useNavigate();
-  const handleLogin = (email, password) => {
-    console.log(email, password, '--authorize,email, password');
-    return postApiAutorisation(email, password)
-    .then((data) =>{
-      //в (data) должны прийти два токена access и refresh
-      console.log(data, '--authorize,data'); 
-      //токен обновления refresh
-      const refresh = data.refresh;
-    
-      if(data.access) {
-        //если получили токен доступа access
-        //токен доступа access в куки, максимальное время хранения 1 час (max-age=3600)?
-        document.cookie = `access=${data.access}; max-age=3600`;
-
-        // и отправляем на главную страницу?
-        navigate('/');
-
-       } if(!data.access) {
-          //если не получили токен доступа access
-          //отправляем токен обновления на сервер
-          //проверяем действителен ли токен обновления
-          postApiAuthorizeVerify(refresh)
-          .then((data) =>{
-            if(data) {
-              //если токен обновления действителен, отправляем токен обновления на сервер
-              /////Принимает веб-токен JSON типа обновления и возвращает веб-токен JSON типа доступа 
-              postApiAuthorizeRefresh(refresh)
-              .then((data) =>{
-                // получили токен доступа access
-                if(data.access) {
-                  //если получили токен доступа access
-                  //токен доступа access в куки, максимальное время хранения 1 час (max-age=3600)?
-                  document.cookie = `access=${data.access}; max-age=3600`;
-            
-                  // и отправляем на главную страницу?
-                  navigate('/');
-                }
-              }).catch(err => {
-                console.log(err, '--authorizeRefresh,err');
-              });
-            }
-                
-          }).catch(err => {
-            console.log(err, '--token,err');
-          });
-        
-        }
-      }).catch(err => {
-        console.log(err, '--authorize,err');
-      });
-    }
-  /////////////////////////
   
   const resetForm = () => {
     setEmailValue('');
@@ -175,7 +117,7 @@ const SignInForm = () => {
     
     /////////Авторизация//////
     if(!emailValue || !passwordValue) return;
-    handleLogin(emailValue, passwordValue);
+    onLogin(emailValue, passwordValue);
     /////////////////////////
 
     resetForm();
@@ -209,6 +151,9 @@ const SignInForm = () => {
         showPassword={showPassword}
         clickShowPassword={clickShowPassword}
       />
+      {!loggedIn && <span className={style.textError}>
+        {textError}
+      </span>}
 
       <button
         className={cn(style.button, style.button__wrap)}
