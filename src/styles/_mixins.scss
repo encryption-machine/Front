@@ -1,0 +1,24 @@
+@mixin font-source-sans(
+  $size: false,
+  $colour: false,
+  $weight: false,
+  $lh: false,
+  $ff: false
+) {
+  font-family: 'Inter', 'Rubik Mono One', 'Glyphter', 'Arial', sans-serif;
+  @if $size {
+    font-size: $size;
+  }
+  @if $colour {
+    color: $colour;
+  }
+  @if $weight {
+    font-weight: $weight;
+  }
+  @if $lh {
+    line-height: $lh;
+  }
+  @if $ff {
+    font-family: $ff;
+  }
+}

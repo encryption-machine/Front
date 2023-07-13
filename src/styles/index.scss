@@ -1,0 +1,28 @@
+@import 'font-variables';
+@import 'mixins';
+@import 'colors';
+@import 'normalize';
+
+body,
+button,
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+  margin: 0;
+  font-family: $mainFont;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+body * {
+  box-sizing: border-box;
+  // background-color: $background;
+}

@@ -1,0 +1,170 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins';
+
+.machine {
+  padding-top: 180px;
+  padding-bottom: 140px;
+  background-color: $gray_light;
+  &__button {
+    width: 300px;
+  }
+}
+.content {
+  width: 1140px;
+  margin: 0 auto;
+  display: grid;
+  gap: 20px 20px;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+}
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.tab {
+  background: none;
+  @include font-source-sans(18px, $black, 700, 20px);
+  border-radius: 0;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  height: 48px;
+  align-items: center;
+  padding: 0 12px;
+  &Active {
+    color: $violet;
+  }
+}
+.select {
+  position: relative;
+  display: block;
+  &__title {
+    width: 380px;
+    height: 40px;
+    padding: 0 12px;
+    @include font-source-sans(16px, $violet, 600, 20px);
+    border-bottom: 1.5px solid $violet;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  &__icon {
+    transition: 0.3s ease-in;
+    svg {
+      fill: currentColor;
+    }
+  }
+  &__hide {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    height: 0;
+    transition: 0.5s ease-in;
+    overflow: hidden;
+    z-index: 3;
+  }
+  &__list {
+    width: 380px;
+    display: grid;
+    align-items: flex-start;
+    padding: 0;
+    margin: 0;
+    border: 1.5px solid $violet;
+    border-top: 0;
+    box-sizing: border-box;
+    li {
+      list-style-type: none;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 12px;
+      background: $white;
+      // border-top: 1.5px solid $black;
+      cursor: pointer;
+      @include font-source-sans(16px, $gray_dark, 600, 20px);
+      &:first-child {
+        border-top: 0;
+      }
+      &:last-child {
+        border-bottom: 1.5px solid $violet;
+      }
+    }
+  }
+  &__open {
+    position: relative;
+    .select__icon {
+      transform: rotate(180deg);
+      & div {
+        height: 16px;
+      }
+    }
+    .select__title {
+      border-radius: 5px 5px 0 0;
+    }
+  }
+}
+.text {
+  width: 100% !important;
+  height: 250px !important;
+  padding: 20px;
+  background: $white;
+  // border-radius: 20px;
+  resize: none;
+  border: none;
+  @include font-source-sans(16px, $gray_light, 600, 19px);
+  &:focus-visible {
+    outline: none;
+    border: 1.5px solid $violet;
+    border-radius: 8px;
+  }
+}
+.copy {
+  &__cont {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  &__button {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    border: none;
+    cursor: pointer;
+    color: $gray_secondary;
+    z-index: 3;
+    background-color: $white;
+    svg {
+      stroke: currentColor;
+    }
+  }
+  &__message {
+    position: absolute;
+    width: 100%;
+    height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $background_select;
+    @include font-source-sans(16px, $black, 600, 19px);
+    overflow: hidden;
+    transition: 0.3s ease-in;
+    &Show {
+      height: 40px;
+    }
+  }
+}
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0 20px;
+}
+.count {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  color: $gray_dark;
+}

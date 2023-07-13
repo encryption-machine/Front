@@ -1,0 +1,73 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins';
+
+.aboutProject {
+  padding: 100px 130px 140px;
+  margin: 0 auto;
+  width: 100%;
+  background-color: $black;
+  &_title {
+    @include font-source-sans(50px, $white, 400, 62px, 'Rubik Mono One');
+    text-align: left;
+    margin-bottom: 52px;
+  }
+
+  &_subtitle {
+    @include font-source-sans(28px, $white, 600, 32px);
+    text-align: left;
+    margin-bottom: 44px;
+  }
+  &_items {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  &_item {
+    border: 1px solid $green;
+    border-radius: 8px;
+    padding: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    &__content {
+      width: calc(100% - 91px);
+    }
+    &:nth-child(1) {
+      .aboutProject_image {
+        background-image: url(../../assets/images/Icon-first.svg);
+      }
+    }
+    &:nth-child(2) {
+      .aboutProject_image {
+        background-image: url(../../assets/images/Icon-two.svg);
+      }
+    }
+    &:nth-child(3) {
+      .aboutProject_image {
+        background-image: url(../../assets/images/Icon-third.svg);
+      }
+    }
+  }
+
+  &_image {
+    width: 80px;
+    height: 80px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-self: center;
+  }
+
+  &_titleItem {
+    @include font-source-sans(32px, $white, 700, 36px);
+    text-align: start;
+    margin-bottom: 20px;
+  }
+  &_description {
+    @include font-source-sans(28px, $white, 400, 32px);
+    text-align: start;
+  }
+}
