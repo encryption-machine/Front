@@ -2,13 +2,12 @@ import styles from './Footer.module.scss';
 import { telephone } from '../../constants/contacts';
 
 export const Footer = () => {
-  console.log(telephone)
   return (
     <footer className={styles.footer}>
       <div className={styles.footer_container}>
         <ul className={styles.list}>
           <li>
-            <a href="tel:telephone">{telephone}</a>
+            <p className={styles.telephone}>{telephone}</p>
           </li>
           <li>
             <a href="#chipers" target="_blank">

@@ -12,9 +12,9 @@ export default function CheckMark() {
       <path
         d="M20 30L40 50L60 30"
         stroke="#CAF23A"
-        stroke-width="4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

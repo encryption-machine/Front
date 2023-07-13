@@ -1,17 +1,10 @@
 import { useState } from 'react';
+import AuthModal from '../AuthModal/AuthModal';
 import styles from './Header.module.scss';
 import logotype from '../../assets/icons/logotype.svg';
 
 export const Header = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  const handleLogin = () => {
-    setLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    setLoggedIn(false);
-  };
+  const [modalOpen, setModalOpen] = useState(false);
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -31,33 +24,31 @@ export const Header = () => {
             </li>
             <li>
               <a
-                href="#aboutProject"
-                onClick={() => scrollToSection('aboutProject')}
+                href="#aboutCiphers"
+                onClick={() => scrollToSection('aboutCiphers')}
               >
-                О проекте
+                О&nbsp;шифрах
               </a>
             </li>
             <li>
               <a
-                href="#aboutCiphers"
-                onClick={() => scrollToSection('aboutCiphers')}
+                href="#aboutProject"
+                onClick={() => scrollToSection('aboutProject')}
               >
-                О шифрах
+                О&nbsp;проекте
               </a>
             </li>
           </ul>
         </nav>
         <div className={styles.entrance}>
-          {/* скорее всего заменить кнопки на Link, когда будут страницы регистрации и авторизации */}
-          {!loggedIn ? (
-            <button type="button" onClick={handleLogin}>
-              Войти
-            </button>
-          ) : (
-            <button type="button" onClick={handleLogout}>
-              Выйти
-            </button>
-          )}
+          <button
+            className={styles.button_header}
+            type="button"
+            onClick={setModalOpen}
+          >
+            Войти
+          </button>
+          <AuthModal isOpen={modalOpen} setIsOpen={setModalOpen} />
         </div>
       </div>
     </header>
