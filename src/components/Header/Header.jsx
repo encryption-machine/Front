@@ -1,17 +1,11 @@
 import { useState } from 'react';
+import AuthModal from '../AuthModal/AuthModal';
 import styles from './Header.module.scss';
 import logotype from '../../assets/icons/logotype.svg';
+import { Link } from '../Link/Link';
 
 export const Header = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  const handleLogin = () => {
-    setLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    setLoggedIn(false);
-  };
+  const [modalOpen, setModalOpen] = useState(false);
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -25,39 +19,43 @@ export const Header = () => {
         <nav>
           <ul>
             <li>
-              <a href="#ciphers" onClick={() => scrollToSection('ciphers')}>
-                Шифрование
-              </a>
-            </li>
-            <li>
-              <a
-                href="#aboutProject"
-                onClick={() => scrollToSection('aboutProject')}
+              <Link
+                href={'#ciphers'}
+                target="_self"
+                onClick={() => scrollToSection('ciphers')}
               >
-                О проекте
-              </a>
+                Шифрование
+              </Link>
             </li>
             <li>
-              <a
-                href="#aboutCiphers"
+              <Link
+                href={'#aboutCiphers'}
+                target="_self"
                 onClick={() => scrollToSection('aboutCiphers')}
               >
-                О шифрах
-              </a>
+                О&nbsp;шифрах
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={'#aboutProject'}
+                target="_self"
+                onClick={() => scrollToSection('aboutProject')}
+              >
+                О&nbsp;проекте
+              </Link>
             </li>
           </ul>
         </nav>
         <div className={styles.entrance}>
-          {/* скорее всего заменить кнопки на Link, когда будут страницы регистрации и авторизации */}
-          {!loggedIn ? (
-            <button type="button" onClick={handleLogin}>
-              Войти
-            </button>
-          ) : (
-            <button type="button" onClick={handleLogout}>
-              Выйти
-            </button>
-          )}
+          <button
+            className={styles.button_header}
+            type="button"
+            onClick={setModalOpen}
+          >
+            Войти
+          </button>
+          <AuthModal isOpen={modalOpen} setIsOpen={setModalOpen} />
         </div>
       </div>
     </header>

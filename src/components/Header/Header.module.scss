@@ -20,6 +20,12 @@
   justify-content: space-between;
   align-items: center;
 
+  .logotype {
+    background-color: $black;
+    height: 80px;
+    width: 80px;
+  }
+
   ul {
     margin: 0;
     padding: 0;
@@ -41,13 +47,9 @@
     @include font-source-sans(18px, $white, 500, 20px);
     font-style: normal;
   }
+
   a:hover {
     color: $green;
-  }
-
-  img {
-    height: 80px;
-    width: 80px;
   }
 }
 
@@ -62,7 +64,7 @@
     align-items: center;
   }
 
-  button {
+  .button_header {
     height: 24px;
     @include font-source-sans(18px, $white, 500, 20px);
     background-color: transparent;
@@ -72,7 +74,7 @@
     margin: 0;
   }
 
-  button:hover {
+  .button_header:hover {
     color: $green;
   }
 }
