@@ -106,6 +106,11 @@ const SignInForm = () => {
     resetForm();
   };
 
+  const handleClearButton = (e, callback) => {
+    e.preventDefault();
+    callback();
+  };
+
   return (
     <AuthForms onSubmit={handleSubmit}>
       <EmailInput
@@ -119,12 +124,14 @@ const SignInForm = () => {
         isEmailValid={emailInput.isEmailValid}
         emptyError={emailEmptyError}
         emailValidError={emailValidError}
+        onClickClearButton={(e) =>
+          handleClearButton(e, () => setEmailValue(''))
+        }
       />
 
       <PasswordInput
         value={passwordValue}
         onBlur={passwordInput.onBlur}
-        onClick={(e) => handleShowPassword(e)}
         onFocus={passwordInput.onFocus}
         isFocus={passwordInput.isFocus}
         isDirty={passwordInput.isDirty}
@@ -134,6 +141,10 @@ const SignInForm = () => {
         isPasswordInputValid={passwordInput.isPasswordInputValid}
         emptyError={firstPasswordError}
         showPassword={showPassword}
+        onClickShowButton={(e) => handleShowPassword(e)}
+        onClickClearButton={(e) =>
+          handleClearButton(e, () => setPasswordValue(''))
+        }
         clickShowPassword={clickShowPassword}
       />
 

@@ -21,31 +21,7 @@ img {
   color: green;
 }
 
-.input__password {
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 10px;
-}
 
-.input__password input {
-  //border: 1px solid black;
-  border: none;
-  border-radius: 10px;
-  background: transparent;
-  width: 100%;
-  outline: none;
-}
-
-.input__password button {
-  //border: 1px solid black;
-  border: none;
-  border-radius: 10px;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-  transition: 0.2s;
-}
 
 :root {
   --x: fit-content;
@@ -67,4 +43,8 @@ img {
 
 .focused {
   opacity: 1;
+}
+
+.clearButton {
+  margin-left: 12px;
 }

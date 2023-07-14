@@ -188,6 +188,11 @@ const SignUpForm = () => {
     resetForm();
   };
 
+  const handleClearButton = (e, callback) => {
+    e.preventDefault();
+    callback();
+  };
+
   return (
     <AuthForms onSubmit={handleSubmit}>
       <EmailInput
@@ -206,7 +211,6 @@ const SignUpForm = () => {
       <PasswordInput
         value={passwordsValue.firstPassword}
         onBlur={passwordInput.onBlur}
-        onClick={(e) => handleShowPassword(e)}
         onFocus={passwordInput.onFocus}
         onChange={handleFirstPasswordValue}
         isFocus={passwordInput.isFocus}
@@ -216,13 +220,19 @@ const SignUpForm = () => {
         isPasswordInputValid={passwordInput.isPasswordInputValid}
         emptyError={firstPasswordError}
         showPassword={showPassword}
+        onClickShowButton={(e) => handleShowPassword(e)}
+        onClickClearButton={(e) =>
+          handleClearButton(
+            e,
+            () => setPasswordsValue({ ...passwordsValue, firstPassword: '' })
+          )
+        }
         clickShowPassword={clickShowPassword}
       />
 
       <ConfirmPasswordInput
         value={passwordsValue.secondPassword}
         onBlur={confirmPasswordInput.onBlur}
-        onClick={(e) => handleShowConfirmPassword(e)}
         onFocus={confirmPasswordInput.onFocus}
         isFocus={confirmPasswordInput.isFocus}
         isDirty={confirmPasswordInput.isDirty}
@@ -232,6 +242,13 @@ const SignUpForm = () => {
         emptyError={secondPasswordError}
         matchError={passwordsIsMatchError}
         showPassword={showConfirmPassword}
+        onClickShowButton={(e) => handleShowConfirmPassword(e)}
+        onClickClearButton={(e) =>
+          handleClearButton(
+            e,
+            () => setPasswordsValue({ ...passwordsValue, secondPassword: '' })
+          )
+        }
         clickShowPassword={clickShowConfirmPassword}
       />
 
@@ -246,6 +263,12 @@ const SignUpForm = () => {
         emptyError={secretWordEmptyError}
         validError={secretWordValidError}
         isCustomValid={secretWordInput.isCustomValid}
+        onClickClearButton={(e) =>
+          handleClearButton(
+            e,
+            () => setSecretWordValue('')
+          )
+        }
       />
 
       <button

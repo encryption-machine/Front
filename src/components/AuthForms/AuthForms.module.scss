@@ -98,6 +98,26 @@
   }
 }
 
+.input > input {
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  border: none;
+  background: transparent;
+  width: 100%;
+  outline: none;
+}
+
+.input > button {
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
 .button {
   background: $green;
   font-size: 18px;
