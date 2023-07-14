@@ -4,6 +4,7 @@
 .aboutCiphers {
   background-color: $violet;
   padding: 100px 130px 140px;
+
   &_title {
     @include font-source-sans(52px, $white, 400, 62px, 'Rubik Mono One');
     margin-bottom: 52px;

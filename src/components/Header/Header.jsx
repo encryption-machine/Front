@@ -2,6 +2,7 @@ import { useState } from 'react';
 import AuthModal from '../AuthModal/AuthModal';
 import styles from './Header.module.scss';
 import logotype from '../../assets/icons/logotype.svg';
+import { Link } from '../Link/Link';
 
 export const Header = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -18,25 +19,31 @@ export const Header = () => {
         <nav>
           <ul>
             <li>
-              <a href="#ciphers" onClick={() => scrollToSection('ciphers')}>
+              <Link
+                href={'#ciphers'}
+                target="_self"
+                onClick={() => scrollToSection('ciphers')}
+              >
                 Шифрование
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#aboutCiphers"
+              <Link
+                href={'#aboutCiphers'}
+                target="_self"
                 onClick={() => scrollToSection('aboutCiphers')}
               >
                 О&nbsp;шифрах
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#aboutProject"
+              <Link
+                href={'#aboutProject'}
+                target="_self"
                 onClick={() => scrollToSection('aboutProject')}
               >
                 О&nbsp;проекте
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>

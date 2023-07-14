@@ -55,7 +55,7 @@ export const Machine = ({ list }) => {
     setResult('hsdfjdsfihsls');
     // }, [encryption.target?.value, current]);
     // временная запись, чтобы eslint не ругался
-  }, [])
+  }, []);
 
   const copyCode = () => {
     try {
@@ -91,7 +91,7 @@ export const Machine = ({ list }) => {
     };
     //   }, [isSelectOpen]);
     // временное решение, чтобы lint не ругался
-  },);
+  });
 
   const lengthOfText = useMemo(() => {
     return encryption.target?.value.length
@@ -112,16 +112,18 @@ export const Machine = ({ list }) => {
       <div className={styles.content}>
         <div className={styles.switch}>
           <button
-            className={`${styles.tab} ${current === 'encryption' ? activeClass : ''
-              }`}
+            className={`${styles.tab} ${
+              current === 'encryption' ? activeClass : ''
+            }`}
             value="encryption"
             onClick={clickTab}
           >
             Шифрование
           </button>
           <button
-            className={`${styles.tab} ${current === 'decryption' ? activeClass : ''
-              }`}
+            className={`${styles.tab} ${
+              current === 'decryption' ? activeClass : ''
+            }`}
             value="decryption"
             onClick={clickTab}
           >
