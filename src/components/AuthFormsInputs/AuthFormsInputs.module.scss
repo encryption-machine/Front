@@ -5,38 +5,6 @@
   gap: 20px;
 }
 
-img {
-  background: #fff;
-}
-
-.confirm__text {
-  text-align: start;
-}
-
-.red {
-  color: red;
-}
-
-.green {
-  color: green;
-}
-
-
-
-:root {
-  --x: fit-content;
-}
-
-.slideUp {
-  height: 120px;
-  transition: all 0.5s cubic-bezier(0, 1, 0.5, 1);
-}
-.slideDown {
-  height: 0;
-  z-index: -99999;
-  transition: all 0.5s cubic-bezier(0, 1, 0.5, 1);
-}
-
 .unfocused {
   opacity: 0;
 }
