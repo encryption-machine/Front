@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import AuthForms from '../AuthForms/AuthForms';
-import cn from 'classnames';
 import useInputValidation from '../../hooks/useInputValidation';
 import {
   EmailInput,
@@ -10,7 +9,7 @@ import {
   SecretQuestionInput,
 } from '../AuthFormsInputs/AuthFormsInputs';
 import { answerRegExp, secretQuestionRegExp } from '../../constants/regExp';
-import style from '../AuthForms/AuthForms.module.scss';
+import FormButton from '../FormButton/FormButton';
 
 const SignUpForm = () => {
   // Set values
@@ -309,14 +308,12 @@ const SignUpForm = () => {
         }
       />
 
-      <button
+      <FormButton
         onSubmit={(e) => e.preventDefault()}
         disabled={!isFormValid}
-        className={cn(style.button, style.button__wrap)}
-        type="submit"
       >
         Зарегистрироваться
-      </button>
+      </FormButton>
     </AuthForms>
   );
 };

@@ -4,6 +4,8 @@ class createStore {
   openAuthForm = false;
   showAuthForm = false;
   showChangePasswordForm = false;
+  showChangePasswordFormEmail = false;
+  showChangePasswordFormAnswer = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -22,6 +24,17 @@ class createStore {
   setShowChangePasswordForm = (bool) => {
     this.showChangePasswordForm = bool;
     this.showAuthForm = !bool;
+    this.setShowChangePasswordFormEmail(bool)
+  };
+  
+  setShowChangePasswordFormEmail = (bool) => {
+    this.showChangePasswordFormEmail = bool;
+    this.showChangePasswordFormAnswer = !bool;
+  };
+  
+  setShowChangePasswordFormAnswer = (bool) => {
+    this.showChangePasswordFormAnswer = bool;
+    this.showChangePasswordFormEmail = !bool;
   };
 }
 

@@ -5,5 +5,4 @@ injectStores({
   formStore,
 });
 
-const store = Object.assign(formStore);
-export default store;
+export { formStore };

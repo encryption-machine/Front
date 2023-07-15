@@ -1,19 +1,16 @@
 import { useState, useEffect } from 'react';
-import cn from 'classnames';
-//import AuthModal from '../AuthModal/AuthModal';
+import { observer } from 'mobx-react';
+import { formStore } from '../../store';
 import AuthForms from '../AuthForms/AuthForms';
+import FormButton from '../FormButton/FormButton';
 import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
 import useInputValidation from '../../hooks/useInputValidation';
 import style from '../AuthForms/AuthForms.module.scss';
-
-import { observer } from 'mobx-react';
-import store from '../../store';
 
 const SignInForm = observer(() => {
   const [passwordValue, setPasswordValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
-  //const [showChangePasswordForm, setShowChangePasswordForm] = useState(false);
 
   // errors
   const [emailEmptyError, setEmailEmptyError] = useState('');
@@ -152,27 +149,18 @@ const SignInForm = observer(() => {
         clickShowPassword={clickShowPassword}
       />
 
-      <button
-        className={cn(style.button, style.button__wrap)}
+      <FormButton
         disabled={!isFormValid}
-        type="submit"
       >
         Войти
-      </button>
+      </FormButton>
       <button
-        onClick={store.setShowChangePasswordForm}
+        onClick={formStore.setShowChangePasswordForm}
         className={style.link}
         type="button"
       >
         Забыли пароль?
       </button>
-{/*
-        <AuthModal
-          isOpen={store.showChangePasswordForm}
-          setIsOpen={store.setShowChangePasswordForm}
-        >*/}
-          {/*<div>ddd</div>*/}
-        {/*</AuthModal>*/}
     </AuthForms>
   );
 });

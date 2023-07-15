@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react';
 import AuthModal from '../AuthModal/AuthModal';
 import AuthTabs from '../AuthTabs/AuthTabs';
-import store from '../../store';
+import ChangePasswordForm from '../ChangePasswordForm';
+import { formStore } from '../../store';
 import styles from './Header.module.scss';
 import logotype from '../../assets/icons/logotype.svg';
 
@@ -44,16 +45,16 @@ export const Header = observer(() => {
           <button
             className={styles.button_header}
             type="button"
-            onClick={store.setOpenAuthForm}
+            onClick={formStore.setOpenAuthForm}
           >
             Войти
           </button>
           <AuthModal
-            isOpen={store.openAuthForm}
-            setIsOpen={store.setOpenAuthForm}
+            isOpen={formStore.openAuthForm}
+            setIsOpen={formStore.setOpenAuthForm}
           >
-            {store.showAuthForm && <AuthTabs />}
-            {store.showChangePasswordForm && <div>test</div>}
+            {formStore.showAuthForm && <AuthTabs />}
+            {formStore.showChangePasswordForm && <ChangePasswordForm />}
           </AuthModal>
         </div>
       </div>
