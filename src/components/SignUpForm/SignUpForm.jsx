@@ -7,24 +7,27 @@ import {
   PasswordInput,
   ConfirmPasswordInput,
   SecretWordInput,
+  SecretQuestionInput,
 } from '../AuthFormsInputs/AuthFormsInputs';
-import { secretWordRegExp } from '../../constants/regExp';
+import { answerRegExp, secretQuestionRegExp } from '../../constants/regExp';
 import style from '../AuthForms/AuthForms.module.scss';
 
 const SignUpForm = () => {
-  const [secretWordValue, setSecretWordValue] = useState('');
-
   // Set values
   const [passwordsValue, setPasswordsValue] = useState({
     firstPassword: '',
     secondPassword: '',
   });
   const [emailValue, setEmailValue] = useState('');
+  const [answerValue, setSecretWordValue] = useState('');
+  const [secretQuestionValue, setSecretQuestionValue] = useState('');
 
   // errors
   const [emailEmptyError, setEmailEmptyError] = useState('');
-  const [secretWordEmptyError, setSecretWordEmptyError] = useState('');
-  const [secretWordValidError, setSecretWordValidError] = useState('');
+  const [answerEmptyError, setSecretWordEmptyError] = useState('');
+  const [answerValidError, setSecretWordValidError] = useState('');
+  const [secretQuestionEmptyError, setSecretQuestionEmptyError] = useState('');
+  const [secretQuestionValidError, setSecretQuestionValidError] = useState('');
   const emailValidError = [
     {
       error_title: 'Недопустимые символы.',
@@ -74,9 +77,11 @@ const SignUpForm = () => {
     setSecretWordValue(e.target.value);
   };
 
-  const [isFormValid, setIsFormValid] = useState(false);
+  const handleSecretQuestionValue = (e) => {
+    setSecretQuestionValue(e.target.value);
+  };
 
-  const regExp = secretWordRegExp;
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const passwordInput = useInputValidation({
     checkInputIsEmpty: passwordsValue.firstPassword,
@@ -94,11 +99,20 @@ const SignUpForm = () => {
     email: emailValue,
   });
 
-  const secretWordInput = useInputValidation({
-    checkInputIsEmpty: secretWordValue,
+  const secretQuestionInput = useInputValidation({
+    checkInputIsEmpty: secretQuestionValue,
     custom: {
-      regExp: regExp,
-      value: secretWordValue,
+      regExp: secretQuestionRegExp,
+      value: secretQuestionValue,
+    },
+    length: { min: 6, max: 8 },
+  });
+
+  const answerInput = useInputValidation({
+    checkInputIsEmpty: answerValue,
+    custom: {
+      regExp: answerRegExp,
+      value: answerValue,
     },
     length: { min: 3, max: 4 },
   });
@@ -107,14 +121,14 @@ const SignUpForm = () => {
     passwordInput.isPasswordInputValid &&
     emailInput.isEmailValid &&
     passwordInput.isMatch &&
-    secretWordInput.isCustomValid
+    answerInput.isCustomValid
       ? setIsFormValid(true)
       : setIsFormValid(false);
   }, [
     emailInput.isEmailValid,
     passwordInput.isMatch,
     passwordInput.isPasswordInputValid,
-    secretWordInput.isCustomValid,
+    answerInput.isCustomValid,
   ]);
 
   // Change show passwords
@@ -136,13 +150,23 @@ const SignUpForm = () => {
     emailInput.isDirty && emailInput.isEmpty
       ? setEmailEmptyError('Поле "E-mail" не может быть пустым')
       : setEmailEmptyError('');
-    secretWordInput.isDirty && secretWordInput.isEmpty
+    answerInput.isDirty && answerInput.isEmpty
       ? setSecretWordEmptyError('Поле "Секретное слово" не может быть пустым')
       : setSecretWordEmptyError('');
-    secretWordInput.isCustomValid
+    answerInput.isCustomValid
       ? setSecretWordValidError('')
       : setSecretWordValidError(
           'Секретное слово должно содержать от 3 до 42 латинских или кирилических букв, состоять из одного слова, без пробелов, цифр и знаков'
+        );
+    secretQuestionInput.isDirty && secretQuestionInput.isEmpty
+      ? setSecretQuestionEmptyError(
+          'Поле "Секретный вопрос" не может быть пустым'
+        )
+      : setSecretQuestionEmptyError('');
+    secretQuestionInput.isCustomValid
+      ? setSecretQuestionValidError('')
+      : setSecretQuestionValidError(
+          'Секретный вопрос должен содержать от 3 до 42 латинских или кирилических букв, состоять из одного слова, без пробелов, цифр и знаков'
         );
     passwordInput.isPasswordInputValid
       ? setPasswordValidError('')
@@ -166,11 +190,14 @@ const SignUpForm = () => {
     passwordInput.isDirty,
     passwordInput.isEmpty,
     emailInput.isEmpty,
-    secretWordInput.isDirty,
-    secretWordInput.isEmpty,
-    secretWordInput.isCustomValid,
+    answerInput.isDirty,
+    answerInput.isEmpty,
+    answerInput.isCustomValid,
     passwordInput.isPasswordInputValid,
     passwordInput.isMatch,
+    secretQuestionInput.isDirty,
+    secretQuestionInput.isEmpty,
+    secretQuestionInput.isCustomValid,
   ]);
 
   const resetForm = () => {
@@ -222,9 +249,8 @@ const SignUpForm = () => {
         showPassword={showPassword}
         onClickShowButton={(e) => handleShowPassword(e)}
         onClickClearButton={(e) =>
-          handleClearButton(
-            e,
-            () => setPasswordsValue({ ...passwordsValue, firstPassword: '' })
+          handleClearButton(e, () =>
+            setPasswordsValue({ ...passwordsValue, firstPassword: '' })
           )
         }
         clickShowPassword={clickShowPassword}
@@ -244,30 +270,42 @@ const SignUpForm = () => {
         showPassword={showConfirmPassword}
         onClickShowButton={(e) => handleShowConfirmPassword(e)}
         onClickClearButton={(e) =>
-          handleClearButton(
-            e,
-            () => setPasswordsValue({ ...passwordsValue, secondPassword: '' })
+          handleClearButton(e, () =>
+            setPasswordsValue({ ...passwordsValue, secondPassword: '' })
           )
         }
         clickShowPassword={clickShowConfirmPassword}
       />
 
-      <SecretWordInput
-        value={secretWordValue}
-        onBlur={secretWordInput.onBlur}
-        onFocus={secretWordInput.onFocus}
-        onChange={handleSecretWordValue}
-        isDirty={secretWordInput.isDirty}
-        isEmpty={secretWordInput.isEmpty}
-        isFocus={secretWordInput.isFocus}
-        emptyError={secretWordEmptyError}
-        validError={secretWordValidError}
-        isCustomValid={secretWordInput.isCustomValid}
+      <SecretQuestionInput
+        value={secretQuestionValue}
+        onBlur={secretQuestionInput.onBlur}
+        onFocus={secretQuestionInput.onFocus}
+        onChange={handleSecretQuestionValue}
+        isDirty={secretQuestionInput.isDirty}
+        isEmpty={secretQuestionInput.isEmpty}
+        isFocus={secretQuestionInput.isFocus}
+        emptyError={secretQuestionEmptyError}
+        validError={secretQuestionValidError}
+        isCustomValid={secretQuestionInput.isCustomValid}
         onClickClearButton={(e) =>
-          handleClearButton(
-            e,
-            () => setSecretWordValue('')
-          )
+          handleClearButton(e, () => setSecretQuestionValue(''))
+        }
+      />
+
+      <SecretWordInput
+        value={answerValue}
+        onBlur={answerInput.onBlur}
+        onFocus={answerInput.onFocus}
+        onChange={handleSecretWordValue}
+        isDirty={answerInput.isDirty}
+        isEmpty={answerInput.isEmpty}
+        isFocus={answerInput.isFocus}
+        emptyError={answerEmptyError}
+        validError={answerValidError}
+        isCustomValid={answerInput.isCustomValid}
+        onClickClearButton={(e) =>
+          handleClearButton(e, () => setSecretWordValue(''))
         }
       />
 

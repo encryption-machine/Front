@@ -40,7 +40,7 @@
     &_email::after,
     &_password::after,
     &_secretQuestion::after,
-    &_secretWord::after {
+    &_answer::after {
       color: $violet;
       font-size: 12px;
       font-weight: 700;
@@ -60,7 +60,7 @@
     &_secretQuestion::after {
       content: 'Секретный вопрос';
     }
-    &_secretWord::after {
+    &_answer::after {
       content: 'Секретное слово';
     }
   }
@@ -72,7 +72,7 @@
     &_email::after,
     &_password::after,
     &_secretQuestion::after,
-    &_secretWord::after {
+    &_answer::after {
       color: $red;
       font-size: 12px;
       font-weight: 700;
@@ -92,7 +92,7 @@
     &_secretQuestion::after {
       content: 'Секретный вопрос';
     }
-    &_secretWord::after {
+    &_answer::after {
       content: 'Секретное слово';
     }
   }

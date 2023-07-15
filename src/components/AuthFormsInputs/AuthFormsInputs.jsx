@@ -320,6 +320,67 @@ export const ConfirmPasswordInput = ({
   );
 };
 
+export const SecretQuestionInput = ({
+  value,
+  onBlur,
+  onFocus,
+  isDirty,
+  isEmpty,
+  isFocus,
+  onChange,
+  emptyError,
+  validError,
+  isCustomValid,
+  classesOnError = [
+    style.inputs,
+    style.input, 
+    style.inputs__hint,
+    style.inputs__hint_secretQuestion,
+  ],
+  classesOnFocus = [style.inputs, style.input,  style.inputs__label_secretQuestion],
+  defaultClasses = [style.inputs, style.input],
+  onClickClearButton,
+}) => {
+  return (
+    <>
+      <div
+        onBlur={onBlur}
+        onFocus={onFocus}
+        className={setClasses(
+          isDirty,
+          isEmpty,
+          isCustomValid,
+          isFocus,
+          classesOnError,
+          classesOnFocus,
+          defaultClasses
+        )}
+      >
+        <input
+          placeholder="Секретный вопрос"
+          value={value}
+          onChange={onChange}
+        />
+
+        <ClearButton
+          onBlur={onBlur}
+          onFocus={onFocus}
+          onClickClearButton={onClickClearButton}
+          isFocus={isFocus}
+          value={value}
+        />
+      </div>
+
+      {isDirty && isEmpty ? (
+        <span className={style.hintError}>{emptyError}</span>
+      ) : null}
+      {!isCustomValid && !isEmpty ? (
+        <span className={style.hintError}>{validError}</span>
+      ) : null}
+    </>
+  );
+};
+
 export const SecretWordInput = ({
   value,
   onBlur,
@@ -335,9 +396,9 @@ export const SecretWordInput = ({
     style.inputs,
     style.input, 
     style.inputs__hint,
-    style.inputs__hint_secretWord,
+    style.inputs__hint_answer,
   ],
-  classesOnFocus = [style.inputs, style.input,  style.inputs__label_secretWord],
+  classesOnFocus = [style.inputs, style.input,  style.inputs__label_answer],
   defaultClasses = [style.inputs, style.input],
   onClickClearButton,
 }) => {
