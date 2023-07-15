@@ -1,8 +1,17 @@
 // авторизация
 const BASE_URL = 'http://127.0.0.1:8000/api/v1';
 
-const getResponseData = (res) => { return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)};
+const getResponseData = (res) => {
+  return res
+    .json()
+    .then((response) => {
+      if (res.ok) {
+        return response;
+      }
+      return Promise.reject(new Error(response.detail));
+    })
 
+}
   //запрос авторизации
   // Принимает набор учетных данных пользователя и возвращает пару веб-токенов access и refresh JSON для подтверждения аутентификации этих учетных данных.
   export const postApiAutorisation  = (email, password) => {

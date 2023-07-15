@@ -1,22 +1,22 @@
 /* eslint-disable react/jsx-pascal-case */
+import { useContext } from 'react'; 
 import cn from 'classnames';
 import { Modal } from '../Modal/Modal';
 import AuthTabs from '../AuthTabs/AuthTabs';
 import styles from './AuthModal.module.scss';
+import { ModelOpenContext } from '../../context/ModalOpenContext';
 
-const AuthModal = ({ isOpen, setIsOpen, onLogin, textError, loggedIn, isModalClose }) => {
-   console.log(isModalClose, 'modalClose-model');
-   console.log(isOpen, 'isOpen-model');
-   console.log(setIsOpen, 'setIsOpen-model');
-   
+const AuthModal = ({ onClickOpen, onLogin, textError, loggedIn }) => {
+  const modalOpen = useContext(ModelOpenContext);
+   console.log(modalOpen, 'isOpen-model');
+ 
   return (
     <Modal.overlay
-      //TODO представляла, что добавлю сюда (|| !isModalClose) состояние стейта и попап закроется 
-      className={isOpen || !isModalClose ? cn(styles.overlay, styles.active) : styles.overlay}
-      onClose={setIsOpen}
+      className={modalOpen ? cn(styles.overlay, styles.active) : styles.overlay}
+      onClose={onClickOpen}
     >
       <Modal.window className={styles.modal}>
-        <Modal.close className={styles.close} onClose={setIsOpen} />
+        <Modal.close className={styles.close}  onClose={onClickOpen}/>
         <AuthTabs loggedIn={loggedIn} onLogin={onLogin} textError={textError}/>
       </Modal.window>
     </Modal.overlay>

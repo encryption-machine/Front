@@ -5,21 +5,20 @@ import { Header } from '../../components/Header/Header';
 import { Outlet } from 'react-router-dom';
 /////////Авторизация//////
 import { postApiAutorisation, postApiAuthorizeRefresh, postApiAuthorizeVerify } from '../../utils/Auth.js';
+import { ModelOpenContext } from '../../context/ModalOpenContext';
 /////////////////////////
 
 export default function MainLayout() {
    /////////Авторизация//////
    const [loggedIn, setLoggedIn] = useState(false);
    const [textError, setTextError] = useState('');
-   /////TODO Стейт для закрытия попапа (попап закрыт)
-   const [isModalClose, setIsModalClose] = useState(true);
-
-     
+   /////TODO Стейт для открытия попапа (попап закрыт)
+   const [modalOpen, setModalOpen] = useState(false);
+   
    const handleLogin = (email, password) => {
      return postApiAutorisation(email, password)
      .then((data) =>{
-       //в (data) должны прийти два токена access и refresh
-      //  console.log(data, '--authorize,data'); 
+       //в (data) должны прийти два токена access и refresh 
        //токен обновления refresh
        const refresh = data.refresh;
      
@@ -31,7 +30,7 @@ export default function MainLayout() {
          //делаем стейт залогиненного
          setLoggedIn(true);
          //и закрываем попап формы
-         setIsModalClose(false); //TODO
+         setModalOpen(false);
         } else {
            //если не получили токен доступа access
            //отправляем токен обновления на сервер
@@ -52,41 +51,53 @@ export default function MainLayout() {
                     //делаем стейт залогиненного
                     setLoggedIn(true);
                     //и закрываем попап формы 
-                    setIsModalClose(false); //TODO 
+                    setModalOpen(false);
                  }
                }).catch(err => {
-                 console.log(err, '--authorizeRefresh,err');
+                 console.log( err, '--authorizeRefresh,err');
                  setLoggedIn(false);
-                 setTextError('Получить доступ не удалось, попробуйте ещё');
+                 setModalOpen(true);
+                 setTextError(err.message);
                });
              }
                  
            }).catch(err => {
              console.log(err, '--token,err');
              setLoggedIn(false);
-             setTextError('Получить доступ не удалось, попробуйте ещё');
+             setModalOpen(true);
+             setTextError(err.message);
            });
          
          }
        }).catch(err => {
          console.log(err, '--authorize,err');
          setLoggedIn(false);
-         setTextError('Получить доступ не удалось, попробуйте ещё');
+         setModalOpen(true);
+         setTextError(err.message);
        });
      }
      const handleSignOut = () => {
       setLoggedIn(false);
      }
+    const handleClick = () => { // общая функция для закрытия и открытия попапа
+      if(modalOpen) {
+        setModalOpen(false);
+      } else {
+        setModalOpen(true);
+      }
+      
+    }
    /////////////////////////
-   console.log(loggedIn, 'loggedIn');
-   console.log(isModalClose, 'modalClose');
+ 
   return (
     <div className={styles.main_layout}>
-      <Header  loggedIn={loggedIn} onLogin={handleLogin} textError={textError} isModalClose={isModalClose} signOut={handleSignOut}/>
-      <section>
-        <Outlet />
-      </section>
-      <Footer />
+      <ModelOpenContext.Provider value={modalOpen}>
+        <Header  loggedIn={loggedIn} onClickOpen={handleClick} onLogin={handleLogin} textError={textError} signOut={handleSignOut}/>
+        <section>
+          <Outlet />
+        </section>
+        <Footer />
+      </ModelOpenContext.Provider>
     </div>
   );
 }
