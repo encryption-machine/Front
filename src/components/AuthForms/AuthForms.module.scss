@@ -61,7 +61,7 @@
       content: 'Секретный вопрос';
     }
     &_answer::after {
-      content: 'Секретное слово';
+      content: 'Ответ';
     }
   }
   &__hint {
@@ -93,7 +93,7 @@
       content: 'Секретный вопрос';
     }
     &_answer::after {
-      content: 'Секретное слово';
+      content: 'Ответ';
     }
   }
 }

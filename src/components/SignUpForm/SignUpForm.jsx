@@ -6,7 +6,7 @@ import {
   EmailInput,
   PasswordInput,
   ConfirmPasswordInput,
-  SecretWordInput,
+  AnswerInput,
   SecretQuestionInput,
 } from '../AuthFormsInputs/AuthFormsInputs';
 import { answerRegExp, secretQuestionRegExp } from '../../constants/regExp';
@@ -19,13 +19,13 @@ const SignUpForm = () => {
     secondPassword: '',
   });
   const [emailValue, setEmailValue] = useState('');
-  const [answerValue, setSecretWordValue] = useState('');
+  const [answerValue, setAnswerValue] = useState('');
   const [secretQuestionValue, setSecretQuestionValue] = useState('');
 
   // errors
   const [emailEmptyError, setEmailEmptyError] = useState('');
-  const [answerEmptyError, setSecretWordEmptyError] = useState('');
-  const [answerValidError, setSecretWordValidError] = useState('');
+  const [answerEmptyError, setAnswerEmptyError] = useState('');
+  const [answerValidError, setAnswerValidError] = useState('');
   const [secretQuestionEmptyError, setSecretQuestionEmptyError] = useState('');
   const [secretQuestionValidError, setSecretQuestionValidError] = useState('');
   const emailValidError = [
@@ -73,8 +73,8 @@ const SignUpForm = () => {
     setClickShowConfirmPassword(!clickShowConfirmPassword);
   };
 
-  const handleSecretWordValue = (e) => {
-    setSecretWordValue(e.target.value);
+  const handleAnswerValue = (e) => {
+    setAnswerValue(e.target.value);
   };
 
   const handleSecretQuestionValue = (e) => {
@@ -151,12 +151,12 @@ const SignUpForm = () => {
       ? setEmailEmptyError('Поле "E-mail" не может быть пустым')
       : setEmailEmptyError('');
     answerInput.isDirty && answerInput.isEmpty
-      ? setSecretWordEmptyError('Поле "Секретное слово" не может быть пустым')
-      : setSecretWordEmptyError('');
+      ? setAnswerEmptyError('Поле "Ответ" не может быть пустым')
+      : setAnswerEmptyError('');
     answerInput.isCustomValid
-      ? setSecretWordValidError('')
-      : setSecretWordValidError(
-          'Секретное слово должно содержать от 3 до 42 латинских или кирилических букв, состоять из одного слова, без пробелов, цифр и знаков'
+      ? setAnswerValidError('')
+      : setAnswerValidError(
+          'Ответ должен содержать от 3 до 42 латинских или кирилических букв, состоять из одного слова, без пробелов, цифр и знаков'
         );
     secretQuestionInput.isDirty && secretQuestionInput.isEmpty
       ? setSecretQuestionEmptyError(
@@ -206,7 +206,7 @@ const SignUpForm = () => {
       firstPassword: '',
       secondPassword: '',
     });
-    setSecretWordValue('');
+    setAnswerValue('');
     setIsFormValid(false);
   };
 
@@ -293,11 +293,11 @@ const SignUpForm = () => {
         }
       />
 
-      <SecretWordInput
+      <AnswerInput
         value={answerValue}
         onBlur={answerInput.onBlur}
         onFocus={answerInput.onFocus}
-        onChange={handleSecretWordValue}
+        onChange={handleAnswerValue}
         isDirty={answerInput.isDirty}
         isEmpty={answerInput.isEmpty}
         isFocus={answerInput.isFocus}
@@ -305,7 +305,7 @@ const SignUpForm = () => {
         validError={answerValidError}
         isCustomValid={answerInput.isCustomValid}
         onClickClearButton={(e) =>
-          handleClearButton(e, () => setSecretWordValue(''))
+          handleClearButton(e, () => setAnswerValue(''))
         }
       />
 

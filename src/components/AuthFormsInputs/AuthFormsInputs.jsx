@@ -381,7 +381,7 @@ export const SecretQuestionInput = ({
   );
 };
 
-export const SecretWordInput = ({
+export const AnswerInput = ({
   value,
   onBlur,
   onFocus,
@@ -418,7 +418,7 @@ export const SecretWordInput = ({
         )}
       >
         <input
-          placeholder="Секретное слово"
+          placeholder="Введите ответ"
           value={value}
           onChange={onChange}
         />
@@ -439,7 +439,7 @@ export const SecretWordInput = ({
         <span className={style.hintError}>{validError}</span>
       ) : null}
       <span className={style.hintError}>
-        Секретное слово нужно для дальнейшей смены пароля
+        Секретный вопрос и ответ на него нужны для дальнейшей смены пароля
       </span>
     </>
   );
