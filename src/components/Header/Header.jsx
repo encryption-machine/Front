@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { observer } from 'mobx-react';
 import AuthModal from '../AuthModal/AuthModal';
+import AuthTabs from '../AuthTabs/AuthTabs';
+import store from '../../store';
 import styles from './Header.module.scss';
 import logotype from '../../assets/icons/logotype.svg';
 
-export const Header = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-
+export const Header = observer(() => {
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -44,13 +44,19 @@ export const Header = () => {
           <button
             className={styles.button_header}
             type="button"
-            onClick={setModalOpen}
+            onClick={store.setOpenAuthForm}
           >
             Войти
           </button>
-          <AuthModal isOpen={modalOpen} setIsOpen={setModalOpen} />
+          <AuthModal
+            isOpen={store.openAuthForm}
+            setIsOpen={store.setOpenAuthForm}
+          >
+            {store.showAuthForm && <AuthTabs />}
+            {store.showChangePasswordForm && <div>test</div>}
+          </AuthModal>
         </div>
       </div>
     </header>
   );
-};
+});

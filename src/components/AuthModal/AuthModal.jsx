@@ -1,10 +1,9 @@
 /* eslint-disable react/jsx-pascal-case */
 import cn from 'classnames';
 import { Modal } from '../Modal/Modal';
-import AuthTabs from '../AuthTabs/AuthTabs';
 import styles from './AuthModal.module.scss';
 
-const AuthModal = ({ isOpen, setIsOpen }) => {
+const AuthModal = ({ isOpen, setIsOpen, children }) => {
   return (
     <Modal.overlay
       className={isOpen ? cn(styles.overlay, styles.active) : styles.overlay}
@@ -12,7 +11,7 @@ const AuthModal = ({ isOpen, setIsOpen }) => {
     >
       <Modal.window className={styles.modal}>
         <Modal.close className={styles.close} onClose={setIsOpen} />
-        <AuthTabs />
+        {children}
       </Modal.window>
     </Modal.overlay>
   );

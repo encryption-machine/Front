@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import cn from 'classnames';
+//import AuthModal from '../AuthModal/AuthModal';
 import AuthForms from '../AuthForms/AuthForms';
 import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
 import useInputValidation from '../../hooks/useInputValidation';
 import style from '../AuthForms/AuthForms.module.scss';
 
-const SignInForm = () => {
+import { observer } from 'mobx-react';
+import store from '../../store';
+
+const SignInForm = observer(() => {
   const [passwordValue, setPasswordValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
+  //const [showChangePasswordForm, setShowChangePasswordForm] = useState(false);
 
   // errors
   const [emailEmptyError, setEmailEmptyError] = useState('');
@@ -155,11 +159,22 @@ const SignInForm = () => {
       >
         Войти
       </button>
-      <Link to="#" className={style.link}>
+      <button
+        onClick={store.setShowChangePasswordForm}
+        className={style.link}
+        type="button"
+      >
         Забыли пароль?
-      </Link>
+      </button>
+{/*
+        <AuthModal
+          isOpen={store.showChangePasswordForm}
+          setIsOpen={store.setShowChangePasswordForm}
+        >*/}
+          {/*<div>ddd</div>*/}
+        {/*</AuthModal>*/}
     </AuthForms>
   );
-};
+});
 
 export default SignInForm;
