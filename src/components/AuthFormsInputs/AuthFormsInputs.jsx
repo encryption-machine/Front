@@ -47,6 +47,29 @@ const ClearButton = ({
   );
 };
 
+const ShowPasswordButton = ({
+  onBlur,
+  onFocus,
+  onClickShowButton,
+  isFocus,
+  clickShowPassword,
+}) => {
+  return (
+    <button
+      onBlur={onBlur}
+      onFocus={onFocus}
+      onClick={onClickShowButton}
+      className={!isFocus ? styleLocal.unfocused : styleLocal.focused}
+    >
+      {!clickShowPassword ? (
+        <img src={hidePassword} alt="Показать" />
+      ) : (
+        <img src={viewPassword} alt="Скрыть" />
+      )}
+    </button>
+  );
+};
+
 export const EmailInput = ({
   value,
   onBlur,
@@ -64,11 +87,7 @@ export const EmailInput = ({
     style.inputs__hint,
     style.inputs__hint_email,
   ],
-  classesOnFocus = [
-    style.inputs,
-    style.input,
-    style.inputs__label_email,
-  ],
+  classesOnFocus = [style.inputs, style.input, style.inputs__label_email],
   defaultClasses = [style.input, style.inputs],
   onClickClearButton,
 }) => {
@@ -144,6 +163,7 @@ export const PasswordInput = ({
   isEmpty,
   onChange,
   emptyError,
+  placeholder,
   showPassword,
   clickShowPassword,
   onClickShowButton,
@@ -156,11 +176,7 @@ export const PasswordInput = ({
     style.inputs__hint_password,
     style.input,
   ],
-  classesOnFocus = [
-    style.input,
-    style.inputs,
-    style.inputs__label_password,
-  ],
+  classesOnFocus = [style.input, style.inputs, style.inputs__label_password],
   defaultClasses = [style.input, style.inputs],
 }) => {
   return (
@@ -182,23 +198,18 @@ export const PasswordInput = ({
           className={style.input}
           name="password"
           type={showPassword}
-          placeholder="Пароль"
+          placeholder={placeholder}
           value={value}
           onChange={onChange}
         />
 
-        <button
+        <ShowPasswordButton
           onBlur={onBlur}
           onFocus={onFocus}
-          onClick={onClickShowButton}
-          className={!isFocus ? styleLocal.unfocused : styleLocal.focused}
-        >
-          {!clickShowPassword ? (
-            <img src={hidePassword} alt="Показать" />
-          ) : (
-            <img src={viewPassword} alt="Скрыть" />
-          )}
-        </button>
+          onClickShowButton={onClickShowButton}
+          isFocus={isFocus}
+          clickShowPassword={clickShowPassword}
+        />
 
         <ClearButton
           onBlur={onBlur}
@@ -244,6 +255,7 @@ export const ConfirmPasswordInput = ({
   onChange,
   emptyError,
   matchError,
+  placeholder,
   showPassword,
   clickShowPassword,
   onClickShowButton,
@@ -254,11 +266,7 @@ export const ConfirmPasswordInput = ({
     style.inputs__hint_password,
     style.input,
   ],
-  classesOnFocus = [
-    style.input,
-    style.inputs,
-    style.inputs__label_password,
-  ],
+  classesOnFocus = [style.input, style.inputs, style.inputs__label_password],
   defaultClasses = [style.input, style.inputs],
 }) => {
   return (
@@ -280,35 +288,26 @@ export const ConfirmPasswordInput = ({
           className={style.input}
           name="confirmPassword"
           type={showPassword}
-          placeholder="Еще раз пароль"
+          placeholder={placeholder}
           value={value}
           onChange={onChange}
         />
 
-        <button
+        <ShowPasswordButton
           onBlur={onBlur}
           onFocus={onFocus}
-          onClick={onClickShowButton}
-          className={!isFocus ? styleLocal.unfocused : styleLocal.focused}
-        >
-          {!clickShowPassword ? (
-            <img src={hidePassword} alt="Показать" />
-          ) : (
-            <img src={viewPassword} alt="Скрыть" />
-          )}
-        </button>
-        <button
+          onClickShowButton={onClickShowButton}
+          isFocus={isFocus}
+          clickShowPassword={clickShowPassword}
+        />
+
+        <ClearButton
           onBlur={onBlur}
           onFocus={onFocus}
-          onClick={onClickClearButton}
-          className={
-            !isFocus
-              ? styleLocal.unfocused
-              : cn(styleLocal.focused, styleLocal.clearButton)
-          }
-        >
-          {value ? <img src={clearPassword} alt="Отчистить" /> : null}
-        </button>
+          onClickClearButton={onClickClearButton}
+          isFocus={isFocus}
+          value={value}
+        />
       </div>
       {isDirty && isEmpty ? (
         <span className={style.hintError}>{emptyError}</span>
@@ -333,11 +332,15 @@ export const SecretQuestionInput = ({
   isCustomValid,
   classesOnError = [
     style.inputs,
-    style.input, 
+    style.input,
     style.inputs__hint,
     style.inputs__hint_secretQuestion,
   ],
-  classesOnFocus = [style.inputs, style.input,  style.inputs__label_secretQuestion],
+  classesOnFocus = [
+    style.inputs,
+    style.input,
+    style.inputs__label_secretQuestion,
+  ],
   defaultClasses = [style.inputs, style.input],
   onClickClearButton,
 }) => {
@@ -394,11 +397,11 @@ export const AnswerInput = ({
   isCustomValid,
   classesOnError = [
     style.inputs,
-    style.input, 
+    style.input,
     style.inputs__hint,
     style.inputs__hint_answer,
   ],
-  classesOnFocus = [style.inputs, style.input,  style.inputs__label_answer],
+  classesOnFocus = [style.inputs, style.input, style.inputs__label_answer],
   defaultClasses = [style.inputs, style.input],
   onClickClearButton,
 }) => {
@@ -417,11 +420,7 @@ export const AnswerInput = ({
           defaultClasses
         )}
       >
-        <input
-          placeholder="Введите ответ"
-          value={value}
-          onChange={onChange}
-        />
+        <input placeholder="Введите ответ" value={value} onChange={onChange} />
 
         <ClearButton
           onBlur={onBlur}

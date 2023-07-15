@@ -246,6 +246,7 @@ const SignUpForm = () => {
         isPasswordInputValid={passwordInput.isPasswordInputValid}
         emptyError={firstPasswordError}
         showPassword={showPassword}
+        placeholder='Пароль'
         onClickShowButton={(e) => handleShowPassword(e)}
         onClickClearButton={(e) =>
           handleClearButton(e, () =>
@@ -267,6 +268,7 @@ const SignUpForm = () => {
         emptyError={secondPasswordError}
         matchError={passwordsIsMatchError}
         showPassword={showConfirmPassword}
+        placeholder='Ещё раз пароль'
         onClickShowButton={(e) => handleShowConfirmPassword(e)}
         onClickClearButton={(e) =>
           handleClearButton(e, () =>

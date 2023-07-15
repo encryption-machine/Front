@@ -147,6 +147,7 @@ const SignInForm = observer(() => {
           handleClearButton(e, () => setPasswordValue(''))
         }
         clickShowPassword={clickShowPassword}
+        placeholder='Пароль'
       />
 
       <FormButton
