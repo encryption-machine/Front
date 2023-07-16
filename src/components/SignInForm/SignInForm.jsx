@@ -4,6 +4,7 @@ import { FormGlobalStore as formStore } from '../../stores';
 import AuthForms from '../AuthForms/AuthForms';
 import FormButton from '../FormButton/FormButton';
 import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
+import { composeEmptyErrorMessage, passwordValidErrorMessage, emailValidErrorMessage } from '../../constants/errorMessages';
 import useInputValidation from '../../hooks/useInputValidation';
 import style from '../AuthForms/AuthForms.module.scss';
 
@@ -14,25 +15,6 @@ const SignInForm = observer(() => {
 
   // errors
   const [emailEmptyError, setEmailEmptyError] = useState('');
-  const emailValidError = [
-    {
-      error_title: 'Недопустимые символы.',
-      list_title: 'Допустимые символы:',
-      item_1: 'цифры',
-      item_2: 'латинские буквы',
-      item_3: '«_», «-», «@» и «.»',
-    },
-  ];
-  const passwordValidError = [
-    {
-      list_title: 'Пароль должен содержать:',
-      item_1: 'от 6 до 8 символов',
-      item_2: 'цифры',
-      item_3: 'заглавные буквы',
-      item_4: 'строчные буквы ',
-      item_5: 'специальные символы',
-    },
-  ];
   const [firstPasswordError, setFirstPasswordError] = useState('');
 
   // Set show
@@ -78,10 +60,10 @@ const SignInForm = observer(() => {
   // Set errors
   useEffect(() => {
     passwordInput.isDirty && passwordInput.isEmpty
-      ? setFirstPasswordError('Поле "Пароль" не может быть пустым')
+      ? setFirstPasswordError(composeEmptyErrorMessage('Пароль'))
       : setFirstPasswordError('');
     emailInput.isDirty && emailInput.isEmpty
-      ? setEmailEmptyError('Поле "E-mail" не может быть пустым')
+      ? setEmailEmptyError(composeEmptyErrorMessage('E-mail'))
       : setEmailEmptyError('');
   }, [
     emailInput.isDirty,
@@ -121,7 +103,7 @@ const SignInForm = observer(() => {
         isFocus={emailInput.isFocus}
         isEmailValid={emailInput.isEmailValid}
         emptyError={emailEmptyError}
-        emailValidError={emailValidError}
+        emailValidError={emailValidErrorMessage}
         onClickClearButton={(e) =>
           handleClearButton(e, () => setEmailValue(''))
         }
@@ -137,7 +119,7 @@ const SignInForm = observer(() => {
         isDirty={passwordInput.isDirty}
         isEmpty={passwordInput.isEmpty}
         onChange={handleFirstPasswordValue}
-        passwordValidError={passwordValidError}
+        passwordValidError={passwordValidErrorMessage}
         isPasswordInputValid={passwordInput.isPasswordInputValid}
         emptyError={firstPasswordError}
         showPassword={showPassword}

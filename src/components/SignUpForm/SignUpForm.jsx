@@ -9,6 +9,14 @@ import {
   SecretQuestionInput,
 } from '../AuthFormsInputs/AuthFormsInputs';
 import { answerRegExp, secretQuestionRegExp } from '../../constants/regExp';
+import {
+  answerErrorMessage,
+  composeEmptyErrorMessage,
+  passwordMismatchErrorMessage,
+  secretQuestionErrorMessage,
+  passwordValidErrorMessage,
+  emailValidErrorMessage,
+} from '../../constants/errorMessages';
 import FormButton from '../FormButton/FormButton';
 import styles from '../AuthForms/AuthForms.module.scss';
 
@@ -28,27 +36,8 @@ const SignUpForm = () => {
   const [answerValidError, setAnswerValidError] = useState('');
   const [secretQuestionEmptyError, setSecretQuestionEmptyError] = useState('');
   const [secretQuestionValidError, setSecretQuestionValidError] = useState('');
-  const emailValidError = [
-    {
-      error_title: 'Недопустимые символы.',
-      list_title: 'Допустимые символы:',
-      item_1: 'цифры',
-      item_2: 'латинские буквы',
-      item_3: '«_», «-», «@» и «.»',
-    },
-  ];
   const [firstPasswordError, setFirstPasswordError] = useState('');
   const [secondPasswordError, setSecondPasswordError] = useState('');
-  const passwordValidError = [
-    {
-      list_title: 'Пароль должен содержать:',
-      item_1: 'от 6 до 8 символов',
-      item_2: 'цифры',
-      item_3: 'заглавные буквы',
-      item_4: 'строчные буквы ',
-      item_5: 'специальные символы',
-    },
-  ];
   const [passwordsIsMatchError, setPasswordsIsMatchError] = useState('');
 
   // Set show
@@ -151,35 +140,31 @@ const SignUpForm = () => {
   // Set errors
   useEffect(() => {
     passwordInput.isDirty && passwordInput.isEmpty
-      ? setFirstPasswordError('Поле "Пароль" не может быть пустым')
+      ? setFirstPasswordError(composeEmptyErrorMessage('Пароль'))
       : setFirstPasswordError('');
     confirmPasswordInput.isDirty && passwordInput.isEmpty
-      ? setSecondPasswordError('Поле "Повтор пароля" не может быть пустым')
+      ? setSecondPasswordError(composeEmptyErrorMessage('Повтор пароля'))
       : setSecondPasswordError('');
     emailInput.isDirty && emailInput.isEmpty
-      ? setEmailEmptyError('Поле "E-mail" не может быть пустым')
+      ? setEmailEmptyError(composeEmptyErrorMessage('E-mail'))
       : setEmailEmptyError('');
     answerInput.isDirty && answerInput.isEmpty
-      ? setAnswerEmptyError('Поле "Ответ" не может быть пустым')
+      ? setAnswerEmptyError(composeEmptyErrorMessage('Ответ'))
       : setAnswerEmptyError('');
     answerInput.isCustomValid
       ? setAnswerValidError('')
-      : setAnswerValidError(
-          'Ответ должен содержать от 3 до 42 латинских или кирилических букв, состоять из одного слова, без пробелов, цифр и знаков'
-        );
+      : setAnswerValidError(answerErrorMessage);
     secretQuestionInput.isDirty && secretQuestionInput.isEmpty
       ? setSecretQuestionEmptyError(
-          'Поле "Секретный вопрос" не может быть пустым'
+          composeEmptyErrorMessage('Секретный вопрос')
         )
       : setSecretQuestionEmptyError('');
     secretQuestionInput.isCustomValid
       ? setSecretQuestionValidError('')
-      : setSecretQuestionValidError(
-          'Секретный вопрос должен содержать от 3 до 42 латинских или кирилических букв, состоять из одного слова, без пробелов, цифр и знаков'
-        );
+      : setSecretQuestionValidError(secretQuestionErrorMessage);
     passwordInput.isMatch
       ? setPasswordsIsMatchError('')
-      : setPasswordsIsMatchError('Пароли не совпали');
+      : setPasswordsIsMatchError(passwordMismatchErrorMessage);
   }, [
     confirmPasswordInput.isDirty,
     emailInput.isDirty,
@@ -229,7 +214,7 @@ const SignUpForm = () => {
         isFocus={emailInput.isFocus}
         isEmailValid={emailInput.isEmailValid}
         emptyError={emailEmptyError}
-        emailValidError={emailValidError}
+        emailValidError={emailValidErrorMessage}
         onClickClearButton={(e) =>
           handleClearButton(e, () => setEmailValue(''))
         }
@@ -245,7 +230,7 @@ const SignUpForm = () => {
         isFocus={passwordInput.isFocus}
         isDirty={passwordInput.isDirty}
         isEmpty={passwordInput.isEmpty}
-        passwordValidError={passwordValidError}
+        passwordValidError={passwordValidErrorMessage}
         isPasswordInputValid={passwordInput.isPasswordInputValid}
         emptyError={firstPasswordError}
         showPassword={showPassword}

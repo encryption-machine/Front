@@ -150,6 +150,7 @@ export const EmailInput = ({
                 <span className={styles.hintError__title}>
                   {error.error_title}
                 </span>
+                <span>{error.format}</span>
                 <ul className={styles.hintError__list}>
                   {error.list_title}
                   <li className={styles.hintError__item}>{error.item_1}</li>

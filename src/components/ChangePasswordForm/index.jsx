@@ -2,6 +2,12 @@ import { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { FormGlobalStore as formStore } from '../../stores/';
 import { answerRegExp } from '../../constants/regExp';
+import {
+  answerErrorMessage,
+  composeEmptyErrorMessage,
+  passwordValidErrorMessage,
+  emailValidErrorMessage,
+} from '../../constants/errorMessages';
 import { ChangePasswordForm as form } from './ChangePasswordForm';
 import {
   EmailInput,
@@ -21,27 +27,8 @@ const ChangePasswordForm = observer(() => {
     secondPassword: '',
   });
   const [emailEmptyError, setEmailEmptyError] = useState('');
-  const emailValidError = [
-    {
-      error_title: 'Недопустимые символы.',
-      list_title: 'Допустимые символы:',
-      item_1: 'цифры',
-      item_2: 'латинские буквы',
-      item_3: '«_», «-», «@» и «.»',
-    },
-  ];
   const [firstPasswordError, setFirstPasswordError] = useState('');
   const [secondPasswordError, setSecondPasswordError] = useState('');
-  const passwordValidError = [
-    {
-      list_title: 'Пароль должен содержать:',
-      item_1: 'от 6 до 8 символов',
-      item_2: 'цифры',
-      item_3: 'заглавные буквы',
-      item_4: 'строчные буквы ',
-      item_5: 'специальные символы',
-    },
-  ];
   const [passwordsIsMatchError, setPasswordsIsMatchError] = useState('');
   const [showPassword, setShowPassword] = useState('password');
   const [showConfirmPassword, setShowConfirmPassword] = useState('password');
@@ -105,25 +92,23 @@ const ChangePasswordForm = observer(() => {
 
   useEffect(() => {
     passwordInput.isDirty && passwordInput.isEmpty
-      ? setFirstPasswordError('Поле "Пароль" не может быть пустым')
+      ? setFirstPasswordError(composeEmptyErrorMessage('Пароль'))
       : setFirstPasswordError('');
     confirmPasswordInput.isDirty && passwordInput.isEmpty
-      ? setSecondPasswordError('Поле "Повтор пароля" не может быть пустым')
+      ? setSecondPasswordError(composeEmptyErrorMessage('Повтор пароля'))
       : setSecondPasswordError('');
     passwordInput.isMatch
       ? setPasswordsIsMatchError('')
       : setPasswordsIsMatchError('Пароли не совпали');
     emailInput.isDirty && emailInput.isEmpty
-      ? setEmailEmptyError('Поле "E-mail" не может быть пустым')
+      ? setEmailEmptyError(composeEmptyErrorMessage('E-mail'))
       : setEmailEmptyError('');
     answerInput.isDirty && answerInput.isEmpty
-      ? setAnswerEmptyError('Поле "Ответ" не может быть пустым')
+      ? setAnswerEmptyError(composeEmptyErrorMessage('Ответ'))
       : setAnswerEmptyError('');
     answerInput.isCustomValid
       ? setAnswerValidError('')
-      : setAnswerValidError(
-          'Ответ должен содержать от 3 до 42 латинских или кирилических букв, состоять из одного слова, без пробелов, цифр и знаков'
-        );
+      : setAnswerValidError(answerErrorMessage);
   }, [
     answerInput.isCustomValid,
     answerInput.isDirty,
@@ -157,7 +142,7 @@ const ChangePasswordForm = observer(() => {
               isFocus={emailInput.isFocus}
               isEmailValid={emailInput.isEmailValid}
               emptyError={emailEmptyError}
-              emailValidError={emailValidError}
+              emailValidError={emailValidErrorMessage}
               onClickClearButton={(e) =>
                 handleClearButton(e, () => setEmailValue(''))
               }
@@ -205,7 +190,7 @@ const ChangePasswordForm = observer(() => {
             isFocus={passwordInput.isFocus}
             isDirty={passwordInput.isDirty}
             isEmpty={passwordInput.isEmpty}
-            passwordValidError={passwordValidError}
+            passwordValidError={passwordValidErrorMessage}
             isPasswordInputValid={passwordInput.isPasswordInputValid}
             emptyError={firstPasswordError}
             showPassword={showPassword}
