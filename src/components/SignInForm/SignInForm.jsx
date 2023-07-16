@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { observer } from 'mobx-react';
-import { formStore } from '../../store';
+import { observer } from 'mobx-react-lite';
+import { FormGlobalStore as formStore } from '../../stores';
 import AuthForms from '../AuthForms/AuthForms';
 import FormButton from '../FormButton/FormButton';
 import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
@@ -152,7 +152,7 @@ const SignInForm = observer(() => {
 
       <FormButton disabled={!isFormValid}>Войти</FormButton>
       <span
-        onClick={formStore.setShowChangePasswordForm}
+        onClick={() => formStore.setShowChangePasswordForm(true)}
         className={style.link}
         type="button"
       >

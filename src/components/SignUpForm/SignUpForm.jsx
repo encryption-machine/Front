@@ -10,6 +10,7 @@ import {
 } from '../AuthFormsInputs/AuthFormsInputs';
 import { answerRegExp, secretQuestionRegExp } from '../../constants/regExp';
 import FormButton from '../FormButton/FormButton';
+import styles from '../AuthForms/AuthForms.module.scss';
 
 const SignUpForm = () => {
   // Set values
@@ -38,7 +39,16 @@ const SignUpForm = () => {
   ];
   const [firstPasswordError, setFirstPasswordError] = useState('');
   const [secondPasswordError, setSecondPasswordError] = useState('');
-  const [passwordValidError, setPasswordValidError] = useState([]);
+  const passwordValidError = [
+    {
+      list_title: 'Пароль должен содержать:',
+      item_1: 'от 6 до 8 символов',
+      item_2: 'цифры',
+      item_3: 'заглавные буквы',
+      item_4: 'строчные буквы ',
+      item_5: 'специальные символы',
+    },
+  ];
   const [passwordsIsMatchError, setPasswordsIsMatchError] = useState('');
 
   // Set show
@@ -167,18 +177,6 @@ const SignUpForm = () => {
       : setSecretQuestionValidError(
           'Секретный вопрос должен содержать от 3 до 42 латинских или кирилических букв, состоять из одного слова, без пробелов, цифр и знаков'
         );
-    passwordInput.isPasswordInputValid
-      ? setPasswordValidError('')
-      : setPasswordValidError([
-          {
-            list_title: 'Пароль должен содержать:',
-            item_1: 'от 6 до 8 символов',
-            item_2: 'цифры',
-            item_3: 'заглавные буквы',
-            item_4: 'строчные буквы ',
-            item_5: 'специальные символы',
-          },
-        ]);
     passwordInput.isMatch
       ? setPasswordsIsMatchError('')
       : setPasswordsIsMatchError('Пароли не совпали');
@@ -320,6 +318,10 @@ const SignUpForm = () => {
           handleClearButton(e, () => setAnswerValue(''))
         }
       />
+
+      <span className={styles.hintError}>
+        Секретный вопрос и ответ на него нужны для дальнейшей смены пароля
+      </span>
 
       <FormButton onSubmit={(e) => e.preventDefault()} disabled={!isFormValid}>
         Зарегистрироваться

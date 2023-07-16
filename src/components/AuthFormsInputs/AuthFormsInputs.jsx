@@ -281,7 +281,7 @@ export const ConfirmPasswordInput = ({
           value={value}
           onChange={onChange}
         />
-        
+
         <Label htmlFor={name}>{label}</Label>
 
         <ShowPasswordButton
@@ -342,7 +342,7 @@ export const SecretQuestionInput = ({
           value={value}
           onChange={onChange}
         />
-        
+
         <Label htmlFor={name}>{label}</Label>
 
         <ClearButton
@@ -396,7 +396,7 @@ export const AnswerInput = ({
           value={value}
           onChange={onChange}
         />
-        
+
         <Label htmlFor={name}>{label}</Label>
 
         <ClearButton
@@ -414,9 +414,6 @@ export const AnswerInput = ({
       {!isCustomValid && !isEmpty ? (
         <span className={styles.hintError}>{validError}</span>
       ) : null}
-      <span className={styles.hintError}>
-        Секретный вопрос и ответ на него нужны для дальнейшей смены пароля
-      </span>
     </>
   );
 };

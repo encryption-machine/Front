@@ -4,7 +4,7 @@ import styles from './ChangePasswordForm.module.scss';
 
 const Container = ({ children }) => {
   return (
-    <AuthForms >
+    <AuthForms>
       <h2 className={styles.title}>Восстановление пароля</h2>
       {children}
     </AuthForms>
