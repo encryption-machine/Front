@@ -84,6 +84,7 @@ const SignInForm = observer(() => {
   const handleSubmit = (e) => {
     e.preventDefault();
     resetForm();
+    console.log('submit auth form');
   };
 
   const handleClearButton = (e, callback) => {

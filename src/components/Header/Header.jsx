@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import AuthModal from '../AuthModal/AuthModal';
 import AuthTabs from '../AuthTabs/AuthTabs';
-import ChangePasswordForm from '../ChangePasswordForm';
+import ChangePasswordForm from '../ChangePasswordForm/ChangePasswordForm';
 import { FormGlobalStore as formStore } from '../../stores/';
 import styles from './Header.module.scss';
 import logotype from '../../assets/icons/logotype.svg';
