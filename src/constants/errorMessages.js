@@ -4,10 +4,10 @@ export const composeEmptyErrorMessage = (value) =>
 export const passwordMismatchErrorMessage = 'Пароли не совпали';
 
 export const secretQuestionErrorMessage =
-  'Секретный вопрос должен содержать от 3 до 42 латинских или кирилических букв, состоять из одного слова, без пробелов, цифр и знаков';
+  'Секретный вопрос должен содержать любые символы от 1 до 100 знаков';
 
 export const answerErrorMessage =
-  'Ответ должен содержать от 3 до 42 латинских или кирилических букв, состоять из одного слова, без пробелов, цифр и знаков';
+  'Ответ должен содержать любые символы от 1 до 30 знаков';
 
 export const emailValidErrorMessage = [
   {
@@ -23,7 +23,7 @@ export const emailValidErrorMessage = [
 export const passwordValidErrorMessage = [
   {
     list_title: 'Пароль должен содержать:',
-    item_1: 'от 6 до 8 символов',
+    item_1: 'от 8 до 30 символов',
     item_2: 'цифры',
     item_3: 'заглавные буквы',
     item_4: 'строчные буквы ',
