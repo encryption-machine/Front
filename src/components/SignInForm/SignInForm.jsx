@@ -38,7 +38,7 @@ const SignInForm = observer(() => {
   const passwordInput = useInputValidation({
     checkInputIsEmpty: passwordValue,
     password: passwordValue,
-    length: { min: 6, max: 8 },
+    length: { min: 8, max: 30 },
   });
 
   const emailInput = useInputValidation({

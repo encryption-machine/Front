@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { FormGlobalStore as formStore } from '../../stores/';
-import { answerRegExp } from '../../constants/regExp';
+import { qaRegExp } from '../../constants/regExp';
 import {
   answerErrorMessage,
   composeEmptyErrorMessage,
@@ -67,16 +67,16 @@ const ChangePasswordForm = observer(() => {
   const answerInput = useInputValidation({
     checkInputIsEmpty: answerValue,
     custom: {
-      regExp: answerRegExp,
+      regExp: qaRegExp,
       value: answerValue,
     },
-    length: { min: 3, max: 4 },
+    length: { min: 1, max: 30 },
   });
   const passwordInput = useInputValidation({
     checkInputIsEmpty: passwordsValue.firstPassword,
     password: passwordsValue.firstPassword,
     confirmPassword: passwordsValue.secondPassword,
-    length: { min: 6, max: 8 },
+    length: { min: 8, max: 30 },
   });
 
   const confirmPasswordInput = useInputValidation({
