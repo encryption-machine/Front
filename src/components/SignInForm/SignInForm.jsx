@@ -23,8 +23,17 @@ const SignInForm = observer(() => {
       item_3: '«_», «-», «@» и «.»',
     },
   ];
+  const passwordValidError = [
+    {
+      list_title: 'Пароль должен содержать:',
+      item_1: 'от 6 до 8 символов',
+      item_2: 'цифры',
+      item_3: 'заглавные буквы',
+      item_4: 'строчные буквы ',
+      item_5: 'специальные символы',
+    },
+  ];
   const [firstPasswordError, setFirstPasswordError] = useState('');
-  const [passwordValidError, setPasswordValidError] = useState([]);
 
   // Set show
   const [showPassword, setShowPassword] = useState('password');
@@ -74,18 +83,6 @@ const SignInForm = observer(() => {
     emailInput.isDirty && emailInput.isEmpty
       ? setEmailEmptyError('Поле "E-mail" не может быть пустым')
       : setEmailEmptyError('');
-    passwordInput.isPasswordInputValid
-      ? setPasswordValidError('')
-      : setPasswordValidError([
-          {
-            list_title: 'Пароль должен содержать:',
-            item_1: 'от 6 до 8 символов',
-            item_2: 'цифры',
-            item_3: 'заглавные буквы',
-            item_4: 'строчные буквы ',
-            item_5: 'специальные символы',
-          },
-        ]);
   }, [
     emailInput.isDirty,
     emailInput.isEmailValid,
@@ -128,6 +125,8 @@ const SignInForm = observer(() => {
         onClickClearButton={(e) =>
           handleClearButton(e, () => setEmailValue(''))
         }
+        placeholder="E-mail"
+        label="E-mail"
       />
 
       <PasswordInput
@@ -147,14 +146,11 @@ const SignInForm = observer(() => {
           handleClearButton(e, () => setPasswordValue(''))
         }
         clickShowPassword={clickShowPassword}
-        placeholder='Пароль'
+        placeholder="Пароль"
+        label="Пароль"
       />
 
-      <FormButton
-        disabled={!isFormValid}
-      >
-        Войти
-      </FormButton>
+      <FormButton disabled={!isFormValid}>Войти</FormButton>
       <button
         onClick={formStore.setShowChangePasswordForm}
         className={style.link}

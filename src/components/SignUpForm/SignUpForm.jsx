@@ -232,6 +232,11 @@ const SignUpForm = () => {
         isEmailValid={emailInput.isEmailValid}
         emptyError={emailEmptyError}
         emailValidError={emailValidError}
+        onClickClearButton={(e) =>
+          handleClearButton(e, () => setEmailValue(''))
+        }
+        placeholder="E-mail"
+        label="E-mail"
       />
 
       <PasswordInput
@@ -246,7 +251,8 @@ const SignUpForm = () => {
         isPasswordInputValid={passwordInput.isPasswordInputValid}
         emptyError={firstPasswordError}
         showPassword={showPassword}
-        placeholder='Пароль'
+        placeholder="Пароль"
+        label="Пароль"
         onClickShowButton={(e) => handleShowPassword(e)}
         onClickClearButton={(e) =>
           handleClearButton(e, () =>
@@ -268,7 +274,8 @@ const SignUpForm = () => {
         emptyError={secondPasswordError}
         matchError={passwordsIsMatchError}
         showPassword={showConfirmPassword}
-        placeholder='Ещё раз пароль'
+        placeholder="Ещё раз пароль"
+        label="Ещё раз пароль"
         onClickShowButton={(e) => handleShowConfirmPassword(e)}
         onClickClearButton={(e) =>
           handleClearButton(e, () =>
@@ -289,6 +296,8 @@ const SignUpForm = () => {
         emptyError={secretQuestionEmptyError}
         validError={secretQuestionValidError}
         isCustomValid={secretQuestionInput.isCustomValid}
+        placeholder="Секретный вопрос"
+        label="Секретный вопрос"
         onClickClearButton={(e) =>
           handleClearButton(e, () => setSecretQuestionValue(''))
         }
@@ -305,15 +314,14 @@ const SignUpForm = () => {
         emptyError={answerEmptyError}
         validError={answerValidError}
         isCustomValid={answerInput.isCustomValid}
+        placeholder="Ответ"
+        label="Ответ"
         onClickClearButton={(e) =>
           handleClearButton(e, () => setAnswerValue(''))
         }
       />
 
-      <FormButton
-        onSubmit={(e) => e.preventDefault()}
-        disabled={!isFormValid}
-      >
+      <FormButton onSubmit={(e) => e.preventDefault()} disabled={!isFormValid}>
         Зарегистрироваться
       </FormButton>
     </AuthForms>
