@@ -151,13 +151,13 @@ const SignInForm = observer(() => {
       />
 
       <FormButton disabled={!isFormValid}>Войти</FormButton>
-      <button
+      <span
         onClick={formStore.setShowChangePasswordForm}
         className={style.link}
         type="button"
       >
         Забыли пароль?
-      </button>
+      </span>
     </AuthForms>
   );
 });

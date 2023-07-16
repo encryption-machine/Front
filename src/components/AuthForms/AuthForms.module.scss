@@ -61,9 +61,15 @@
 }
 
 .link {
-  background: $violet;
+  //background: $violet;
   text-align: center;
   margin-top: 8px;
+  color: $white;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    color: $green;
+  }
 }
 
 .hintError {
