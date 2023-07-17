@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react-lite';
 import AuthModal from '../AuthModal/AuthModal';
 import AuthTabs from '../AuthTabs/AuthTabs';
-import ChangePasswordForm from '../ChangePasswordForm';
+import RecoveryPasswordForm from '../RecoveryPasswordForm/RecoveryPasswordForm';
 import { FormGlobalStore as formStore } from '../../stores/';
 import styles from './Header.module.scss';
 import logotype from '../../assets/icons/logotype.svg';
+import { Link } from '../Link/Link';
 
 export const Header = observer(() => {
   const scrollToSection = (id) => {
@@ -17,27 +18,33 @@ export const Header = observer(() => {
       <div className={styles.header_container}>
         <img className={styles.logotype} src={logotype} alt="logo" />
         <nav>
-          <ul>
-            <li>
-              <a href="#ciphers" onClick={() => scrollToSection('ciphers')}>
+          <ul className={styles.list}>
+            <li className={styles.chapter}>
+              <Link
+                href={'#ciphers'}
+                target="_self"
+                onClick={() => scrollToSection('ciphers')}
+              >
                 Шифрование
-              </a>
+              </Link>
             </li>
-            <li>
-              <a
-                href="#aboutCiphers"
+            <li className={styles.chapter}>
+              <Link
+                href={'#aboutCiphers'}
+                target="_self"
                 onClick={() => scrollToSection('aboutCiphers')}
               >
                 О&nbsp;шифрах
-              </a>
+              </Link>
             </li>
-            <li>
-              <a
-                href="#aboutProject"
+            <li className={styles.chapter}>
+              <Link
+                href={'#aboutProject'}
+                target="_self"
                 onClick={() => scrollToSection('aboutProject')}
               >
                 О&nbsp;проекте
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
@@ -54,7 +61,7 @@ export const Header = observer(() => {
             setIsOpen={formStore.setOpenAuthForm}
           >
             {formStore.showAuthForm && <AuthTabs />}
-            {formStore.showChangePasswordForm && <ChangePasswordForm />}
+            {formStore.showRecoveryPasswordForm && <RecoveryPasswordForm />}
           </AuthModal>
         </div>
       </div>

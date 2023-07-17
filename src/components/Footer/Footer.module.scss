@@ -12,23 +12,8 @@
 .footer_container {
   width: calc(100% - 130px * 2);
   margin: 0 auto;
+}
 
-  ul {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-    align-items: center;
-    font-weight: 600;
-    justify-content: space-between;
-  }
-
-  a {
-    text-decoration: none;
-    @include font-source-sans(18px, $gray_dark, 700, 20px);
-  }
-
-  a:hover {
-    color: $green;
-  }
+.telephone {
+  @include font-source-sans(16px, $black, 400, 20px);
 }
