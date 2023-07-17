@@ -1,11 +1,11 @@
-export const BASE_URL = 'http://127.0.0.1:8000/api/v1/';
+export const BASE_URL = 'http://shifmachine.acceleratorpracticum.ru/api/v1/';
 
 function handleResponce(res) {
     if (res.ok) {
-        console.log('111')
         return res.json();
     }
-    return Promise.reject(res.status);
+    console.log(res)
+    return Promise.reject(new Error(res.status))
 };
 
 export const sendEmail = (data) => {
@@ -30,13 +30,13 @@ export const sendSecretQuestion = (id, answer) => {
         },
         body: JSON.stringify({
             id: id,
-            answer: answer
+            answer: answer,
         })
     })
         .then(handleResponce)
 }
 
-export const sendNewPassword = (id, token, password, confirmPassword) => {
+export const sendNewPassword = (id, password, confirmPassword, token) => {
     return fetch(`${BASE_URL}users/reset_password_confirm/`, {
         method: 'POST',
         headers: {
@@ -44,18 +44,20 @@ export const sendNewPassword = (id, token, password, confirmPassword) => {
         },
         body: JSON.stringify({
             id: id,
+            new_password: password,
+            re_new_password: confirmPassword,
             token: token,
-            re_new_password: password,
-            new_password: confirmPassword
+
         })
     })
         .then((res) => {
+            console.log(res)
             if (res.ok) {
-                console.log('111')
-                // return res.json();
+                console.log("oki-doki")
+                return res.json();
             }
-            console.log('TUT I')
-            // return Promise.reject(res.status);
-        }
-        )
+            console.log(res)
+            return Promise.reject(new Error(res.status))
+
+        });
 }

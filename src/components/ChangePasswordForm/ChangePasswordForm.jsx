@@ -19,6 +19,9 @@ import {
   emailValidErrorMessage,
 } from '../../constants/errorMessages';
 
+// тест по отправке апи запроса для восстановления пароля
+import * as apiPasswordRecovery from '../../utils/apiPasswordRecovery';
+
 const ChangePasswordForm = observer(() => {
   const [emailValue, setEmailValue] = useState('');
   const [answerValue, setAnswerValue] = useState('');
@@ -37,6 +40,15 @@ const ChangePasswordForm = observer(() => {
     useState(false);
   const [answerEmptyError, setAnswerEmptyError] = useState('');
   const [answerValidError, setAnswerValidError] = useState('');
+
+  //  переменные для апи запроса по восстановлению пароля
+  const [idUser, setIdUser] = useState('');
+  const [token, setToken] = useState('');
+  const [secretQuestion, setSecretQuestion] = useState('');
+  const [serverError, setServerError] = useState('')
+
+
+
   const handleEmailValue = (e) => {
     setEmailValue(e.target.value);
   };
@@ -76,7 +88,7 @@ const ChangePasswordForm = observer(() => {
     checkInputIsEmpty: passwordsValue.firstPassword,
     password: passwordsValue.firstPassword,
     confirmPassword: passwordsValue.secondPassword,
-    length: { min: 6, max: 8 },
+    length: { min: 8, max: 30 },
   });
 
   const confirmPasswordInput = useInputValidation({
@@ -131,21 +143,67 @@ const ChangePasswordForm = observer(() => {
     e.preventDefault();
     console.log('submit email');
     console.log('click');
-    formStore.setShowChangePasswordFormAnswer(true);
+    // отправка почты на сервера для восстановления пароля
+    apiPasswordRecovery.sendEmail(emailValue)
+      .then((res) => {
+        if (res) {
+          // ответ с сервера, который надо вставить в placeholder формы
+          const question = res.question;
+          const idUser = res.id;
+          setIdUser(idUser);
+          setSecretQuestion(question);
+          formStore.setShowChangePasswordFormAnswer(true);
+        } else {
+          console.log('ERR 1')
+        }
+      })
+      .catch((err) => {
+        setServerError('Пользователь с таким Email не найден')
+        console.log(err, 'Пользователь с таким Email не найден')
+      })
   };
 
   const handleSubmitAnswer = (e) => {
     e.preventDefault();
     console.log('submit answer');
     console.log('click');
-    formStore.setShowChangePasswordFormNewPassword(true);
+
+    apiPasswordRecovery.sendSecretQuestion(idUser, answerValue)
+      .then((result) => {
+        if (result) {
+          // ответ с сервера  - секретный вопрос
+          const token = result.token
+          setToken(token)
+          formStore.setShowChangePasswordFormNewPassword(true);
+        } else {
+          console.log('ERR 3')
+        }
+      })
+      .catch((err) => {
+        setServerError('Неверный ответ')
+        console.log(err, 'Неверный ответ')
+      })
   };
 
   const handleSubmitNewPassword = (e) => {
     e.preventDefault();
     console.log('submit new passwords');
     console.log('click');
-    formStore.setOpenAuthForm(false);
+
+    apiPasswordRecovery.sendNewPassword(idUser, passwordsValue.firstPassword, passwordsValue.secondPassword, token)
+
+      .then((result) => {
+        if (result) {
+          // console.log('!!!result', result)
+          formStore.setOpenAuthForm(false);
+        } else {
+          console.log('!!!ERR 5')
+        }
+      })
+      .catch((err) => {
+        // ошибка если падает запрос
+        console.log('!!!ERR 6', err)
+      })
   };
 
   return (
@@ -171,6 +229,8 @@ const ChangePasswordForm = observer(() => {
               placeholder="E-mail"
               label="E-mail"
             />
+            {/* стилизовать ответ ошибки с сервера. Также надо доработать, чтобы ошибка уходила, если пользователь очистил форму */}
+            {serverError && <div>{serverError}</div>}
 
             <FormButton onClick={(e) => handleSubmitEmail(e)}>Далее</FormButton>
           </div>
@@ -190,12 +250,14 @@ const ChangePasswordForm = observer(() => {
             emptyError={answerEmptyError}
             validError={answerValidError}
             isCustomValid={answerInput.isCustomValid}
-            placeholder="Ответ"
-            label="Ответ"
+            placeholder='Ответ'
+            label={secretQuestion}
             onClickClearButton={(e) =>
               handleClearButton(e, () => setAnswerValue(''))
             }
           />
+          {/* стилизовать ответ ошибки с сервера. Также надо доработать, чтобы ошибка уходила, если пользователь очистил форму */}
+          {serverError && <div>{serverError}</div>}
           <FormButton onClick={(e) => handleSubmitAnswer(e)}>Далее</FormButton>
         </AuthForms>
       )}
