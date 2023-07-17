@@ -139,7 +139,7 @@ const SignInForm = observer(() => {
 
       <FormButton disabled={!isFormValid}>Войти</FormButton>
       <span
-        onClick={() => formStore.setShowChangePasswordForm(true)}
+        onClick={() => formStore.setShowRecoveryPasswordForm(true)}
         className={style.link}
         type="button"
       >

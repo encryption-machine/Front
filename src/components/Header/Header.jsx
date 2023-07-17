@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import AuthModal from '../AuthModal/AuthModal';
 import AuthTabs from '../AuthTabs/AuthTabs';
-import ChangePasswordForm from '../ChangePasswordForm/ChangePasswordForm';
+import RecoveryPasswordForm from '../RecoveryPasswordForm/RecoveryPasswordForm';
 import { FormGlobalStore as formStore } from '../../stores/';
 import styles from './Header.module.scss';
 import logotype from '../../assets/icons/logotype.svg';
@@ -54,7 +54,7 @@ export const Header = observer(() => {
             setIsOpen={formStore.setOpenAuthForm}
           >
             {formStore.showAuthForm && <AuthTabs />}
-            {formStore.showChangePasswordForm && <ChangePasswordForm />}
+            {formStore.showRecoveryPasswordForm && <RecoveryPasswordForm />}
           </AuthModal>
         </div>
       </div>

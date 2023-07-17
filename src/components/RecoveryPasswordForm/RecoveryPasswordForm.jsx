@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { FormGlobalStore as formStore } from '../../stores';
 import { answerRegExp } from '../../constants/regExp';
 import FormButton from '../FormButton/FormButton';
 import useInputValidation from '../../hooks/useInputValidation';
-import styles from './ChangePasswordForm.module.scss';
+import styles from './RecoveryPasswordForm.module.scss';
 import AuthForms from '../AuthForms/AuthForms';
 import {
   EmailInput,
@@ -22,7 +23,7 @@ import {
 // тест по отправке апи запроса для восстановления пароля
 import * as apiPasswordRecovery from '../../utils/apiPasswordRecovery';
 
-const ChangePasswordForm = observer(() => {
+const RecoveryPasswordForm = observer(() => {
   const [emailValue, setEmailValue] = useState('');
   const [answerValue, setAnswerValue] = useState('');
   const [passwordsValue, setPasswordsValue] = useState({
@@ -156,14 +157,14 @@ const ChangePasswordForm = observer(() => {
           const idUser = res.id;
           setIdUser(idUser);
           setSecretQuestion(question);
-          formStore.setShowChangePasswordFormAnswer(true);
+          formStore.setShowRecoveryPasswordFormAnswer(true);
         } else {
-          console.log('ошибка при отправке почты');
+          console.error('ошибка при отправке почты');
         }
       })
       .catch((err) => {
         setServerError('Пользователь с таким Email не найден');
-        console.log('ошибка при отправке почты', err);
+        console.error('ошибка при отправке почты', err);
       });
   };
 
@@ -176,14 +177,14 @@ const ChangePasswordForm = observer(() => {
         if (result) {
           const token = result.token;
           setToken(token);
-          formStore.setShowChangePasswordFormNewPassword(true);
+          formStore.setShowRecoveryPasswordFormNewPassword(true);
         } else {
-          console.log('ошибка при ответе на секретный вопрос');
+          console.error('ошибка при ответе на секретный вопрос');
         }
       })
       .catch((err) => {
         setServerError('Неверный ответ');
-        console.log('ошибка при ответе на секретный вопрос', err);
+        console.error('ошибка при ответе на секретный вопрос', err);
       });
   };
 
@@ -201,18 +202,18 @@ const ChangePasswordForm = observer(() => {
         if (result) {
           formStore.setOpenAuthForm(false);
         } else {
-          console.log('ошибка при изменении пароля');
+          console.error('ошибка при изменении пароля');
         }
       })
       .catch((err) => {
-        console.log('ошибка при изменении пароля', err);
+        console.error('ошибка при изменении пароля', err);
       });
   };
 
   return (
     <>
       <h2 className={styles.title}>Восстановление пароля</h2>
-      {formStore.showChangePasswordFormEmail && (
+      {formStore.showRecoveryPasswordFormEmail && (
         <AuthForms onSubmit={(e) => handleSubmitEmail(e)}>
           <div className={styles.container}>
             <EmailInput
@@ -236,12 +237,19 @@ const ChangePasswordForm = observer(() => {
               <span className={styles.serverError}> {serverError} </span>
             )}
 
-            <FormButton onClick={(e) => handleSubmitEmail(e)}>Далее</FormButton>
+            <FormButton
+              disabled={
+                emailInput.isEmpty || !emailInput.isEmailValid || serverError
+              }
+              onClick={(e) => handleSubmitEmail(e)}
+            >
+              Далее
+            </FormButton>
           </div>
         </AuthForms>
       )}
 
-      {formStore.showChangePasswordFormAnswer && (
+      {formStore.showRecoveryPasswordFormAnswer && (
         <AuthForms onSubmit={(e) => handleSubmitAnswer(e)}>
           <AnswerInput
             value={answerValue}
@@ -263,11 +271,18 @@ const ChangePasswordForm = observer(() => {
           {serverError && (
             <span className={styles.serverError}> {serverError}</span>
           )}
-          <FormButton onClick={(e) => handleSubmitAnswer(e)}>Далее</FormButton>
+          <FormButton
+            disabled={
+              answerInput.isEmpty || !answerInput.isCustomValid || serverError
+            }
+            onClick={(e) => handleSubmitAnswer(e)}
+          >
+            Далее
+          </FormButton>
         </AuthForms>
       )}
 
-      {formStore.showChangePasswordFormNewPassword && (
+      {formStore.showRecoveryPasswordFormNewPassword && (
         <AuthForms onSubmit={(e) => handleSubmitNewPassword(e)}>
           <PasswordInput
             value={passwordsValue.firstPassword}
@@ -314,7 +329,16 @@ const ChangePasswordForm = observer(() => {
             }
             clickShowPassword={clickShowConfirmPassword}
           />
-          <FormButton onClick={(e) => handleSubmitNewPassword(e)}>
+          <FormButton
+            disabled={
+              passwordInput.isEmpty ||
+              confirmPasswordInput.isEmpty ||
+              !passwordInput.isPasswordInputValid ||
+              !passwordInput.isMatch ||
+              serverError
+            }
+            onClick={(e) => handleSubmitNewPassword(e)}
+          >
             Далее
           </FormButton>
         </AuthForms>
@@ -323,4 +347,4 @@ const ChangePasswordForm = observer(() => {
   );
 });
 
-export default ChangePasswordForm;
+export default RecoveryPasswordForm;

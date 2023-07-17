@@ -3,10 +3,10 @@ import { makeAutoObservable } from 'mobx';
 class FormStore {
   openAuthForm = false;
   showAuthForm = false;
-  showChangePasswordForm = false;
-  showChangePasswordFormEmail = false;
-  showChangePasswordFormAnswer = false;
-  showChangePasswordFormNewPassword = false;
+  showRecoveryPasswordForm = false;
+  showRecoveryPasswordFormEmail = false;
+  showRecoveryPasswordFormAnswer = false;
+  showRecoveryPasswordFormNewPassword = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -19,30 +19,30 @@ class FormStore {
 
   setShowAuthForm = (bool) => {
     this.showAuthForm = bool;
-    this.showChangePasswordForm = !bool;
+    this.showRecoveryPasswordForm = !bool;
   };
 
-  setShowChangePasswordForm = (bool) => {
-    this.showChangePasswordForm = bool;
+  setShowRecoveryPasswordForm = (bool) => {
+    this.showRecoveryPasswordForm = bool;
     this.showAuthForm = !bool;
-    this.setShowChangePasswordFormEmail(bool);
+    this.setShowRecoveryPasswordFormEmail(bool);
   };
 
-  setShowChangePasswordFormEmail = (bool) => {
-    this.showChangePasswordFormEmail = bool;
-    this.showChangePasswordFormAnswer = !bool;
-    this.showChangePasswordFormNewPassword = !bool;
+  setShowRecoveryPasswordFormEmail = (bool) => {
+    this.showRecoveryPasswordFormEmail = bool;
+    this.showRecoveryPasswordFormAnswer = !bool;
+    this.showRecoveryPasswordFormNewPassword = !bool;
   };
 
-  setShowChangePasswordFormAnswer = (bool) => {
-    this.showChangePasswordFormAnswer = bool;
-    this.showChangePasswordFormEmail = !bool;
-    this.showChangePasswordFormNewPassword = !bool;
+  setShowRecoveryPasswordFormAnswer = (bool) => {
+    this.showRecoveryPasswordFormAnswer = bool;
+    this.showRecoveryPasswordFormEmail = !bool;
+    this.showRecoveryPasswordFormNewPassword = !bool;
   };
-  setShowChangePasswordFormNewPassword = (bool) => {
-    this.showChangePasswordFormNewPassword = bool;
-    this.showChangePasswordFormEmail = !bool;
-    this.showChangePasswordFormAnswer = !bool;
+  setShowRecoveryPasswordFormNewPassword = (bool) => {
+    this.showRecoveryPasswordFormNewPassword = bool;
+    this.showRecoveryPasswordFormEmail = !bool;
+    this.showRecoveryPasswordFormAnswer = !bool;
   };
 }
 
