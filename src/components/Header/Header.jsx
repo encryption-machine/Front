@@ -17,8 +17,8 @@ export const Header = () => {
       <div className={styles.header_container}>
         <img className={styles.logotype} src={logotype} alt="logo" />
         <nav>
-          <ul>
-            <li>
+          <ul className={styles.list}>
+            <li className={styles.chapter}>
               <Link
                 href={'#ciphers'}
                 target="_self"
@@ -27,7 +27,7 @@ export const Header = () => {
                 Шифрование
               </Link>
             </li>
-            <li>
+            <li className={styles.chapter}>
               <Link
                 href={'#aboutCiphers'}
                 target="_self"
@@ -36,7 +36,7 @@ export const Header = () => {
                 О&nbsp;шифрах
               </Link>
             </li>
-            <li>
+            <li className={styles.chapter}>
               <Link
                 href={'#aboutProject'}
                 target="_self"

@@ -6,7 +6,7 @@
   @include font-source-sans(18px, $white, 500, 20px);
   font-style: normal;
 
-  :hover {
+  &:hover {
     color: $green;
   }
 }
