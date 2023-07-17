@@ -1,6 +1,6 @@
 import style from './AuthForms.module.scss';
 
-const AuthForms = ({ children, title, onSubmit }) => {
+const AuthForms = ({ children, onSubmit }) => {
   return (
     <main className={style.root}>
       <form
@@ -13,7 +13,6 @@ const AuthForms = ({ children, title, onSubmit }) => {
         }}
         className={style.form}
       >
-        <h1 className={style.title}>{title}</h1>
         {children}
       </form>
     </main>
