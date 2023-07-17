@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import cn from 'classnames';
+import { observer } from 'mobx-react';
+import { formStore } from '../../store';
 import AuthForms from '../AuthForms/AuthForms';
+import FormButton from '../FormButton/FormButton';
 import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
 import useInputValidation from '../../hooks/useInputValidation';
 import style from '../AuthForms/AuthForms.module.scss';
@@ -10,7 +11,8 @@ import style from '../AuthForms/AuthForms.module.scss';
 import * as apiPasswordRecovery from '../../utils/apiPasswordRecovery';
 
 
-const SignInForm = () => {
+
+const SignInForm = observer(() => {
   const [passwordValue, setPasswordValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
@@ -34,8 +36,17 @@ const SignInForm = () => {
       item_3: '«_», «-», «@» и «.»',
     },
   ];
+  const passwordValidError = [
+    {
+      list_title: 'Пароль должен содержать:',
+      item_1: 'от 6 до 8 символов',
+      item_2: 'цифры',
+      item_3: 'заглавные буквы',
+      item_4: 'строчные буквы ',
+      item_5: 'специальные символы',
+    },
+  ];
   const [firstPasswordError, setFirstPasswordError] = useState('');
-  const [passwordValidError, setPasswordValidError] = useState([]);
 
   // Set show
   const [showPassword, setShowPassword] = useState('password');
@@ -85,29 +96,6 @@ const SignInForm = () => {
     emailInput.isDirty && emailInput.isEmpty
       ? setEmailEmptyError('Поле "E-mail" не может быть пустым')
       : setEmailEmptyError('');
-    //emailInput.isEmailValid
-    //  ? setEmailValidError('')
-    //  : setEmailValidError([
-    //      {
-    //        error_title: 'Недопустимые символы.',
-    //        list_title: 'Допустимые символы:',
-    //        item_1: 'цифры',
-    //        item_2: 'латинские буквы',
-    //        item_3: '«_», «-», «@» и «.»',
-    //      },
-    //    ]);
-    passwordInput.isPasswordInputValid
-      ? setPasswordValidError('')
-      : setPasswordValidError([
-        {
-          list_title: 'Пароль должен содержать:',
-          item_1: 'от 6 до 8 символов',
-          item_2: 'цифры',
-          item_3: 'заглавные буквы',
-          item_4: 'строчные буквы ',
-          item_5: 'специальные символы',
-        },
-      ]);
   }, [
     emailInput.isDirty,
     emailInput.isEmailValid,
@@ -186,23 +174,34 @@ const SignInForm = () => {
     resetForm();
   };
 
+  const handleClearButton = (e, callback) => {
+    e.preventDefault();
+    callback();
+  };
+
   return (
     <AuthForms onSubmit={handleSubmit}>
       <EmailInput
         value={emailValue}
-        onBlur={(e) => emailInput.onBlur(e)}
+        onBlur={emailInput.onBlur}
+        onFocus={emailInput.onFocus}
+        onChange={handleEmailValue}
         isDirty={emailInput.isDirty}
         isEmpty={emailInput.isEmpty}
+        isFocus={emailInput.isFocus}
         isEmailValid={emailInput.isEmailValid}
         emptyError={emailEmptyError}
-        onChange={handleEmailValue}
         emailValidError={emailValidError}
+        onClickClearButton={(e) =>
+          handleClearButton(e, () => setEmailValue(''))
+        }
+        placeholder="E-mail"
+        label="E-mail"
       />
 
       <PasswordInput
         value={passwordValue}
         onBlur={passwordInput.onBlur}
-        onClick={(e) => handleShowPassword(e)}
         onFocus={passwordInput.onFocus}
         isFocus={passwordInput.isFocus}
         isDirty={passwordInput.isDirty}
@@ -212,21 +211,25 @@ const SignInForm = () => {
         isPasswordInputValid={passwordInput.isPasswordInputValid}
         emptyError={firstPasswordError}
         showPassword={showPassword}
+        onClickShowButton={(e) => handleShowPassword(e)}
+        onClickClearButton={(e) =>
+          handleClearButton(e, () => setPasswordValue(''))
+        }
         clickShowPassword={clickShowPassword}
+        placeholder="Пароль"
+        label="Пароль"
       />
 
+      <FormButton disabled={!isFormValid}>Войти</FormButton>
       <button
-        className={cn(style.button, style.button__wrap)}
-        disabled={!isFormValid}
-        type="submit"
+        onClick={formStore.setShowChangePasswordForm}
+        className={style.link}
+        type="button"
       >
-        Войти
-      </button>
-      <Link to="#" className={style.link}>
         Забыли пароль?
-      </Link>
+      </button>
     </AuthForms>
   );
-};
+});
 
 export default SignInForm;

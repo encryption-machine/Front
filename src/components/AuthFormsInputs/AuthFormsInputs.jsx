@@ -2,41 +2,141 @@ import cn from 'classnames';
 import { nanoid } from 'nanoid';
 import viewPassword from '../../assets/icons/view.svg';
 import hidePassword from '../../assets/icons/hide.svg';
+import clearPassword from '../../assets/icons/close.svg';
 import style from '../AuthForms/AuthForms.module.scss';
 import styleLocal from './AuthFormsInputs.module.scss';
 
+const styles = Object.assign(style, styleLocal);
+
+const setClasses = (dirty, empty, customMatch, focus) => {
+  if ((dirty && empty) || (dirty && !customMatch)) {
+    return cn(
+      styles.input,
+      styles.inputs,
+      styles.label__error,
+      styles.inputs__hint,
+      styles.label__placeholder
+    );
+  } else if (focus && !empty) {
+    return cn(
+      styles.input,
+      styles.inputs,
+      styles.label__focus,
+      styles.label__placeholder
+    );
+  } else if ((dirty && !focus && !empty) || (!dirty && focus && empty)) {
+    return cn(
+      styles.input,
+      styles.inputs,
+      styles.label__empty,
+      styles.label__placeholder
+    );
+  } else {
+    return cn(styles.input, styles.inputs, styles.label__placeholder);
+  }
+};
+
+const ClearButton = ({
+  onBlur,
+  onFocus,
+  onClickClearButton,
+  isFocus,
+  value,
+}) => {
+  return (
+    <button
+      onBlur={() => onBlur}
+      onFocus={() => onFocus}
+      onClick={onClickClearButton}
+      className={
+        !isFocus
+          ? styleLocal.unfocused
+          : cn(styleLocal.focused, styleLocal.clearButton)
+      }
+    >
+      {value ? <img src={clearPassword} alt="Отчистить" /> : null}
+    </button>
+  );
+};
+
+const ShowPasswordButton = ({
+  onBlur,
+  onFocus,
+  onClickShowButton,
+  isFocus,
+  clickShowPassword,
+}) => {
+  return (
+    <button
+      onBlur={onBlur}
+      onFocus={onFocus}
+      onClick={onClickShowButton}
+      className={!isFocus ? styleLocal.unfocused : styleLocal.focused}
+    >
+      {!clickShowPassword ? (
+        <img src={hidePassword} alt="Показать" />
+      ) : (
+        <img src={viewPassword} alt="Скрыть" />
+      )}
+    </button>
+  );
+};
+
+const Label = ({ children, htmlFor }) => {
+  return (
+    <label className={styles.label} htmlFor={htmlFor}>
+      {children}
+    </label>
+  );
+};
+
 export const EmailInput = ({
   value,
+  label,
   onBlur,
+  onFocus,
+  onChange,
   isDirty,
   isEmpty,
-  onChange,
+  isFocus,
   emptyError,
+  placeholder,
   isEmailValid,
   emailValidError,
+  onClickClearButton,
 }) => {
+  const name = 'email';
+
   return (
     <>
       <div
         onBlur={onBlur}
-        className={
-          (isDirty && isEmpty) || (isDirty && !isEmailValid)
-            ? cn(style.inputs, style.inputs__hint_email)
-            : style.inputs
-        }
+        onFocus={onFocus}
+        className={setClasses(isDirty, isEmpty, isEmailValid, isFocus)}
       >
         <input
-          className={style.input}
-          name="email"
+          className={cn(styles.input, styles.textField)}
+          name={name}
           type="text"
-          placeholder="E-mail"
+          placeholder={placeholder}
           value={value}
           onChange={onChange}
+          id={name}
+        />
+
+        <Label htmlFor={name}>{label}</Label>
+
+        <ClearButton
+          onBlur={onBlur}
+          onFocus={onFocus}
+          onClickClearButton={onClickClearButton}
+          isFocus={isFocus}
+          value={value}
         />
       </div>
 
       {isDirty && isEmpty ? (
-        <span className={style.hintError}>{emptyError}</span>
+        <span className={styles.hintError}>{emptyError}</span>
       ) : null}
 
       {isDirty && !isEmailValid && !isEmpty ? (
@@ -44,17 +144,17 @@ export const EmailInput = ({
           {emailValidError.map((error) => {
             return (
               <div
-                className={cn(style.hintError, style.hintError__wrap)}
+                className={cn(styles.hintError, styles.hintError__wrap)}
                 key={nanoid()}
               >
-                <span className={style.hintError__title}>
+                <span className={styles.hintError__title}>
                   {error.error_title}
                 </span>
-                <ul className={style.hintError__list}>
+                <ul className={styles.hintError__list}>
                   {error.list_title}
-                  <li className={style.hintError__item}>{error.item_1}</li>
-                  <li className={style.hintError__item}>{error.item_2}</li>
-                  <li className={style.hintError__item}>{error.item_3}</li>
+                  <li className={styles.hintError__item}>{error.item_1}</li>
+                  <li className={styles.hintError__item}>{error.item_2}</li>
+                  <li className={styles.hintError__item}>{error.item_3}</li>
                 </ul>
               </div>
             );
@@ -67,70 +167,75 @@ export const EmailInput = ({
 
 export const PasswordInput = ({
   value,
+  label,
   onBlur,
-  onClick,
   onFocus,
   isFocus,
   isDirty,
   isEmpty,
   onChange,
   emptyError,
+  placeholder,
   showPassword,
   clickShowPassword,
+  onClickShowButton,
+  onClickClearButton,
   passwordValidError,
   isPasswordInputValid,
 }) => {
+  const name = 'password';
+
   return (
     <>
       <div
         onBlur={onBlur}
         onFocus={onFocus}
-        className={
-          (isDirty && isEmpty) || (isDirty && !isPasswordInputValid)
-            ? cn(
-                style.inputs,
-                style.inputs__hint_password,
-                styleLocal.input__password
-              )
-            : cn(styleLocal.input__password, style.inputs)
-        }
+        className={setClasses(isDirty, isEmpty, isPasswordInputValid, isFocus)}
       >
         <input
-          className={style.input}
-          name="password"
+          className={cn(styles.input, styles.textField)}
+          name={name}
           type={showPassword}
-          placeholder="Пароль"
+          placeholder={placeholder}
           value={value}
           onChange={onChange}
+          id={name}
         />
 
-        <button
+        <Label htmlFor={name}>{label}</Label>
+
+        <ShowPasswordButton
           onBlur={onBlur}
           onFocus={onFocus}
-          onClick={onClick}
-          className={!isFocus ? styleLocal.unfocused : styleLocal.focused}
-        >
-          {clickShowPassword ? (
-            <img src={hidePassword} alt="" />
-          ) : (
-            <img src={viewPassword} alt="" />
-          )}
-        </button>
+          onClickShowButton={onClickShowButton}
+          isFocus={isFocus}
+          clickShowPassword={clickShowPassword}
+        />
+
+        <ClearButton
+          onBlur={onBlur}
+          onFocus={onFocus}
+          onClickClearButton={onClickClearButton}
+          isFocus={isFocus}
+          value={value}
+        />
       </div>
+
       {isDirty && isEmpty ? (
-        <span className={style.hintError}>{emptyError}</span>
+        <span className={styles.hintError}>{emptyError}</span>
       ) : null}
+
       {isDirty && !isPasswordInputValid && !isEmpty ? (
-        <div className={cn(style.hintError, style.hintError__wrap)}>
+        <div className={cn(styles.hintError, styles.hintError__wrap)}>
           {passwordValidError.map((error) => {
             return (
-              <ul key={nanoid()} className={style.hintError__list}>
+              <ul key={nanoid()} className={styles.hintError__list}>
                 {error.list_title}
-                <li className={style.hintError__item}>{error.item_1}</li>
-                <li className={style.hintError__item}>{error.item_2}</li>
-                <li className={style.hintError__item}>{error.item_3}</li>
-                <li className={style.hintError__item}>{error.item_4}</li>
-                <li className={style.hintError__item}>{error.item_5}</li>
+                <li className={styles.hintError__item}>{error.item_1}</li>
+                <li className={styles.hintError__item}>{error.item_2}</li>
+                <li className={styles.hintError__item}>{error.item_3}</li>
+                <li className={styles.hintError__item}>{error.item_4}</li>
+                <li className={styles.hintError__item}>{error.item_5}</li>
               </ul>
             );
           })}
@@ -142,8 +247,8 @@ export const PasswordInput = ({
 
 export const ConfirmPasswordInput = ({
   value,
+  label,
   onBlur,
-  onClick,
   onFocus,
   isFocus,
   isDirty,
@@ -152,96 +257,165 @@ export const ConfirmPasswordInput = ({
   onChange,
   emptyError,
   matchError,
+  placeholder,
   showPassword,
   clickShowPassword,
+  onClickShowButton,
+  onClickClearButton,
 }) => {
+  const name = 'confirm-password';
+
   return (
     <>
       <div
         onBlur={onBlur}
         onFocus={onFocus}
-        className={
-          (isDirty && isEmpty) || (isDirty && !isMatch)
-            ? cn(
-                style.inputs,
-                style.inputs__hint_password,
-                styleLocal.input__password
-              )
-            : cn(styleLocal.input__password, style.inputs)
-        }
+        className={setClasses(isDirty, isEmpty, isMatch, isFocus)}
       >
         <input
-          className={style.input}
-          name="confirmPassword"
+          className={cn(styles.input, styles.textField)}
+          id={name}
+          name={name}
           type={showPassword}
-          placeholder="Еще раз пароль"
+          placeholder={placeholder}
           value={value}
           onChange={onChange}
         />
+        
+        <Label htmlFor={name}>{label}</Label>
 
-        <button
+        <ShowPasswordButton
           onBlur={onBlur}
           onFocus={onFocus}
-          onClick={onClick}
-          className={!isFocus ? styleLocal.unfocused : styleLocal.focused}
-        >
-          {clickShowPassword ? (
-            <img src={hidePassword} alt="" />
-          ) : (
-            <img src={viewPassword} alt="" />
-          )}
-        </button>
+          onClickShowButton={onClickShowButton}
+          isFocus={isFocus}
+          clickShowPassword={clickShowPassword}
+        />
+
+        <ClearButton
+          onBlur={onBlur}
+          onFocus={onFocus}
+          onClickClearButton={onClickClearButton}
+          isFocus={isFocus}
+          value={value}
+        />
       </div>
       {isDirty && isEmpty ? (
-        <span className={style.hintError}>{emptyError}</span>
+        <span className={styles.hintError}>{emptyError}</span>
       ) : null}
       {!isMatch && isDirty && !isEmpty ? (
-        <span className={style.hintError}>{matchError}</span>
+        <span className={styles.hintError}>{matchError}</span>
       ) : null}
     </>
   );
 };
 
-export const SecretWordInput = ({
+export const SecretQuestionInput = ({
   value,
+  label,
   onBlur,
   onFocus,
   isDirty,
   isEmpty,
+  isFocus,
   onChange,
   emptyError,
   validError,
+  placeholder,
   isCustomValid,
+  onClickClearButton,
 }) => {
+  const name = 'secret-question';
+
   return (
     <>
       <div
         onBlur={onBlur}
         onFocus={onFocus}
-        className={
-          (isDirty && isEmpty) || (isDirty && !isCustomValid)
-            ? cn(
-                style.inputs,
-                style.inputs__hint_dafault,
-                styleLocal.input__password
-              )
-            : cn(styleLocal.input__password, style.inputs)
-        }
+        className={setClasses(isDirty, isEmpty, isCustomValid, isFocus)}
       >
         <input
-          placeholder="Секретное слово"
+          id={name}
+          name={name}
+          className={cn(styles.input, styles.textField)}
+          placeholder={placeholder}
           value={value}
           onChange={onChange}
         />
+        
+        <Label htmlFor={name}>{label}</Label>
+
+        <ClearButton
+          onBlur={onBlur}
+          onFocus={onFocus}
+          onClickClearButton={onClickClearButton}
+          isFocus={isFocus}
+          value={value}
+        />
       </div>
+
       {isDirty && isEmpty ? (
-        <span className={style.hintError}>{emptyError}</span>
+        <span className={styles.hintError}>{emptyError}</span>
       ) : null}
       {!isCustomValid && !isEmpty ? (
-        <span className={style.hintError}>{validError}</span>
+        <span className={styles.hintError}>{validError}</span>
       ) : null}
-      <span className={style.hintError}>
-        Секретное слово нужно для дальнейшей смены пароля
+    </>
+  );
+};
+
+export const AnswerInput = ({
+  value,
+  label,
+  onBlur,
+  onFocus,
+  isDirty,
+  isEmpty,
+  isFocus,
+  onChange,
+  emptyError,
+  validError,
+  isCustomValid,
+  placeholder,
+  onClickClearButton,
+}) => {
+  const name = 'answer';
+
+  return (
+    <>
+      <div
+        onBlur={onBlur}
+        onFocus={onFocus}
+        className={setClasses(isDirty, isEmpty, isCustomValid, isFocus)}
+      >
+        <input
+          id={name}
+          name={name}
+          className={cn(styles.input, styles.textField)}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+        />
+        
+        <Label htmlFor={name}>{label}</Label>
+
+        <ClearButton
+          onBlur={onBlur}
+          onFocus={onFocus}
+          onClickClearButton={onClickClearButton}
+          isFocus={isFocus}
+          value={value}
+        />
+      </div>
+
+      {isDirty && isEmpty ? (
+        <span className={styles.hintError}>{emptyError}</span>
+      ) : null}
+      {!isCustomValid && !isEmpty ? (
+        <span className={styles.hintError}>{validError}</span>
+      ) : null}
+      <span className={styles.hintError}>
+        Секретный вопрос и ответ на него нужны для дальнейшей смены пароля
       </span>
     </>
   );
