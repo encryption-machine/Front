@@ -4,27 +4,18 @@ import { FormGlobalStore as formStore } from '../../stores';
 import AuthForms from '../AuthForms/AuthForms';
 import FormButton from '../FormButton/FormButton';
 import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
-import { composeEmptyErrorMessage, passwordValidErrorMessage, emailValidErrorMessage } from '../../constants/errorMessages';
+import {
+  composeEmptyErrorMessage,
+  passwordValidErrorMessage,
+  emailValidErrorMessage,
+} from '../../constants/errorMessages';
 import useInputValidation from '../../hooks/useInputValidation';
 import style from '../AuthForms/AuthForms.module.scss';
-
-// тест по отправке апи запроса для восстановления пароля
-import * as apiPasswordRecovery from '../../utils/apiPasswordRecovery';
-
-
 
 const SignInForm = observer(() => {
   const [passwordValue, setPasswordValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
-
-
-  // тест по отправке апи запроса для восстановления пароля
-  const [idUser, setIdUser] = useState('')
-  const [answer, setAnswer] = useState('one')
-  const [token, setToken] = useState('')
-  const [newPassword, setNewPassword] = useState('!One0987');
-  const [newPasswordConfirm, setNewPasswordConfirm] = useState('!One0987');
 
   // errors
   const [emailEmptyError, setEmailEmptyError] = useState('');
@@ -96,63 +87,6 @@ const SignInForm = observer(() => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // тест по отправке запросов на сервера по восстановлению пароля
-    apiPasswordRecovery.sendEmail(emailValue)
-      .then((res) => {
-        if (res) {
-          // ответ с сервера, который надо вставить в placeholder формы
-          const question = res.question;
-          const idUser = res.id;
-          console.log('res', res)
-          console.log('question', question)
-          console.log('idUser', idUser)
-          setIdUser(idUser)
-          // return question
-        } else {
-          console.log('ERR 1')
-        }
-      })
-      .catch((err) => {
-        if (err === 400) {
-          console.log('Пользователь с таким Email не найден')
-        } else {
-          console.log('ERR 2', err)
-        }
-      })
-
-    apiPasswordRecovery.sendSecretQuestion(idUser, answer)
-      .then((result) => {
-        if (result) {
-          // ответ с сервера, который надо вставить в placeholder формы
-          console.log('result', result)
-          const token = result.token
-          setToken(token)
-          console.log('token', token)
-        } else {
-          console.log('ERR 3')
-        }
-      })
-      .catch((err) => {
-        console.log('ERR 4', err)
-
-      })
-
-    apiPasswordRecovery.sendNewPassword(idUser, token, newPassword, newPasswordConfirm)
-      .then((result) => {
-        if (result) {
-          // ответ с сервера, который надо вставить в placeholder формы
-          console.log('!!!result', result)
-        } else {
-          console.log('!!!ERR 5')
-        }
-      })
-      .catch((err) => {
-        console.log('!!!ERR 6', err)
-
-      })
-
-
     resetForm();
     console.log('submit auth form');
   };

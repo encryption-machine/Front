@@ -45,9 +45,7 @@ const ChangePasswordForm = observer(() => {
   const [idUser, setIdUser] = useState('');
   const [token, setToken] = useState('');
   const [secretQuestion, setSecretQuestion] = useState('');
-  const [serverError, setServerError] = useState('')
-
-
+  const [serverError, setServerError] = useState('');
 
   const handleEmailValue = (e) => {
     setEmailValue(e.target.value);
@@ -121,6 +119,9 @@ const ChangePasswordForm = observer(() => {
     answerInput.isCustomValid
       ? setAnswerValidError('')
       : setAnswerValidError(answerErrorMessage);
+    emailValue || answerValue
+      ? setServerError('')
+      : setServerError(serverError);
   }, [
     answerInput.isCustomValid,
     answerInput.isDirty,
@@ -132,78 +133,80 @@ const ChangePasswordForm = observer(() => {
     passwordInput.isDirty,
     passwordInput.isEmpty,
     passwordInput.isMatch,
+    emailValue,
+    answerValue,
   ]);
 
   const handleClearButton = (e, callback) => {
     e.preventDefault();
     callback();
+    if (serverError) {
+      setServerError('');
+    }
   };
 
   const handleSubmitEmail = (e) => {
     e.preventDefault();
-    console.log('submit email');
-    console.log('click');
     // отправка почты на сервера для восстановления пароля
-    apiPasswordRecovery.sendEmail(emailValue)
+    apiPasswordRecovery
+      .sendEmail(emailValue)
       .then((res) => {
         if (res) {
-          // ответ с сервера, который надо вставить в placeholder формы
           const question = res.question;
           const idUser = res.id;
           setIdUser(idUser);
           setSecretQuestion(question);
           formStore.setShowChangePasswordFormAnswer(true);
         } else {
-          console.log('ERR 1')
+          console.log('ошибка при отправке почты');
         }
       })
       .catch((err) => {
-        setServerError('Пользователь с таким Email не найден')
-        console.log(err, 'Пользователь с таким Email не найден')
-      })
+        setServerError('Пользователь с таким Email не найден');
+        console.log('ошибка при отправке почты', err);
+      });
   };
 
   const handleSubmitAnswer = (e) => {
     e.preventDefault();
-    console.log('submit answer');
-    console.log('click');
-
-    apiPasswordRecovery.sendSecretQuestion(idUser, answerValue)
+    // отправка ответа на секретный вопрос для восстановления пароля
+    apiPasswordRecovery
+      .sendSecretQuestion(idUser, answerValue)
       .then((result) => {
         if (result) {
-          // ответ с сервера  - секретный вопрос
-          const token = result.token
-          setToken(token)
+          const token = result.token;
+          setToken(token);
           formStore.setShowChangePasswordFormNewPassword(true);
         } else {
-          console.log('ERR 3')
+          console.log('ошибка при ответе на секретный вопрос');
         }
       })
       .catch((err) => {
-        setServerError('Неверный ответ')
-        console.log(err, 'Неверный ответ')
-      })
+        setServerError('Неверный ответ');
+        console.log('ошибка при ответе на секретный вопрос', err);
+      });
   };
 
   const handleSubmitNewPassword = (e) => {
     e.preventDefault();
-    console.log('submit new passwords');
-    console.log('click');
 
-    apiPasswordRecovery.sendNewPassword(idUser, passwordsValue.firstPassword, passwordsValue.secondPassword, token)
-
+    apiPasswordRecovery
+      .sendNewPassword(
+        idUser,
+        passwordsValue.firstPassword,
+        passwordsValue.secondPassword,
+        token
+      )
       .then((result) => {
         if (result) {
-          // console.log('!!!result', result)
           formStore.setOpenAuthForm(false);
         } else {
-          console.log('!!!ERR 5')
+          console.log('ошибка при изменении пароля');
         }
       })
       .catch((err) => {
-        // ошибка если падает запрос
-        console.log('!!!ERR 6', err)
-      })
+        console.log('ошибка при изменении пароля', err);
+      });
   };
 
   return (
@@ -229,8 +232,9 @@ const ChangePasswordForm = observer(() => {
               placeholder="E-mail"
               label="E-mail"
             />
-            {/* стилизовать ответ ошибки с сервера. Также надо доработать, чтобы ошибка уходила, если пользователь очистил форму */}
-            {serverError && <div>{serverError}</div>}
+            {serverError && (
+              <span className={styles.serverError}> {serverError} </span>
+            )}
 
             <FormButton onClick={(e) => handleSubmitEmail(e)}>Далее</FormButton>
           </div>
@@ -250,14 +254,15 @@ const ChangePasswordForm = observer(() => {
             emptyError={answerEmptyError}
             validError={answerValidError}
             isCustomValid={answerInput.isCustomValid}
-            placeholder='Ответ'
+            placeholder="Ответ"
             label={secretQuestion}
             onClickClearButton={(e) =>
               handleClearButton(e, () => setAnswerValue(''))
             }
           />
-          {/* стилизовать ответ ошибки с сервера. Также надо доработать, чтобы ошибка уходила, если пользователь очистил форму */}
-          {serverError && <div>{serverError}</div>}
+          {serverError && (
+            <span className={styles.serverError}> {serverError}</span>
+          )}
           <FormButton onClick={(e) => handleSubmitAnswer(e)}>Далее</FormButton>
         </AuthForms>
       )}
@@ -309,7 +314,9 @@ const ChangePasswordForm = observer(() => {
             }
             clickShowPassword={clickShowConfirmPassword}
           />
-          <FormButton onClick={(e) => handleSubmitNewPassword(e)}>Далее</FormButton>
+          <FormButton onClick={(e) => handleSubmitNewPassword(e)}>
+            Далее
+          </FormButton>
         </AuthForms>
       )}
     </>
