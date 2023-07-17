@@ -88,7 +88,7 @@ const useSignupValidator = ({
         length.min &&
         custom.regExp.test(String(custom.value))
       ) {
-        console.log('length');
+        // console.log('length');
         if (
           custom.value.length >= length.min &&
           custom.value.length <= length.max
@@ -126,8 +126,8 @@ const useSignupValidator = ({
       setIsEmpty(null);
     }
 
-    console.log(isEmpty);
-    console.log(checkInputIsEmpty);
+    // console.log(isEmpty);
+    // console.log(checkInputIsEmpty);
   }, [checkInputIsEmpty, isEmpty]);
 
   useEffect(() => {

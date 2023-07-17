@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { FormGlobalStore as formStore } from '../../stores';
 import { answerRegExp } from '../../constants/regExp';
 import FormButton from '../FormButton/FormButton';
 import useInputValidation from '../../hooks/useInputValidation';
-import styles from './ChangePasswordForm.module.scss';
+import styles from './RecoveryPasswordForm.module.scss';
 import AuthForms from '../AuthForms/AuthForms';
 import {
   EmailInput,
@@ -19,7 +20,10 @@ import {
   emailValidErrorMessage,
 } from '../../constants/errorMessages';
 
-const ChangePasswordForm = observer(() => {
+// тест по отправке апи запроса для восстановления пароля
+import * as apiPasswordRecovery from '../../utils/apiPasswordRecovery';
+
+const RecoveryPasswordForm = observer(() => {
   const [emailValue, setEmailValue] = useState('');
   const [answerValue, setAnswerValue] = useState('');
   const [passwordsValue, setPasswordsValue] = useState({
@@ -37,6 +41,13 @@ const ChangePasswordForm = observer(() => {
     useState(false);
   const [answerEmptyError, setAnswerEmptyError] = useState('');
   const [answerValidError, setAnswerValidError] = useState('');
+
+  //  переменные для апи запроса по восстановлению пароля
+  const [idUser, setIdUser] = useState('');
+  const [token, setToken] = useState('');
+  const [secretQuestion, setSecretQuestion] = useState('');
+  const [serverError, setServerError] = useState('');
+
   const handleEmailValue = (e) => {
     setEmailValue(e.target.value);
   };
@@ -76,7 +87,7 @@ const ChangePasswordForm = observer(() => {
     checkInputIsEmpty: passwordsValue.firstPassword,
     password: passwordsValue.firstPassword,
     confirmPassword: passwordsValue.secondPassword,
-    length: { min: 6, max: 8 },
+    length: { min: 8, max: 30 },
   });
 
   const confirmPasswordInput = useInputValidation({
@@ -109,6 +120,9 @@ const ChangePasswordForm = observer(() => {
     answerInput.isCustomValid
       ? setAnswerValidError('')
       : setAnswerValidError(answerErrorMessage);
+    emailValue || answerValue
+      ? setServerError('')
+      : setServerError(serverError);
   }, [
     answerInput.isCustomValid,
     answerInput.isDirty,
@@ -120,38 +134,86 @@ const ChangePasswordForm = observer(() => {
     passwordInput.isDirty,
     passwordInput.isEmpty,
     passwordInput.isMatch,
+    emailValue,
+    answerValue,
   ]);
 
   const handleClearButton = (e, callback) => {
     e.preventDefault();
     callback();
+    if (serverError) {
+      setServerError('');
+    }
   };
 
   const handleSubmitEmail = (e) => {
     e.preventDefault();
-    console.log('submit email');
-    console.log('click');
-    formStore.setShowChangePasswordFormAnswer(true);
+    // отправка почты на сервера для восстановления пароля
+    apiPasswordRecovery
+      .sendEmail(emailValue)
+      .then((res) => {
+        if (res) {
+          const question = res.question;
+          const idUser = res.id;
+          setIdUser(idUser);
+          setSecretQuestion(question);
+          formStore.setShowRecoveryPasswordFormAnswer(true);
+        } else {
+          console.error('ошибка при отправке почты');
+        }
+      })
+      .catch((err) => {
+        setServerError('Пользователь с таким Email не найден');
+        console.error('ошибка при отправке почты', err);
+      });
   };
 
   const handleSubmitAnswer = (e) => {
     e.preventDefault();
-    console.log('submit answer');
-    console.log('click');
-    formStore.setShowChangePasswordFormNewPassword(true);
+    // отправка ответа на секретный вопрос для восстановления пароля
+    apiPasswordRecovery
+      .sendSecretQuestion(idUser, answerValue)
+      .then((result) => {
+        if (result) {
+          const token = result.token;
+          setToken(token);
+          formStore.setShowRecoveryPasswordFormNewPassword(true);
+        } else {
+          console.error('ошибка при ответе на секретный вопрос');
+        }
+      })
+      .catch((err) => {
+        setServerError('Неверный ответ');
+        console.error('ошибка при ответе на секретный вопрос', err);
+      });
   };
 
   const handleSubmitNewPassword = (e) => {
     e.preventDefault();
-    console.log('submit new passwords');
-    console.log('click');
-    formStore.setOpenAuthForm(false);
+
+    apiPasswordRecovery
+      .sendNewPassword(
+        idUser,
+        passwordsValue.firstPassword,
+        passwordsValue.secondPassword,
+        token
+      )
+      .then((result) => {
+        if (result) {
+          formStore.setOpenAuthForm(false);
+        } else {
+          console.error('ошибка при изменении пароля');
+        }
+      })
+      .catch((err) => {
+        console.error('ошибка при изменении пароля', err);
+      });
   };
 
   return (
     <>
       <h2 className={styles.title}>Восстановление пароля</h2>
-      {formStore.showChangePasswordFormEmail && (
+      {formStore.showRecoveryPasswordFormEmail && (
         <AuthForms onSubmit={(e) => handleSubmitEmail(e)}>
           <div className={styles.container}>
             <EmailInput
@@ -171,13 +233,23 @@ const ChangePasswordForm = observer(() => {
               placeholder="E-mail"
               label="E-mail"
             />
+            {serverError && (
+              <span className={styles.serverError}> {serverError} </span>
+            )}
 
-            <FormButton onClick={(e) => handleSubmitEmail(e)}>Далее</FormButton>
+            <FormButton
+              disabled={
+                emailInput.isEmpty || !emailInput.isEmailValid || serverError
+              }
+              onClick={(e) => handleSubmitEmail(e)}
+            >
+              Далее
+            </FormButton>
           </div>
         </AuthForms>
       )}
 
-      {formStore.showChangePasswordFormAnswer && (
+      {formStore.showRecoveryPasswordFormAnswer && (
         <AuthForms onSubmit={(e) => handleSubmitAnswer(e)}>
           <AnswerInput
             value={answerValue}
@@ -191,16 +263,26 @@ const ChangePasswordForm = observer(() => {
             validError={answerValidError}
             isCustomValid={answerInput.isCustomValid}
             placeholder="Ответ"
-            label="Ответ"
+            label={secretQuestion}
             onClickClearButton={(e) =>
               handleClearButton(e, () => setAnswerValue(''))
             }
           />
-          <FormButton onClick={(e) => handleSubmitAnswer(e)}>Далее</FormButton>
+          {serverError && (
+            <span className={styles.serverError}> {serverError}</span>
+          )}
+          <FormButton
+            disabled={
+              answerInput.isEmpty || !answerInput.isCustomValid || serverError
+            }
+            onClick={(e) => handleSubmitAnswer(e)}
+          >
+            Далее
+          </FormButton>
         </AuthForms>
       )}
 
-      {formStore.showChangePasswordFormNewPassword && (
+      {formStore.showRecoveryPasswordFormNewPassword && (
         <AuthForms onSubmit={(e) => handleSubmitNewPassword(e)}>
           <PasswordInput
             value={passwordsValue.firstPassword}
@@ -247,11 +329,22 @@ const ChangePasswordForm = observer(() => {
             }
             clickShowPassword={clickShowConfirmPassword}
           />
-          <FormButton onClick={(e) => handleSubmitNewPassword(e)}>Далее</FormButton>
+          <FormButton
+            disabled={
+              passwordInput.isEmpty ||
+              confirmPasswordInput.isEmpty ||
+              !passwordInput.isPasswordInputValid ||
+              !passwordInput.isMatch ||
+              serverError
+            }
+            onClick={(e) => handleSubmitNewPassword(e)}
+          >
+            Далее
+          </FormButton>
         </AuthForms>
       )}
     </>
   );
 });
 
-export default ChangePasswordForm;
+export default RecoveryPasswordForm;

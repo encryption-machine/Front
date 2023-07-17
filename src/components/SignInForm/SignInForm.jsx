@@ -4,7 +4,11 @@ import { FormGlobalStore as formStore } from '../../stores';
 import AuthForms from '../AuthForms/AuthForms';
 import FormButton from '../FormButton/FormButton';
 import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
-import { composeEmptyErrorMessage, passwordValidErrorMessage, emailValidErrorMessage } from '../../constants/errorMessages';
+import {
+  composeEmptyErrorMessage,
+  passwordValidErrorMessage,
+  emailValidErrorMessage,
+} from '../../constants/errorMessages';
 import useInputValidation from '../../hooks/useInputValidation';
 import style from '../AuthForms/AuthForms.module.scss';
 
@@ -135,7 +139,7 @@ const SignInForm = observer(() => {
 
       <FormButton disabled={!isFormValid}>Войти</FormButton>
       <span
-        onClick={() => formStore.setShowChangePasswordForm(true)}
+        onClick={() => formStore.setShowRecoveryPasswordForm(true)}
         className={style.link}
         type="button"
       >
