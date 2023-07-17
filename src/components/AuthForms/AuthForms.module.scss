@@ -61,9 +61,15 @@
 }
 
 .link {
-  background: $violet;
+  //background: $violet;
   text-align: center;
   margin-top: 8px;
+  color: $white;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    color: $green;
+  }
 }
 
 .hintError {
@@ -80,6 +86,8 @@
 .hintError__wrap {
   display: flex !important;
   flex-direction: column;
+  align-items: flex-start !important;
+  gap: 7px;
 }
 
 .hintError__title {

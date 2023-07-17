@@ -1,11 +1,12 @@
 import { makeAutoObservable } from 'mobx';
 
-class createStore {
+class FormStore {
   openAuthForm = false;
   showAuthForm = false;
   showChangePasswordForm = false;
   showChangePasswordFormEmail = false;
   showChangePasswordFormAnswer = false;
+  showChangePasswordFormNewPassword = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -13,7 +14,7 @@ class createStore {
 
   setOpenAuthForm = (bool) => {
     this.openAuthForm = bool;
-    this.setShowAuthForm(bool)
+    this.setShowAuthForm(bool);
   };
 
   setShowAuthForm = (bool) => {
@@ -24,18 +25,25 @@ class createStore {
   setShowChangePasswordForm = (bool) => {
     this.showChangePasswordForm = bool;
     this.showAuthForm = !bool;
-    this.setShowChangePasswordFormEmail(bool)
+    this.setShowChangePasswordFormEmail(bool);
   };
 
   setShowChangePasswordFormEmail = (bool) => {
     this.showChangePasswordFormEmail = bool;
     this.showChangePasswordFormAnswer = !bool;
+    this.showChangePasswordFormNewPassword = !bool;
   };
 
   setShowChangePasswordFormAnswer = (bool) => {
     this.showChangePasswordFormAnswer = bool;
     this.showChangePasswordFormEmail = !bool;
+    this.showChangePasswordFormNewPassword = !bool;
+  };
+  setShowChangePasswordFormNewPassword = (bool) => {
+    this.showChangePasswordFormNewPassword = bool;
+    this.showChangePasswordFormEmail = !bool;
+    this.showChangePasswordFormAnswer = !bool;
   };
 }
 
-export const formStore = new createStore();
+export default FormStore;
