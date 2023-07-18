@@ -1,5 +1,5 @@
 // авторизация
-const BASE_URL = 'http://127.0.0.1:8000/api/v1';
+const BASE_URL = 'http://shifmachine.acceleratorpracticum.ru/api/v1/';
 
 const getResponseData = (res) => {
   return res

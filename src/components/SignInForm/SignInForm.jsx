@@ -28,6 +28,8 @@ const SignInForm = ({ onLogin, textError, loggedIn }) => {
   // Set show
   const [showPassword, setShowPassword] = useState('password');
   const [clickShowPassword, setClickShowPassword] = useState(false);
+  // const [errorText, setErrorText] = useState(textError);
+  console.log(textError, 'errorText');
 
   // handlers
   const handleFirstPasswordValue = (e) => {
@@ -151,7 +153,8 @@ const SignInForm = ({ onLogin, textError, loggedIn }) => {
         showPassword={showPassword}
         clickShowPassword={clickShowPassword}
       />
-      {!loggedIn && <span className={style.textError}>
+      
+      { <span className={style.textError}>
         {textError}
       </span>}
 

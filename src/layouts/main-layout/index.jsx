@@ -16,6 +16,7 @@ export default function MainLayout() {
    const [modalOpen, setModalOpen] = useState(false);
    
    const handleLogin = (email, password) => {
+    setTextError('');
      return postApiAutorisation(email, password)
      .then((data) =>{
        //в (data) должны прийти два токена access и refresh 
@@ -26,7 +27,7 @@ export default function MainLayout() {
          //если получили токен доступа access
          //токен доступа access в куки, максимальное время хранения 1 час (max-age=3600)?
          document.cookie = `access=${data.access}; max-age=3600`;
-
+        
          //делаем стейт залогиненного
          setLoggedIn(true);
          //и закрываем попап формы
@@ -82,8 +83,10 @@ export default function MainLayout() {
     const handleClick = () => { // общая функция для закрытия и открытия попапа
       if(modalOpen) {
         setModalOpen(false);
+        setTextError('');
       } else {
         setModalOpen(true);
+        
       }
       
     }
