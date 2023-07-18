@@ -1,10 +1,18 @@
 import style from './AuthForms.module.scss';
 
-const AuthForms = ({ children, title }) => {
+const AuthForms = ({ children, onSubmit }) => {
   return (
     <main className={style.root}>
-      <form className={style.form}>
-        <h1 className={style.title}>{title}</h1>
+      <form
+        onSubmit={onSubmit}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            console.log('Enter press');
+            onSubmit(e);
+          }
+        }}
+        className={style.form}
+      >
         {children}
       </form>
     </main>

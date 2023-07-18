@@ -1,6 +1,7 @@
 @import 'font-variables';
 @import 'mixins';
 @import 'colors';
+@import 'normalize';
 
 body,
 button,
@@ -25,4 +26,3 @@ body * {
   box-sizing: border-box;
   // background-color: $background;
 }
-

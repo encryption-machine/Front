@@ -8,7 +8,7 @@ const AboutCiphers = () => {
     <section className={styles.aboutCiphers} id="aboutCiphers">
       <h2 className={styles.aboutCiphers_title}>О шифрах</h2>
       <Accordion ciphersInfo={ciphersInfo}/>
-      <Flipped ciphersInfo={ciphersInfo}/>
+      //<Flipped ciphersInfo={ciphersInfo}/>
     </section>
   );
 };

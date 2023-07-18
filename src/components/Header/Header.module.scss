@@ -20,35 +20,26 @@
   justify-content: space-between;
   align-items: center;
 
-  .logotype{
+  .logotype {
     background-color: $black;
     height: 80px;
     width: 80px;
   }
 
-  ul {
+  .list {
     margin: 0;
     padding: 0;
     list-style: none;
     display: flex;
   }
 
-  li {
+  .chapter {
     padding-right: 32px;
     text-align: center;
-  }
 
-  li:last-of-type {
-    padding-right: 0;
-  }
-
-  a {
-    text-decoration: none;
-    @include font-source-sans(18px, $white, 500, 20px);
-    font-style: normal;
-  }
-  a:hover {
-    color: $green;
+    &:last-of-type {
+      padding-right: 0;
+    }
   }
 }
 
@@ -57,23 +48,18 @@
   position: relative;
   justify-content: flex-end;
   align-items: center;
+}
 
-  div {
-    display: flex;
-    align-items: center;
-  }
+.button_header {
+  height: 24px;
+  @include font-source-sans(18px, $white, 500, 20px);
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  margin: 0;
 
-  .button_header {
-    height: 24px;
-    @include font-source-sans(18px, $white, 500, 20px);
-    background-color: transparent;
-    cursor: pointer;
-    border: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .button_header:hover {
+  &:hover {
     color: $green;
   }
 }

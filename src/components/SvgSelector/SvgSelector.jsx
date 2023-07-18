@@ -14,16 +14,16 @@ const SvgSelector = ({ name }) => {
           <path
             d="M25 70C33.2843 70 40 63.2843 40 55C40 46.7157 33.2843 40 25 40C16.7157 40 10 46.7157 10 55C10 63.2843 16.7157 70 25 70Z"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M70 10L36.25 43.75M62.5 17.5L70 25"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       );
@@ -39,9 +39,9 @@ const SvgSelector = ({ name }) => {
           <path
             d="M49.5 7L30.5 73.5M21 49.75L2 30.75L21 11.75M59 68.75L78 49.75L59 30.75"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       );
@@ -57,93 +57,93 @@ const SvgSelector = ({ name }) => {
           <path
             d="M3 32.9004H77"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M6.7002 7V21.8"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M6.7002 43.9922V66.1988"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M33.3398 7V21.8"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M33.3398 44V73.6"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M59.9805 7V21.8"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M73.2998 7V21.8"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M59.9805 44V58.8"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M20.0205 7V21.8"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M20.0205 44V58.8"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M46.6602 7V21.8"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M46.6602 44V58.8"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M73.2998 44V66.2"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       );
@@ -265,9 +265,9 @@ const SvgSelector = ({ name }) => {
           <path
             d="M3 21.5V3H21.5M21.5 77H3V58.5M77 58.5V77H58.5M58.5 3H77V21.5M11.2222 40H68.7778"
             stroke="#CAF23A"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       );

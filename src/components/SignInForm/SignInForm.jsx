@@ -1,157 +1,152 @@
-/* eslint-disable default-case */
-/* eslint-disable no-undef */
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import cn from 'classnames';
+import { observer } from 'mobx-react-lite';
+import { FormGlobalStore as formStore } from '../../stores';
 import AuthForms from '../AuthForms/AuthForms';
-import viewPassword from '../../assets/icons/view.svg';
-import hidePassword from '../../assets/icons/hide.svg';
+import FormButton from '../FormButton/FormButton';
+import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
+import {
+  composeEmptyErrorMessage,
+  passwordValidErrorMessage,
+  emailValidErrorMessage,
+} from '../../constants/errorMessages';
+import useInputValidation from '../../hooks/useInputValidation';
 import style from '../AuthForms/AuthForms.module.scss';
-import styleLocal from './SignInForm.module.scss';
 
-const SignInForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailDirty, setEmailDirty] = useState(false);
-  const [passwordDirty, setPasswordDirty] = useState(false);
-  const [emailError, setEmailError] = useState(
-    'Поле "Email" не может быть пустым'
-  );
-  const [passwordError, setPasswordError] = useState(
-    'Поле "Пароль" не может быть пустым'
-  );
-  const [formValid, setFormValid] = useState(false);
+const SignInForm = observer(() => {
+  const [passwordValue, setPasswordValue] = useState('');
+  const [emailValue, setEmailValue] = useState('');
+  const [isFormValid, setIsFormValid] = useState(false);
 
+  // errors
+  const [emailEmptyError, setEmailEmptyError] = useState('');
+  const [firstPasswordError, setFirstPasswordError] = useState('');
+
+  // Set show
   const [showPassword, setShowPassword] = useState('password');
   const [clickShowPassword, setClickShowPassword] = useState(false);
+
+  // handlers
+  const handleFirstPasswordValue = (e) => {
+    setPasswordValue(e.target.value);
+  };
+
+  const handleEmailValue = (e) => {
+    setEmailValue(e.target.value);
+  };
 
   const handleShowPassword = (e) => {
     e.preventDefault();
     setClickShowPassword(!clickShowPassword);
   };
 
+  const passwordInput = useInputValidation({
+    checkInputIsEmpty: passwordValue,
+    password: passwordValue,
+    length: { min: 6, max: 8 },
+  });
+
+  const emailInput = useInputValidation({
+    checkInputIsEmpty: emailValue,
+    email: emailValue,
+  });
+
+  useEffect(() => {
+    passwordInput.isPasswordInputValid && emailInput.isEmailValid
+      ? setIsFormValid(true)
+      : setIsFormValid(false);
+  }, [emailInput.isEmailValid, passwordInput.isPasswordInputValid]);
+
+  // Change show passwords
   useEffect(() => {
     clickShowPassword ? setShowPassword('text') : setShowPassword('password');
   }, [clickShowPassword]);
 
+  // Set errors
   useEffect(() => {
-    if (!emailError && !passwordError) {
-      setFormValid(true);
-    } else {
-      setFormValid(false);
-    }
-  }, [emailError, passwordError]);
+    passwordInput.isDirty && passwordInput.isEmpty
+      ? setFirstPasswordError(composeEmptyErrorMessage('Пароль'))
+      : setFirstPasswordError('');
+    emailInput.isDirty && emailInput.isEmpty
+      ? setEmailEmptyError(composeEmptyErrorMessage('E-mail'))
+      : setEmailEmptyError('');
+  }, [
+    emailInput.isDirty,
+    emailInput.isEmailValid,
+    passwordInput.isDirty,
+    passwordInput.isEmpty,
+    emailInput.isEmpty,
+    passwordInput.isPasswordInputValid,
+    passwordInput.isMatch,
+  ]);
 
-  const emailHandler = (e) => {
-    setEmail(e.target.value);
-    const re =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!re.test(String(e.target.value).toLowerCase())) {
-      setEmailError(
-        'Не допустимые символы. Допустимые символы: цифры, латинские буквы, «_», «-», «‎@» и «.»'
-      );
-    } else {
-      setEmailError('');
-    }
+  const resetForm = () => {
+    setEmailValue('');
+    setPasswordValue('');
+    setIsFormValid(false);
   };
 
-  const passwordHandler = (e) => {
-    setPassword(e.target.value);
-    if (e.target.value.length < 6 || e.target.value.length > 8) {
-      setPasswordError(
-        'Пароль должен содержать от 6 до 8 символов, включая, один цифровой и один не алфавитно цифровой символ'
-      );
-      if (!e.target.value) {
-        setPasswordError('Поле "Пароль" не может быть пустым');
-      }
-    } else {
-      setPasswordError('');
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    resetForm();
+    console.log('submit auth form');
   };
 
-  const blurHandler = (e) => {
-    switch (e.target.name) {
-      case 'email':
-        setEmailDirty(true);
-        break;
-      case 'password':
-        setPasswordDirty(true);
-        break;
-      case 'confirm password':
-        setConfirmPasswordDirty(true);
-        break;
-    }
+  const handleClearButton = (e, callback) => {
+    e.preventDefault();
+    callback();
   };
 
   return (
-    <AuthForms>
-      <div
-        className={
-          emailDirty && emailError
-            ? cn(style.inputs, style.inputs__hint)
-            : style.inputs
+    <AuthForms onSubmit={handleSubmit}>
+      <EmailInput
+        value={emailValue}
+        onBlur={emailInput.onBlur}
+        onFocus={emailInput.onFocus}
+        onChange={handleEmailValue}
+        isDirty={emailInput.isDirty}
+        isEmpty={emailInput.isEmpty}
+        isFocus={emailInput.isFocus}
+        isEmailValid={emailInput.isEmailValid}
+        emptyError={emailEmptyError}
+        emailValidError={emailValidErrorMessage}
+        onClickClearButton={(e) =>
+          handleClearButton(e, () => setEmailValue(''))
         }
-      >
-        {' '}
-        <input
-          onBlur={(e) => blurHandler(e)}
-          name="email"
-          type="text"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => emailHandler(e)}
-        />
-      </div>
-      {emailDirty && emailError && (
-        <span className={style.hintError}>{emailError}</span>
-      )}
+        placeholder="E-mail"
+        label="E-mail"
+      />
 
-      <div
-        className={
-          passwordDirty && passwordError
-            ? cn(styleLocal.input__password, style.inputs, style.inputs__hint)
-            : cn(styleLocal.input__password, style.inputs)
+      <PasswordInput
+        value={passwordValue}
+        onBlur={passwordInput.onBlur}
+        onFocus={passwordInput.onFocus}
+        isFocus={passwordInput.isFocus}
+        isDirty={passwordInput.isDirty}
+        isEmpty={passwordInput.isEmpty}
+        onChange={handleFirstPasswordValue}
+        passwordValidError={passwordValidErrorMessage}
+        isPasswordInputValid={passwordInput.isPasswordInputValid}
+        emptyError={firstPasswordError}
+        showPassword={showPassword}
+        onClickShowButton={(e) => handleShowPassword(e)}
+        onClickClearButton={(e) =>
+          handleClearButton(e, () => setPasswordValue(''))
         }
+        clickShowPassword={clickShowPassword}
+        placeholder="Пароль"
+        label="Пароль"
+      />
+
+      <FormButton disabled={!isFormValid}>Войти</FormButton>
+      <span
+        onClick={() => formStore.setShowRecoveryPasswordForm(true)}
+        className={style.link}
+        type="button"
       >
-        {' '}
-        <input
-          onBlur={(e) => blurHandler(e)}
-          name="password"
-          type={showPassword}
-          placeholder="Пароль"
-          value={password}
-          onChange={(e) => passwordHandler(e)}
-        />
-        <button
-          onBlur={(e) => blurHandler(e)}
-          //onFocus={(e) => e.target.value}
-          onClick={(e) => handleShowPassword(e)}
-          //className={
-          //  styleLocal.unfocused
-          //}
-        >
-          {clickShowPassword ? (
-            <img src={hidePassword} alt="" />
-          ) : (
-            <img src={viewPassword} alt="" />
-          )}
-        </button>
-      </div>
-      {passwordDirty && passwordError && (
-        <span className={style.hintError}>{passwordError}</span>
-      )}
-      <button
-        className={cn(style.button, style.button__wrap)}
-        disabled={!formValid}
-        type="submit"
-      >
-        Войти
-      </button>
-      <Link to="#" className={styleLocal.link}>
         Забыли пароль?
-      </Link>
+      </span>
     </AuthForms>
   );
-};
+});
 
 export default SignInForm;
