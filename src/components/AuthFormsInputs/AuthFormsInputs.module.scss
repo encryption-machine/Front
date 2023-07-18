@@ -1,64 +1,10 @@
+@import '../../styles/colors.scss';
+
 .confirm {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   gap: 20px;
-}
-
-img {
-  background: #fff;
-}
-
-.confirm__text {
-  text-align: start;
-}
-
-.red {
-  color: red;
-}
-
-.green {
-  color: green;
-}
-
-.input__password {
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 10px;
-}
-
-.input__password input {
-  //border: 1px solid black;
-  border: none;
-  border-radius: 10px;
-  background: transparent;
-  width: 100%;
-  outline: none;
-}
-
-.input__password button {
-  //border: 1px solid black;
-  border: none;
-  border-radius: 10px;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-:root {
-  --x: fit-content;
-}
-
-.slideUp {
-  height: 120px;
-  transition: all 0.5s cubic-bezier(0, 1, 0.5, 1);
-}
-.slideDown {
-  height: 0;
-  z-index: -99999;
-  transition: all 0.5s cubic-bezier(0, 1, 0.5, 1);
 }
 
 .unfocused {
@@ -67,4 +13,64 @@ img {
 
 .focused {
   opacity: 1;
+}
+
+.clearButton {
+  margin-left: 12px;
+}
+
+.label {
+  display: block;
+  color: $dark-gray;
+  font-size: 16px;
+}
+
+.label__placeholder {
+  position: relative;
+}
+
+.label__placeholder .label {
+  position: absolute;
+  top: 25%;
+  left: 12px;
+  height: 100%;
+  pointer-events: none;
+  transform-origin: 0 0;
+  transition: all 0.25s ease-in-out;
+}
+
+.label__placeholder .textField::-moz-placeholder {
+  color: transparent;
+}
+
+.label__placeholder .textField::placeholder {
+  color: transparent;
+}
+
+%floating {
+  font-size: 12px;
+  font-weight: 700;
+  background: $white;
+  border-radius: 4px;
+  padding: 1px 5px;
+  position: absolute;
+  left: 8px;
+  top: -8px;
+  height: fit-content;
+  transition: all 0.15s ease-in;
+}
+
+.label__error > .label {
+  color: $red;
+  @extend %floating;
+}
+
+.label__focus > .label {
+  color: $violet;
+  @extend %floating;
+}
+
+.label__empty > .label {
+  opacity: 0;
+  transition: all 0.15s ease-in;
 }

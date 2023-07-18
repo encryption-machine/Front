@@ -1,8 +1,13 @@
+import { observer } from 'mobx-react-lite';
 import AuthModal from '../AuthModal/AuthModal';
+import AuthTabs from '../AuthTabs/AuthTabs';
+import RecoveryPasswordForm from '../RecoveryPasswordForm/RecoveryPasswordForm';
+import { FormGlobalStore as formStore } from '../../stores/';
 import styles from './Header.module.scss';
 import logotype from '../../assets/icons/logotype.svg';
+import { CustomLink } from '../CustomLink/CustomLink';
 
-export const Header = ({ loggedIn, onLogin, textError, signOut, onClickOpen }) => {
+export const Header = observer(({ onLogin, textError, loggedIn, signOut }) => {
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -14,40 +19,44 @@ export const Header = ({ loggedIn, onLogin, textError, signOut, onClickOpen }) =
       <div className={styles.header_container}>
         <img className={styles.logotype} src={logotype} alt="logo" />
         <nav>
-          <ul>
-            <li>
-              <a href="#ciphers" onClick={() => scrollToSection('ciphers')}>
-                Шифрование
-              </a>
-            </li>
-            <li>
-              <a
-                href="#aboutProject"
-                onClick={() => scrollToSection('aboutProject')}
+          <ul className={styles.list}>
+            <li className={styles.chapter}>
+              <CustomLink
+                href={'#ciphers'}
+                target="_self"
+                onClick={() => scrollToSection('ciphers')}
               >
-                О проекте
-              </a>
+                Шифрование
+              </CustomLink>
             </li>
-            <li>
-              <a
-                href="#aboutCiphers"
+            <li className={styles.chapter}>
+              <CustomLink
+                href={'#aboutCiphers'}
+                target="_self"
                 onClick={() => scrollToSection('aboutCiphers')}
               >
-                О шифрах
-              </a>
+                О&nbsp;шифрах
+              </CustomLink>
+            </li>
+            <li className={styles.chapter}>
+              <CustomLink
+                href={'#aboutProject'}
+                target="_self"
+                onClick={() => scrollToSection('aboutProject')}
+              >
+                О&nbsp;проекте
+              </CustomLink>
             </li>
           </ul>
         </nav>
         <div className={styles.entrance}>
-          {!loggedIn && <button
+        {!loggedIn && <button
             className={styles.button_header}
             type="button"
-            // onClick={setModalOpen}
-            onClick={onClickOpen} // новый код
+            onClick={() => formStore.setOpenAuthForm(true)}
           >
             Войти
           </button>}
-          {/* /////////Авторизация////// */}
           {loggedIn && <button
             className={styles.button_header}
             type="button"
@@ -55,10 +64,16 @@ export const Header = ({ loggedIn, onLogin, textError, signOut, onClickOpen }) =
           >
             Выйти
           </button>}
-          {/* <AuthModal isOpen={modalOpen} setIsOpen={setModalOpen} loggedIn={loggedIn} onLogin={onLogin} textError={textError}/> */}
-          <AuthModal onClickOpen={onClickOpen} loggedIn={loggedIn} onLogin={onLogin} textError={textError}/>
+          <AuthModal
+            isOpen={formStore.openAuthForm}
+            setIsOpen={formStore.setOpenAuthForm}
+          >
+            {formStore.showAuthForm && <AuthTabs onLogin={onLogin}  loggedIn={loggedIn} textError={textError} />}
+            {formStore.showRecoveryPasswordForm && <RecoveryPasswordForm />}
+          </AuthModal>
+
         </div>
       </div>
     </header>
   );
-};
+});

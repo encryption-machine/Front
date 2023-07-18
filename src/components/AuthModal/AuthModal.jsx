@@ -1,23 +1,19 @@
-/* eslint-disable react/jsx-pascal-case */
-import { useContext } from 'react'; 
+/* eslint-disable react/jsx-pascal-case */ 
 import cn from 'classnames';
 import { Modal } from '../Modal/Modal';
-import AuthTabs from '../AuthTabs/AuthTabs';
 import styles from './AuthModal.module.scss';
-import { ModelOpenContext } from '../../context/ModalOpenContext';
 
-const AuthModal = ({ onClickOpen, onLogin, textError, loggedIn }) => {
-  const modalOpen = useContext(ModelOpenContext);
-   console.log(modalOpen, 'isOpen-model');
- 
+
+const AuthModal = ({ isOpen, setIsOpen, children }) => {
+
   return (
     <Modal.overlay
-      className={modalOpen ? cn(styles.overlay, styles.active) : styles.overlay}
-      onClose={onClickOpen}
+      className={isOpen ? cn(styles.overlay, styles.active) : styles.overlay}
+      onClose={setIsOpen}
     >
       <Modal.window className={styles.modal}>
-        <Modal.close className={styles.close}  onClose={onClickOpen}/>
-        <AuthTabs loggedIn={loggedIn} onLogin={onLogin} textError={textError}/>
+        <Modal.close className={styles.close} onClose={setIsOpen} />
+        {children}
       </Modal.window>
     </Modal.overlay>
   );
