@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { FormGlobalStore as formStore } from '../../stores';
-import { qaRegExp } from '../../constants/regExp';
+import { anyCharRegExp } from '../../constants/regExp';
 import FormButton from '../FormButton/FormButton';
 import useInputValidation from '../../hooks/useInputValidation';
 import styles from './RecoveryPasswordForm.module.scss';
@@ -78,7 +78,7 @@ const RecoveryPasswordForm = observer(() => {
   const answerInput = useInputValidation({
     checkInputIsEmpty: answerValue,
     custom: {
-      regExp: qaRegExp,
+      regExp: anyCharRegExp,
       value: answerValue,
     },
     length: { min: 1, max: 30 },

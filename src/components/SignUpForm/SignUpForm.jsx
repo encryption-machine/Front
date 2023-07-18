@@ -8,7 +8,7 @@ import {
   AnswerInput,
   SecretQuestionInput,
 } from '../AuthFormsInputs/AuthFormsInputs';
-import { qaRegExp } from '../../constants/regExp';
+import { anyCharRegExp } from '../../constants/regExp';
 import {
   answerErrorMessage,
   composeEmptyErrorMessage,
@@ -100,7 +100,7 @@ const SignUpForm = () => {
   const secretQuestionInput = useInputValidation({
     checkInputIsEmpty: secretQuestionValue,
     custom: {
-      regExp: qaRegExp,
+      regExp: anyCharRegExp,
       value: secretQuestionValue,
     },
     length: { min: 1, max: 100 },
@@ -109,7 +109,7 @@ const SignUpForm = () => {
   const answerInput = useInputValidation({
     checkInputIsEmpty: answerValue,
     custom: {
-      regExp: qaRegExp,
+      regExp: anyCharRegExp,
       value: answerValue,
     },
     length: { min: 1, max: 30 },
