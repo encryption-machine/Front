@@ -7,16 +7,15 @@ export const Navigation = () => {
         <section className={styles.navigation}>
             <div className={styles.container}>
                 <CustomLink
-                    to={'/'}
+                    href={'/'}
                     target="_self"
                 >
                     Главная
                 </CustomLink>
                 <img src={arrow} alt='navigation' />
-                <h2>
+                <h2 className={styles.currentPosition}>
                     Личный кабинет
                 </h2>
-
             </div>
         </section>
     )

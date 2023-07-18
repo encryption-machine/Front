@@ -1,0 +1,44 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins';
+
+.accordionHistoryItem {
+    display: grid;
+    grid-template-columns: minmax(min-content, 180px) minmax(min-content, 380px) minmax(min-content, 280px) minmax(min-content, 200px) 24px;
+    gap: 20px;
+    @include font-source-sans(18px, $white, 400, 24px);
+    border-radius: 8px;
+    // background-color: $white;
+    height: 48px;
+    padding: 0 12px;
+
+    .btn {
+        background-image: url('../../assets/icons/arrow-down-light.svg');
+        background-color: transparent;
+        cursor: pointer;
+        width: 16px;
+        height: 8px;
+        background-repeat: no-repeat;
+        background-position: center;
+        border: none;
+    }
+
+    &_description {
+        display: grid;
+        gap: 44px;
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "request response";
+        padding: 12px 0;
+        @include font-source-sans(18px, $white, 400, 24px);
+    }
+
+    &_request {
+        grid-area: request;
+    }
+
+    &_response {
+        grid-area: response;
+    }
+
+
+}
