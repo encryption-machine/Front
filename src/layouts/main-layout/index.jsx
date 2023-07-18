@@ -3,6 +3,8 @@ import { Footer } from '../../components/Footer/Footer';
 import { Header } from '../../components/Header/Header';
 import { Outlet } from 'react-router-dom';
 
+import CookiePopup from '../../components/CookiePopup/CookiePopup';
+
 export default function MainLayout() {
   return (
     <div className={styles.main_layout}>
@@ -11,6 +13,7 @@ export default function MainLayout() {
         <Outlet />
       </section>
       <Footer />
+      <CookiePopup />
     </div>
   );
 }
