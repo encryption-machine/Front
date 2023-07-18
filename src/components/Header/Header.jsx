@@ -5,7 +5,7 @@ import RecoveryPasswordForm from '../RecoveryPasswordForm/RecoveryPasswordForm';
 import { FormGlobalStore as formStore } from '../../stores/';
 import styles from './Header.module.scss';
 import logotype from '../../assets/icons/logotype.svg';
-import { Link } from '../Link/Link';
+import { CustomLink } from '../CustomLink/CustomLink';
 
 export const Header = observer(() => {
   const scrollToSection = (id) => {
@@ -20,31 +20,31 @@ export const Header = observer(() => {
         <nav>
           <ul className={styles.list}>
             <li className={styles.chapter}>
-              <Link
+              <CustomLink
                 href={'#ciphers'}
                 target="_self"
                 onClick={() => scrollToSection('ciphers')}
               >
                 Шифрование
-              </Link>
+              </CustomLink>
             </li>
             <li className={styles.chapter}>
-              <Link
+              <CustomLink
                 href={'#aboutCiphers'}
                 target="_self"
                 onClick={() => scrollToSection('aboutCiphers')}
               >
                 О&nbsp;шифрах
-              </Link>
+              </CustomLink>
             </li>
             <li className={styles.chapter}>
-              <Link
+              <CustomLink
                 href={'#aboutProject'}
                 target="_self"
                 onClick={() => scrollToSection('aboutProject')}
               >
                 О&nbsp;проекте
-              </Link>
+              </CustomLink>
             </li>
           </ul>
         </nav>
