@@ -8,21 +8,9 @@
   height: 100%;
   position: relative;
 
-  &:nth-child(4) {
-    grid-column: 1/2;
-    grid-row: 2/3;
-  }
-
-  &:nth-child(5) {
-    grid-column: 2/4;
-    grid-row: 2/3;
-    width: auto;
-    height: auto;
-  }
-
   &_item {
-    border-radius: 20px;
-    padding: 32px;
+    border-radius: 8px;
+    padding: 48px 40px;
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -31,14 +19,19 @@
   }
 
   &_front {
-    border: 1px solid $green;
+    border: 1px solid $green_light;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     transform: rotateY(0deg);
-    &_name {
-      @include font-source-sans(24px, $white, 700, 28px);
+    &:last-child {
+      border: none;
     }
+    &_name {
+      margin-bottom: 10px;
+      @include font-source-sans(28px, $white, 700, 32px);
+    }
+
   }
   &_back {
     position: absolute;
