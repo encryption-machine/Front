@@ -20,17 +20,7 @@ const SignInForm = observer(({ onLogin, textError }) => {
   // errors
   const [emailEmptyError, setEmailEmptyError] = useState('');
   const [firstPasswordError, setFirstPasswordError] = useState('');
-  //   const emailValidError = [
-  //   {
-  //     error_title: 'Недопустимые символы.',
-  //     list_title: 'Допустимые символы:',
-  //     item_1: 'цифры',
-  //     item_2: 'латинские буквы',
-  //     item_3: '«_», «-», «@» и «.»',
-  //   },
-  // ];
-  // const [firstPasswordError, setFirstPasswordError] = useState('');
-  // const [passwordValidError, setPasswordValidError] = useState([]);
+  
 
   // Set show
   const [showPassword, setShowPassword] = useState('password');
