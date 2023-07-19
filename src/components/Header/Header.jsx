@@ -19,7 +19,7 @@ export const Header = observer(() => {
     const element = document.getElementById(id);
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   };
-
+  
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
@@ -33,14 +33,17 @@ export const Header = observer(() => {
           {(location.pathname === '/') && <ul className={styles.list}>
             <li className={styles.chapter}>
               <CustomLink
+              <CustomLink
                 href={'#ciphers'}
                 target="_self"
                 onClick={() => scrollToSection('ciphers')}
               >
                 Шифрование
               </CustomLink>
+              </CustomLink>
             </li>
             <li className={styles.chapter}>
+              <CustomLink
               <CustomLink
                 href={'#aboutCiphers'}
                 target="_self"
@@ -48,14 +51,17 @@ export const Header = observer(() => {
               >
                 О&nbsp;шифрах
               </CustomLink>
+              </CustomLink>
             </li>
             <li className={styles.chapter}>
+              <CustomLink
               <CustomLink
                 href={'#aboutProject'}
                 target="_self"
                 onClick={() => scrollToSection('aboutProject')}
               >
                 О&nbsp;проекте
+              </CustomLink>
               </CustomLink>
             </li>
             {loggedIn &&
@@ -85,9 +91,10 @@ export const Header = observer(() => {
             isOpen={formStore.openAuthForm}
             setIsOpen={formStore.setOpenAuthForm}
           >
-            {formStore.showAuthForm && <AuthTabs />}
+            {formStore.showAuthForm && <AuthTabs onLogin={onLogin}  loggedIn={loggedIn} textError={textError} />}
             {formStore.showRecoveryPasswordForm && <RecoveryPasswordForm />}
           </AuthModal>
+
         </div>
       </div>
     </header>
