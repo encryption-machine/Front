@@ -13,9 +13,7 @@ export const emailValidErrorMessage = [
   {
     error_title: 'Недопустимые символы или формат.',
     list_title: 'Допустимые символы:',
-    item_1: 'цифры',
-    item_2: 'латинские буквы',
-    item_3: '«_», «-», «@» и «.»',
+    items: ['цифры', 'латинские буквы', '«_», «-», «@» и «.»',],
     format: 'Формат: email@example.com',
   },
 ];
@@ -23,10 +21,6 @@ export const emailValidErrorMessage = [
 export const passwordValidErrorMessage = [
   {
     list_title: 'Пароль должен содержать:',
-    item_1: 'от 8 до 30 символов',
-    item_2: 'цифры',
-    item_3: 'заглавные буквы',
-    item_4: 'строчные буквы ',
-    item_5: 'специальные символы',
+    items: ['от 8 до 30 символов', 'цифры', 'заглавные буквы', 'строчные буквы ', 'специальные символы',],
   },
 ];
