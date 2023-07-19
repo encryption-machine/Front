@@ -11,7 +11,7 @@ import logotype from '../../assets/icons/logotype.svg';
 
 export const Header = observer(() => {
   // временное решение, пока не реализовано апи авторизации
-  const [loggedIn, setLogedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   const location = useLocation();
 
@@ -33,17 +33,14 @@ export const Header = observer(() => {
           {(location.pathname === '/') && <ul className={styles.list}>
             <li className={styles.chapter}>
               <CustomLink
-              <CustomLink
                 href={'#ciphers'}
                 target="_self"
                 onClick={() => scrollToSection('ciphers')}
               >
                 Шифрование
               </CustomLink>
-              </CustomLink>
             </li>
             <li className={styles.chapter}>
-              <CustomLink
               <CustomLink
                 href={'#aboutCiphers'}
                 target="_self"
@@ -51,17 +48,14 @@ export const Header = observer(() => {
               >
                 О&nbsp;шифрах
               </CustomLink>
-              </CustomLink>
             </li>
             <li className={styles.chapter}>
-              <CustomLink
               <CustomLink
                 href={'#aboutProject'}
                 target="_self"
                 onClick={() => scrollToSection('aboutProject')}
               >
                 О&nbsp;проекте
-              </CustomLink>
               </CustomLink>
             </li>
             {loggedIn &&
@@ -91,7 +85,7 @@ export const Header = observer(() => {
             isOpen={formStore.openAuthForm}
             setIsOpen={formStore.setOpenAuthForm}
           >
-            {formStore.showAuthForm && <AuthTabs onLogin={onLogin}  loggedIn={loggedIn} textError={textError} />}
+            {formStore.showAuthForm && <AuthTabs />}
             {formStore.showRecoveryPasswordForm && <RecoveryPasswordForm />}
           </AuthModal>
 
