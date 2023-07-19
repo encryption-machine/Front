@@ -3,9 +3,9 @@ export const emailRegExp =
 
 export const anyCharRegExp = /./;
 
-export const specialCharRegExp = /[ `!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/;
+export const symbolsRegExp = /[ `!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/;
 
-export const numberRegExp = /\d/;
+export const numbersRegExp = /\d/;
 
 export const morseInputTextRegExp = /^[а-яА-я\d\s.,:;)(?!=+-/$@&_"']*$/gm;
 
