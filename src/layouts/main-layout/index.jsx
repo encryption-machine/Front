@@ -8,6 +8,7 @@ import { FormGlobalStore as formStore } from '../../stores';
 /////////Авторизация//////
 import { postApiAutorisation, postApiAuthorizeRefresh, postApiAuthorizeVerify } from '../../utils/Auth.js';
 /////////////////////////
+import CookiePopup from '../../components/CookiePopup/CookiePopup';
 
 const MainLayout = observer(() => {
    /////////Авторизация//////
@@ -75,16 +76,16 @@ const MainLayout = observer(() => {
      const handleSignOut = () => {
       setLoggedIn(false);
      }
-   
    /////////////////////////
  
   return (
     <div className={styles.main_layout}>
-        <Header  loggedIn={loggedIn} onLogin={handleLogin} textError={textError} signOut={handleSignOut}/>
-        <section>
-          <Outlet />
-        </section>
-        <Footer />
+      <Header  loggedIn={loggedIn} onLogin={handleLogin} textError={textError} signOut={handleSignOut}/>
+      <section>
+        <Outlet />
+      </section>
+      <Footer />
+      <CookiePopup />
     </div>
   );
 });
