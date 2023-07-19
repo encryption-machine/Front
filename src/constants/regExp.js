@@ -11,6 +11,6 @@ export const morseInputTextRegExp = /^[а-яА-я\d\s.,:;)(?!=+-/$@&_"']*$/gm;
 
 export const morseInputCodeRegExp = /[-.\s]/gm;
 
-export const cesarRegExp = /^[а-яА-я\d\s.,:;)(*#%!+-/$&"']*$/gm;
+export const caesarRegExp = /^[а-яА-я\d\s.,:;)(*#%!+-/$&"']*$/gm;
 
-export const cesarReplaceCharRegExp = /[Ёё]/gm;
+export const caesarReplaceCharRegExp = /[Ёё]/gim;
