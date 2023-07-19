@@ -26,7 +26,6 @@ const SignInForm = observer(({ onLogin, textError }) => {
   const [showPassword, setShowPassword] = useState('password');
   const [clickShowPassword, setClickShowPassword] = useState(false);
   const [errorText, setErrorText] = useState(textError);
-  console.log(errorText, 'errorText');
 
   // handlers
   const handleFirstPasswordValue = (e) => {
