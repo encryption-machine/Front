@@ -19,6 +19,7 @@ import {
 } from '../../constants/errorMessages';
 import FormButton from '../FormButton/FormButton';
 import styles from '../AuthForms/AuthForms.module.scss';
+import { postApiRegistration } from '../../utils/Registration';
 
 const SignUpForm = () => {
   // Set values
@@ -192,9 +193,25 @@ const SignUpForm = () => {
     setIsFormValid(false);
   };
 
-  const handleSubmit = (e) => {
+  const userRegister = (e) => {
     e.preventDefault();
-    resetForm();
+    return postApiRegistration(emailValue, passwordsValue.firstPassword, passwordsValue.secondPassword, secretQuestionValue, answerValue)
+    .then((res)=> {
+      console.log(res);
+      const authToken = res.accessToken.split("Bearer ")[1];
+      console.log('authToken',authToken);
+    })
+    .catch((err)=>{
+      err.then((resBody) => {
+        console.log('resBody:',resBody);
+        console.log('Object.keys(obj) :',Object.values(resBody) );
+        console.log('resBody.slice(11, -4) :',resBody.slice(11, -4) );
+      })
+    })
+
+
+
+    // resetForm();
   };
 
   const handleClearButton = (e, callback) => {
@@ -203,7 +220,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <AuthForms onSubmit={handleSubmit}>
+    <AuthForms onSubmit={userRegister}>
       <EmailInput
         value={emailValue}
         onBlur={emailInput.onBlur}
@@ -308,7 +325,7 @@ const SignUpForm = () => {
         Секретный вопрос и ответ на него нужны для дальнейшей смены пароля
       </span>
 
-      <FormButton onSubmit={(e) => e.preventDefault()} disabled={!isFormValid}>
+      <FormButton /* onSubmit={(e) => e.preventDefault()}  */disabled={!isFormValid}>
         Зарегистрироваться
       </FormButton>
     </AuthForms>
