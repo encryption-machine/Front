@@ -12,7 +12,7 @@ export default function FlippedItem({ chiper, index}) {
         </div>
       </div>
       <div className={`${styles.flippedItem_item} ${styles.flippedItem_back}`}>
-        <h3 className={styles.flippedItem_back_name}>{chiper.name}</h3>
+        {/* <h3 className={styles.flippedItem_back_name}>{chiper.name}</h3> */}
         <p className={styles.flippedItem_description}>{chiper.description}</p>
       </div>
     </li>

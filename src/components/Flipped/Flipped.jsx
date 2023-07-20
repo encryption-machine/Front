@@ -2,8 +2,9 @@ import React from 'react';
 import styles from './Flipped.module.scss';
 import FlippedItem from './FlippedItem/FlippedItem';
 import FlippedItemLast from './FlippedItemLast/FlippedItemLast';
+import { ciphersInfo } from './Flipped.constants';
 
-export default function Flipped({ ciphersInfo }) {
+export default function Flipped() {
   return (
     <ul className={styles.container}>
       {ciphersInfo.map((chiper, index) => {
