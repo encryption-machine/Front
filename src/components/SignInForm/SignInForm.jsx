@@ -4,6 +4,7 @@ import { FormGlobalStore as formStore } from '../../stores';
 import AuthForms from '../AuthForms/AuthForms';
 import FormButton from '../FormButton/FormButton';
 import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
+import FormValuesStore from '../../stores/forms/values';
 import {
   composeEmptyErrorMessage,
   passwordValidErrorMessage,
@@ -12,9 +13,10 @@ import {
 import useInputValidation from '../../hooks/useInputValidation';
 import style from '../AuthForms/AuthForms.module.scss';
 
+const email = new FormValuesStore();
+
 const SignInForm = observer(() => {
   const [passwordValue, setPasswordValue] = useState('');
-  const [emailValue, setEmailValue] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
 
   // errors
@@ -30,10 +32,6 @@ const SignInForm = observer(() => {
     setPasswordValue(e.target.value);
   };
 
-  const handleEmailValue = (e) => {
-    setEmailValue(e.target.value);
-  };
-
   const handleShowPassword = (e) => {
     e.preventDefault();
     setClickShowPassword(!clickShowPassword);
@@ -46,8 +44,8 @@ const SignInForm = observer(() => {
   });
 
   const emailInput = useInputValidation({
-    checkInputIsEmpty: emailValue,
-    email: emailValue,
+    checkInputIsEmpty: email.value,
+    email: email.value,
   });
 
   useEffect(() => {
@@ -80,7 +78,7 @@ const SignInForm = observer(() => {
   ]);
 
   const resetForm = () => {
-    setEmailValue('');
+    email.setValue('');
     setPasswordValue('');
     setIsFormValid(false);
   };
@@ -99,10 +97,10 @@ const SignInForm = observer(() => {
   return (
     <AuthForms onSubmit={handleSubmit}>
       <EmailInput
-        value={emailValue}
+        value={email.value}
         onBlur={emailInput.onBlur}
         onFocus={emailInput.onFocus}
-        onChange={handleEmailValue}
+        onChange={(e) => email.setValue(e.target.value)}
         isDirty={emailInput.isDirty}
         isEmpty={emailInput.isEmpty}
         isFocus={emailInput.isFocus}
@@ -110,7 +108,7 @@ const SignInForm = observer(() => {
         emptyError={emailEmptyError}
         emailValidError={emailValidErrorMessage}
         onClickClearButton={(e) =>
-          handleClearButton(e, () => setEmailValue(''))
+          handleClearButton(e, () => email.setValue(''))
         }
         placeholder="E-mail"
         label="E-mail"
