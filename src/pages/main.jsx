@@ -4,14 +4,12 @@ import AboutCiphers from '../components/AboutCiphers/AboutCiphers';
 import AboutProject from '../../src/components/AboutProject/AboutProject';
 
 export const MainPage = () => {
-  //Это позже удалим
   const dataMachine = [
-    'Азбука Морзе',
-    'QR код',
-    'AES (Advanced Encryption Standard)',
-    'Шифр Виженера',
-    'DSA (Digital Signature Algorithm)',
-    'Код Цезаря',
+    { name: 'Азбука Морзе', value: 'morse' },
+    { name: 'QR код', value: 'qr' },
+    { name: 'AES (Advanced Encryption Standard)', value: 'aes' },
+    { name: 'Шифр Виженера', value: 'vigenere' },
+    { name: 'Код Цезаря', value: 'caesar' },
   ];
   return (
     <>

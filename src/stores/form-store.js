@@ -7,6 +7,7 @@ class FormStore {
   showRecoveryPasswordFormEmail = false;
   showRecoveryPasswordFormAnswer = false;
   showRecoveryPasswordFormNewPassword = false;
+  showSecretKeyForm = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -43,6 +44,9 @@ class FormStore {
     this.showRecoveryPasswordFormNewPassword = bool;
     this.showRecoveryPasswordFormEmail = !bool;
     this.showRecoveryPasswordFormAnswer = !bool;
+  };
+  setShowSecretKeyForm = (bool) => {
+    this.showSecretKeyForm = !bool;
   };
 }
 
