@@ -1,7 +1,7 @@
 // авторизация
 const BASE_URL = 'http://shifmachine.acceleratorpracticum.ru/api/v1/';
 
-const getResponseData = (res) => {
+export const getResponseData = (res) => {
   return res
     .json()
     .then((response) => {
@@ -10,8 +10,8 @@ const getResponseData = (res) => {
       }
       return Promise.reject(new Error(response.detail));
     })
-
 }
+
   //запрос авторизации
   // Принимает набор учетных данных пользователя и возвращает пару веб-токенов access и refresh JSON для подтверждения аутентификации этих учетных данных.
   export const postApiAutorisation  = (email, password) => {

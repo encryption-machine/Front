@@ -31,8 +31,8 @@ const AuthTabs = ({ onLogin, textError, loggedIn }) => {
         onClick={handleTabClick}
       />
       <div className={styles.authTabs__content}>
-        {selectedTabId === tabsBar[0].id && <SignInForm onLogin={onLogin}  loggedIn={loggedIn} textError={textError}/>}
-        {selectedTabId === tabsBar[1].id && <SignUpForm />}
+        {selectedTabId === tabsBar[0].id && <SignInForm onLogin={onLogin}  /* loggedIn={loggedIn}  */textError={textError}/>}
+        {selectedTabId === tabsBar[1].id && <SignUpForm onLogin={onLogin} loggedIn={loggedIn}/>}
       </div>
     </section>
   );

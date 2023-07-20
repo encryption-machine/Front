@@ -20,8 +20,9 @@ import {
 import FormButton from '../FormButton/FormButton';
 import styles from '../AuthForms/AuthForms.module.scss';
 import { postApiRegistration } from '../../utils/Registration';
+import { observer } from 'mobx-react-lite';
 
-const SignUpForm = () => {
+const SignUpForm = observer(({onLogin, loggedIn}) => {
   // Set values
   const [passwordsValue, setPasswordsValue] = useState({
     firstPassword: '',
@@ -41,6 +42,10 @@ const SignUpForm = () => {
   const [secondPasswordError, setSecondPasswordError] = useState('');
   const [passwordsIsMatchError, setPasswordsIsMatchError] = useState('');
 
+  // errors userRegister
+  // const [loggedIn, setLoggedIn] = useState(false);
+  const [errorText, setErrorText] = useState('');
+
   // Set show
   const [showPassword, setShowPassword] = useState('password');
   const [showConfirmPassword, setShowConfirmPassword] = useState('password');
@@ -59,6 +64,7 @@ const SignUpForm = () => {
     });
   };
   const handleEmailValue = (e) => {
+    setErrorText('');
     setEmailValue(e.target.value);
   };
 
@@ -195,21 +201,24 @@ const SignUpForm = () => {
 
   const userRegister = (e) => {
     e.preventDefault();
-    return postApiRegistration(emailValue, passwordsValue.firstPassword, passwordsValue.secondPassword, secretQuestionValue, answerValue)
-    .then((res)=> {
-      console.log(res);
-      const authToken = res.accessToken.split("Bearer ")[1];
-      console.log('authToken',authToken);
-    })
-    .catch((err)=>{
-      err.then((resBody) => {
-        console.log('resBody:',resBody);
-        console.log('Object.keys(obj) :',Object.values(resBody) );
-        console.log('resBody.slice(11, -4) :',resBody.slice(11, -4) );
+    return postApiRegistration(
+      emailValue,
+      passwordsValue.firstPassword,
+      passwordsValue.secondPassword,
+      secretQuestionValue,
+      answerValue
+    )
+      .then((res) => {
+
+        //!!!!!! пароля нет в res
+        onLogin(res.email, passwordsValue.firstPassword);
+        console.log('res', res);
       })
-    })
-
-
+      .catch((err) => {
+        console.log('err:', err.message);
+        // setLoggedIn(false);
+        setErrorText(err.message);
+      });
 
     // resetForm();
   };
@@ -325,11 +334,17 @@ const SignUpForm = () => {
         Секретный вопрос и ответ на него нужны для дальнейшей смены пароля
       </span>
 
-      <FormButton /* onSubmit={(e) => e.preventDefault()}  */disabled={!isFormValid}>
+      {errorText && <span className={styles.textError}>
+      {errorText}
+      </span>}
+
+      <FormButton
+        /* onSubmit={(e) => e.preventDefault()}  */ disabled={!isFormValid}
+      >
         Зарегистрироваться
       </FormButton>
     </AuthForms>
   );
-};
+});
 
 export default SignUpForm;

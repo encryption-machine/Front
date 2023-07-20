@@ -33,6 +33,7 @@ const SignInForm = observer(({ onLogin, textError }) => {
   };
 
   const handleEmailValue = (e) => {
+    setErrorText('');
     setEmailValue(e.target.value);
   };
 

@@ -1,24 +1,15 @@
 import { BASE_URL } from '../constants/url';
 
-export const getResponseData = (res) => {
-  return res.ok
-    ? res.json()
-    : Promise.reject(
-        res.text()
-      );
-};
-
-// export const getResponseData = (res) => {
-//   return res
-//     .json()
-//     .then((res) => {
-//       if (res.ok) {
-//         return res;
-//       }
-//       return Promise.reject(`Ошибка: ${res}`);
-//     })
-
-// }
+const getResponseData = (res) => {
+  return res
+    .json()
+    .then((response) => {
+      if (res.ok) {
+        return response;
+      }
+      return Promise.reject(new Error(response.email));
+    })
+}
 
 //регистрация
 export const postApiRegistration = (
