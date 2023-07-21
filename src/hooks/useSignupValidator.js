@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import {
   emailRegExp,
-  specialCharRegExp,
-  numberRegExp,
+  symbolsRegExp,
+  numbersRegExp,
 } from '../constants/regExp';
 
 const useSignupValidator = ({
@@ -45,7 +45,7 @@ const useSignupValidator = ({
         setMinLengthError(true);
       }
 
-      if (password.length < length.max) {
+      if (password.length <= length.max) {
         setMaxLengthValid(true);
         setMaxLengthError(false);
       } else {
@@ -60,8 +60,8 @@ const useSignupValidator = ({
 
     uppercaseCheck && setUpperCase(password.toLowerCase() !== password);
     lowercaseCheck && setLowerCase(password.toUpperCase() !== password);
-    numberCheck && setIsNumber(numberRegExp.test(password));
-    specialCharCheck && setSpecialChar(specialCharRegExp.test(password));
+    numberCheck && setIsNumber(numbersRegExp.test(password));
+    specialCharCheck && setSpecialChar(symbolsRegExp.test(password));
     setMatch(password && password === confirmPassword);
   }, [
     password,

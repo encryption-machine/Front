@@ -13,19 +13,19 @@ import {
 import useInputValidation from '../../hooks/useInputValidation';
 import style from '../AuthForms/AuthForms.module.scss';
 
-const email = new FormValuesStore();
-
-const SignInForm = observer(() => {
+const SignInForm = observer(({ onLogin, textError }) => {
   const [passwordValue, setPasswordValue] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
 
   // errors
   const [emailEmptyError, setEmailEmptyError] = useState('');
   const [firstPasswordError, setFirstPasswordError] = useState('');
+  
 
   // Set show
   const [showPassword, setShowPassword] = useState('password');
   const [clickShowPassword, setClickShowPassword] = useState(false);
+  const [errorText, setErrorText] = useState(textError);
 
   // handlers
   const handleFirstPasswordValue = (e) => {
@@ -40,7 +40,7 @@ const SignInForm = observer(() => {
   const passwordInput = useInputValidation({
     checkInputIsEmpty: passwordValue,
     password: passwordValue,
-    length: { min: 6, max: 8 },
+    length: { min: 8, max: 30 },
   });
 
   const emailInput = useInputValidation({
@@ -67,6 +67,9 @@ const SignInForm = observer(() => {
     emailInput.isDirty && emailInput.isEmpty
       ? setEmailEmptyError(composeEmptyErrorMessage('E-mail'))
       : setEmailEmptyError('');
+    emailValue || passwordValue
+      ? setErrorText('')
+      : setErrorText(textError);
   }, [
     emailInput.isDirty,
     emailInput.isEmailValid,
@@ -75,8 +78,11 @@ const SignInForm = observer(() => {
     emailInput.isEmpty,
     passwordInput.isPasswordInputValid,
     passwordInput.isMatch,
+    emailValue,
+    passwordValue,
+    textError,
   ]);
-
+  
   const resetForm = () => {
     email.setValue('');
     setPasswordValue('');
@@ -85,6 +91,12 @@ const SignInForm = observer(() => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    /////////Авторизация//////
+    if(!emailValue || !passwordValue) return;
+    onLogin(emailValue, passwordValue);
+    /////////////////////////
+
     resetForm();
     console.log('submit auth form');
   };
@@ -134,6 +146,10 @@ const SignInForm = observer(() => {
         placeholder="Пароль"
         label="Пароль"
       />
+      
+      {errorText && <span className={style.textError}>
+      {errorText}
+      </span>}
 
       <FormButton disabled={!isFormValid}>Войти</FormButton>
       <span

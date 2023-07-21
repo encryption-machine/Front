@@ -7,12 +7,13 @@ import styles from './Header.module.scss';
 import logotype from '../../assets/icons/logotype.svg';
 import { CustomLink } from '../CustomLink/CustomLink';
 
-export const Header = observer(() => {
+export const Header = observer(({ onLogin, textError, loggedIn, signOut }) => {
+
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   };
-
+  
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
@@ -49,20 +50,28 @@ export const Header = observer(() => {
           </ul>
         </nav>
         <div className={styles.entrance}>
-          <button
+        {!loggedIn && <button
             className={styles.button_header}
             type="button"
             onClick={() => formStore.setOpenAuthForm(true)}
           >
             Войти
-          </button>
+          </button>}
+          {loggedIn && <button
+            className={styles.button_header}
+            type="button"
+            onClick={signOut}
+          >
+            Выйти
+          </button>}
           <AuthModal
             isOpen={formStore.openAuthForm}
             setIsOpen={formStore.setOpenAuthForm}
           >
-            {formStore.showAuthForm && <AuthTabs />}
+            {formStore.showAuthForm && <AuthTabs onLogin={onLogin}  loggedIn={loggedIn} textError={textError} />}
             {formStore.showRecoveryPasswordForm && <RecoveryPasswordForm />}
           </AuthModal>
+
         </div>
       </div>
     </header>
