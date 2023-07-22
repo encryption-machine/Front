@@ -1,0 +1,47 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins';
+
+.userHistory {
+    width: 100%;
+    background-color: $violet;
+    padding-bottom: 140px;
+}
+
+.container {
+    width: calc(100% - 2 * 130px);
+    margin: 0 auto;
+
+    .title {
+        @include font-source-sans(40px, $white, 800, 52px);
+        padding-bottom: 52px;
+    }
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    max-width: 1180px;
+    margin: 0 auto;
+
+    .header {
+        list-style: none;
+        width: 100%;
+        padding: 12px;
+        display: grid;
+        grid-template-columns: minmax(min-content, 180px) minmax(min-content, 380px) minmax(min-content, 280px) minmax(min-content, 200px) 24px;
+        // grid-template-columns: 180px 380px 280px 200px 24px;
+        gap: 20px;
+        margin: 0;
+        @include font-source-sans(18px, $white, 400, 24px);
+    }
+
+    .hr {
+        width: 100%;
+        color: $white
+    }
+
+    .textLight {
+        @include font-source-sans(18px, $white, 400, 24px);
+
+    }
+}
