@@ -88,10 +88,10 @@ const SignInForm = observer(({ onLogin, loginErrorMessage }) => {
   const resetForm = () => {
     email.setValue('');
     password.setValue('');
-    passwordInput.setDirty(false)
-    emailInput.setDirty(false)
-    passwordInput.setFocus(false)
-    emailInput.setFocus(false)
+    passwordInput.setDirty(false);
+    emailInput.setDirty(false);
+    passwordInput.setFocus(false);
+    emailInput.setFocus(false);
     setIsFormValid(false);
   };
 
