@@ -28,7 +28,6 @@ export const Machine = observer(({ list }) => {
   const [qrCopy, SetQrCopy] = useState(false);
   const [encryptionTextLength, SetEncryptionTextLength] = useState(2000);
   const [descKey, SetEncKey] = useState('');
-  const [minHeight, SetMinHeight] = useState(250);
   const selectRef = useRef(null);
   const activeClass = styles.tabActive;
 
@@ -127,6 +126,7 @@ export const Machine = observer(({ list }) => {
 
   const secretKeyClick = () => {
     setResult('');
+    SetQrResult('');
     if (type !== 'morse' && type !== 'qr') {
       secretStore.setOpenSecretModal(true);
     } else {
@@ -239,10 +239,9 @@ export const Machine = observer(({ list }) => {
             placeholder="Результат"
             defaultValue={result}
             readOnly
-            style={{ minHeight: minHeight }}
           />
           <button
-            disabled={isCopyShow}
+            disabled={isCopyShow || !result.length}
             onClick={copyCode}
             className={styles.copy__button}
           >
