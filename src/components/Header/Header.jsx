@@ -8,12 +8,9 @@ import AuthTabs from '../AuthTabs/AuthTabs';
 import RecoveryPasswordForm from '../RecoveryPasswordForm/RecoveryPasswordForm';
 import { CustomLink } from '../CustomLink/CustomLink';
 import logotype from '../../assets/icons/logotype.svg';
+import { CustomLink } from '../CustomLink/CustomLink';
 
-export const Header = observer(() => {
-  // временное решение, пока не реализовано апи авторизации
-  const [loggedIn, setLogedIn] = useState(true);
-
-  const location = useLocation();
+export const Header = observer(({ onLogin, textError, loggedIn, signOut }) => {
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -72,20 +69,35 @@ export const Header = observer(() => {
           </ul>}
         </nav>
         <div className={styles.entrance}>
-          {(location.pathname === '/profile') && <span className={styles.email}>user@email.ru</span>}
-          <button
-            className={styles.button_header}
-            type="button"
-            onClick={() => formStore.setOpenAuthForm(true)}
-          >
-            {/* временное решение пока нет авторизации */}
-            {loggedIn ? 'Выйти' : 'Войти'}
-          </button>
+          {!loggedIn && (
+            <button
+              className={styles.button_header}
+              type="button"
+              onClick={() => formStore.setOpenAuthForm(true)}
+            >
+              Войти
+            </button>
+          )}
+          {loggedIn && (
+            <button
+              className={styles.button_header}
+              type="button"
+              onClick={signOut}
+            >
+              Выйти
+            </button>
+          )}
           <AuthModal
             isOpen={formStore.openAuthForm}
             setIsOpen={formStore.setOpenAuthForm}
           >
-            {formStore.showAuthForm && <AuthTabs />}
+            {formStore.showAuthForm && (
+              <AuthTabs
+                onLogin={onLogin}
+                loggedIn={loggedIn}
+                textError={textError}
+              />
+            )}
             {formStore.showRecoveryPasswordForm && <RecoveryPasswordForm />}
           </AuthModal>
         </div>

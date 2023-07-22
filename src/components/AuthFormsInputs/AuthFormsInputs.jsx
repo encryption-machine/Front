@@ -153,9 +153,13 @@ export const EmailInput = ({
                 <span>{error.format}</span>
                 <ul className={styles.hintError__list}>
                   {error.list_title}
-                  <li className={styles.hintError__item}>{error.item_1}</li>
-                  <li className={styles.hintError__item}>{error.item_2}</li>
-                  <li className={styles.hintError__item}>{error.item_3}</li>
+                  {error.items.map((item) => {
+                    return (
+                      <li key={nanoid()} className={styles.hintError__item}>
+                        {item}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             );
@@ -232,11 +236,13 @@ export const PasswordInput = ({
             return (
               <ul key={nanoid()} className={styles.hintError__list}>
                 {error.list_title}
-                <li className={styles.hintError__item}>{error.item_1}</li>
-                <li className={styles.hintError__item}>{error.item_2}</li>
-                <li className={styles.hintError__item}>{error.item_3}</li>
-                <li className={styles.hintError__item}>{error.item_4}</li>
-                <li className={styles.hintError__item}>{error.item_5}</li>
+                {error.items.map((item) => {
+                  return (
+                    <li key={nanoid()} className={styles.hintError__item}>
+                      {item}
+                    </li>
+                  );
+                })}
               </ul>
             );
           })}

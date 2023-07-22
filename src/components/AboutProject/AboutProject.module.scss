@@ -2,18 +2,17 @@
 @import '../../styles/mixins';
 
 .aboutProject {
-  padding: 100px 130px 140px;
+  padding: 100px 9% 140px;
   margin: 0 auto;
   width: 100%;
   background-color: $black;
   &_title {
-    @include font-source-sans(50px, $white, 400, 62px, 'Rubik Mono One');
+    @include font-source-sans(40px, $white, 800, 52px, 'Inter');
     text-align: left;
     margin-bottom: 52px;
   }
-
   &_subtitle {
-    @include font-source-sans(28px, $white, 600, 32px);
+    @include font-source-sans(18px, $white, 400, 24px, 'Inter');
     text-align: left;
     margin-bottom: 44px;
   }
@@ -28,13 +27,14 @@
   &_item {
     border: 1px solid $green;
     border-radius: 8px;
-    padding: 40px;
+    padding: 40px 80px 40px 40px;
     width: 100%;
     display: flex;
     justify-content: space-between;
 
     &__content {
-      width: calc(100% - 91px);
+      // width: calc(100% - 260px);
+      width: 50%;
     }
     &:nth-child(1) {
       .aboutProject_image {
@@ -54,20 +54,20 @@
   }
 
   &_image {
-    width: 80px;
-    height: 80px;
+    width: 180px;
+    height: 180px;
     background-repeat: no-repeat;
     background-size: cover;
     align-self: center;
   }
 
   &_titleItem {
-    @include font-source-sans(32px, $white, 700, 36px);
+    @include font-source-sans(28px, $white, 700, 32px, 'Inter');
     text-align: start;
     margin-bottom: 20px;
   }
   &_description {
-    @include font-source-sans(28px, $white, 400, 32px);
+    @include font-source-sans(18px, $white, 400, 24px, 'Inter');
     text-align: start;
   }
 }
