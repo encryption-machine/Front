@@ -3,7 +3,6 @@ import styles from './OurTeam.module.scss';
 import telegramIcon from '../../assets/icons/team-teledram.svg';
 import internetIcon from '../../assets/icons/team-be.svg';
 import gitIcon from '../../assets/icons/team-git.svg';
-// import { ourTeamInfoLast } from './ourTeam.constants';
 
 const OurTeam = () => {
  
@@ -41,36 +40,6 @@ const OurTeam = () => {
             </li>
           ))}
         </ul>
-        {/* <ul className={styles.ourTeam_containerLast}>
-          {ourTeamInfoLast.map(({ id, titleCard, subtitle, telegram, internet, github }) => (
-            <li className={styles.ourTeam_cardLast} key={id}>
-              <div className={styles.ourTeam_photo}></div>
-              <div className={styles.ourTeam_cardContent}>
-                <h3 className={styles.ourTeam_titleCard}>{titleCard}</h3>
-                <p className={styles.ourTeam_subtitle}>{subtitle}</p>
-                <nav>
-                  <ul className={styles.ourTeam_links}>
-                    <li>
-                      <a href={telegram} className={styles.ourTeam_link}>
-                        <img className={styles.ourTeam_icon} src={telegramIcon} alt='telegram'/>
-                      </a>
-                    </li>
-                    <li hidden={!internet}>
-                      <a href={internet} className={styles.ourTeam_link}>
-                        <img className={styles.ourTeam_icon} src={internetIcon} alt='internet'/>
-                      </a>
-                    </li>
-                    <li hidden={!github}>
-                      <a href={github} className={styles.ourTeam_link}>
-                        <img className={styles.ourTeam_icon} src={gitIcon} alt='git'/>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </li>
-          ))} 
-        </ul> */}
       </div>
     </section>
   )
