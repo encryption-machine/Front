@@ -16,7 +16,7 @@ export const getEncryption = (text, algorithm, key, is_encryption) => {
     body: JSON.stringify({
       text: text,
       algorithm: algorithm,
-      key: key,
+      key: key.length ? key : null,
       is_encryption: is_encryption,
     }),
   }).then(handleResponce);
