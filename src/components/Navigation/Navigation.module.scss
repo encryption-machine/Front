@@ -1,0 +1,20 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins';
+
+.navigation {
+    width: 100%;
+    padding-top: 160px;
+    padding-bottom: 20px;
+    background-color: $violet;
+}
+
+.container {
+    width: calc(100% - 2 * 130px);
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.currentPosition {
+    @include font-source-sans(18px, $green, 500, 20px);
+}

@@ -1,0 +1,73 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins';
+
+
+.dataRequest {
+    display: grid;
+    grid-template-columns: minmax(min-content, 180px) minmax(min-content, 380px) minmax(min-content, 280px) minmax(min-content, 200px) 24px;
+    // grid-template-columns: 180px 380px 280px 200px 24px;
+    gap: 20px;
+    border-radius: 8px;
+    height: 48px;
+    padding: 0 12px;
+    align-items: center;
+
+    &_description {
+        display: grid;
+        gap: 44px;
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "request response";
+        padding: 12px;
+    }
+
+    &_request {
+        grid-area: request;
+    }
+
+    &_response {
+        grid-area: response;
+    }
+}
+
+.btn {
+    background-color: transparent;
+    cursor: pointer;
+    width: 16px;
+    height: 8px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+}
+
+.accordionHistoryItem {
+    @include font-source-sans(18px, $white, 400, 24px);
+    background-color: transparent;
+
+    .dataRequest {
+        &_description {
+            @include font-source-sans(18px, $white, 400, 24px);
+        }
+    }
+
+    .btn {
+        background-image: url('../../assets/icons/arrow-down-light.svg');
+    }
+}
+
+.accordionHistoryItem:nth-child(even) {
+    @include font-source-sans(18px, $violet, 400, 24px);
+    background-color: $white;
+    border-radius: 8px;
+
+    .dataRequest {
+
+        &_description {
+            @include font-source-sans(18px, $violet, 400, 24px);
+        }
+    }
+
+    .btn {
+        background-image: url('../../assets/icons/arrow-down-dark.svg');
+    }
+}

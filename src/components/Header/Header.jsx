@@ -1,13 +1,17 @@
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import { FormGlobalStore as formStore } from '../../stores/';
+import styles from './Header.module.scss';
 import AuthModal from '../AuthModal/AuthModal';
 import AuthTabs from '../AuthTabs/AuthTabs';
 import RecoveryPasswordForm from '../RecoveryPasswordForm/RecoveryPasswordForm';
-import { FormGlobalStore as formStore } from '../../stores/';
-import styles from './Header.module.scss';
+import { CustomLink } from '../CustomLink/CustomLink';
 import logotype from '../../assets/icons/logotype.svg';
 import { CustomLink } from '../CustomLink/CustomLink';
 
 export const Header = observer(({ onLogin, textError, loggedIn, signOut }) => {
+
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -16,9 +20,14 @@ export const Header = observer(({ onLogin, textError, loggedIn, signOut }) => {
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
-        <img className={styles.logotype} src={logotype} alt="logo" />
+        <CustomLink
+          href={"/"}
+          target="_self"
+        >
+          <img className={styles.logotype} src={logotype} alt="logo" />
+        </CustomLink>
         <nav>
-          <ul className={styles.list}>
+          {(location.pathname === '/') && <ul className={styles.list}>
             <li className={styles.chapter}>
               <CustomLink
                 href={'#ciphers'}
@@ -46,7 +55,18 @@ export const Header = observer(({ onLogin, textError, loggedIn, signOut }) => {
                 О&nbsp;проекте
               </CustomLink>
             </li>
-          </ul>
+            {loggedIn &&
+              <li>
+                <CustomLink
+                  href={'/profile'}
+                  target="_self"
+                >
+                  Личный&nbsp;кабинет
+                </CustomLink>
+              </li>
+
+            }
+          </ul>}
         </nav>
         <div className={styles.entrance}>
           {!loggedIn && (

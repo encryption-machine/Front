@@ -63,3 +63,8 @@
     color: $green;
   }
 }
+
+.email {
+  margin-right: 8px;
+  @include font-source-sans(18px, $green, 500, 20px);
+}

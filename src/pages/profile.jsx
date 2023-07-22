@@ -1,5 +1,12 @@
 import React from 'react';
+import { Navigation } from '../components/Navigation/Navigation';
+import { UserHistory } from '../components/UserHistory/UserHistory';
 
 export const ProfilePage = () => {
-  return <div>здесь будет страница пользователя</div>;
+  return (
+    <>
+      <Navigation />
+      <UserHistory />
+    </>
+  );
 };
