@@ -165,7 +165,7 @@ const SvgSelector = ({ name }) => {
           />
         </svg>
       );
-  
+
     default:
       break;
   }

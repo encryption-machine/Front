@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './FlippedItem.module.scss';
 import SvgSelector from '../../SvgSelector/SvgSelector';
 
-export default function FlippedItem({ chiper, index}) {
+export default function FlippedItem({ chiper, index }) {
   return (
     <li className={styles.flippedItem} key={chiper.id}>
       <div className={`${styles.flippedItem_item} ${styles.flippedItem_front}`}>
