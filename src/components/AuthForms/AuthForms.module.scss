@@ -92,9 +92,21 @@
 .hintError__title {
   width: 100%;
 }
-
+/////////Авторизация//////
+.textError {
+  font-size: 16px;
+  margin: 8px 0 0 0;
+  padding: 0;
+  color: $white;
+  background: $violet;
+  text-align: start;
+  font-weight: normal;
+  padding: 0 12px 8px 12px;
+}
+////////////////////////////
 .hintError__list {
   width: 100%;
+  padding: 0;
   display: flex !important;
   flex-direction: column;
   align-items: flex-start;

@@ -1,0 +1,67 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/mixins';
+
+.flippedItem {
+  list-style-type: none;
+  max-height: 360px;
+  height: 100%;
+  position: relative;
+
+  &_item {
+    border-radius: 20px;
+    padding: 48px 40px 60px 40px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    backface-visibility: hidden;
+    transition: transform 0.6s linear;
+  }
+
+  &_front {
+    border: 1px solid $green_light;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transform: rotateY(0deg);
+    &:last-child {
+      border: none;
+    }
+    &_name {
+      margin-bottom: 20px;
+      @include font-source-sans(28px, $white, 700, 32px);
+    }
+  }
+  &_back {
+    position: absolute;
+    background-color: $green_light;
+    top: 0;
+    transform: rotateY(180deg);
+    &_name {
+      margin-bottom: 24px;
+      @include font-source-sans(24px, $black, 700, 28px);
+    }
+  }
+
+  &_svg {
+    overflow: hidden;
+    display: flex;
+    max-height: 180px;
+    max-width: 180px;
+    & svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &_description {
+    @include font-source-sans(18px, $black, 400, 24px);
+  }
+
+  &:hover > .flippedItem_front {
+    transform: rotateY(-180deg);
+  }
+
+  &:hover > .flippedItem_back {
+    transform: rotateY(0);
+  }
+}

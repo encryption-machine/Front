@@ -8,7 +8,7 @@ import {
   AnswerInput,
   SecretQuestionInput,
 } from '../AuthFormsInputs/AuthFormsInputs';
-import { answerRegExp, secretQuestionRegExp } from '../../constants/regExp';
+import { anyCharRegExp } from '../../constants/regExp';
 import {
   answerErrorMessage,
   composeEmptyErrorMessage,
@@ -85,7 +85,7 @@ const SignUpForm = () => {
     checkInputIsEmpty: passwordsValue.firstPassword,
     password: passwordsValue.firstPassword,
     confirmPassword: passwordsValue.secondPassword,
-    length: { min: 6, max: 8 },
+    length: { min: 8, max: 30 },
   });
 
   const confirmPasswordInput = useInputValidation({
@@ -100,19 +100,19 @@ const SignUpForm = () => {
   const secretQuestionInput = useInputValidation({
     checkInputIsEmpty: secretQuestionValue,
     custom: {
-      regExp: secretQuestionRegExp,
+      regExp: anyCharRegExp,
       value: secretQuestionValue,
     },
-    length: { min: 6, max: 8 },
+    length: { min: 1, max: 100 },
   });
 
   const answerInput = useInputValidation({
     checkInputIsEmpty: answerValue,
     custom: {
-      regExp: answerRegExp,
+      regExp: anyCharRegExp,
       value: answerValue,
     },
-    length: { min: 3, max: 4 },
+    length: { min: 1, max: 30 },
   });
 
   useEffect(() => {
