@@ -6,7 +6,7 @@
   margin: 0 auto;
   padding: 30px 0;
   position: sticky;
-  background-color: $gray_light;
+  background-color: $black;
 }
 
 .footer_container {
@@ -15,5 +15,5 @@
 }
 
 .telephone {
-  @include font-source-sans(16px, $black, 400, 20px);
+  @include font-source-sans(16px, $white, 400, 20px);
 }

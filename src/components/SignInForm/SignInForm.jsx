@@ -20,7 +20,6 @@ const SignInForm = observer(({ onLogin, textError }) => {
   // errors
   const [emailEmptyError, setEmailEmptyError] = useState('');
   const [firstPasswordError, setFirstPasswordError] = useState('');
-  
 
   // Set show
   const [showPassword, setShowPassword] = useState('password');
@@ -44,7 +43,7 @@ const SignInForm = observer(({ onLogin, textError }) => {
   const passwordInput = useInputValidation({
     checkInputIsEmpty: passwordValue,
     password: passwordValue,
-    length: { min: 6, max: 8 },
+    length: { min: 8, max: 30 },
   });
 
   const emailInput = useInputValidation({
@@ -71,9 +70,7 @@ const SignInForm = observer(({ onLogin, textError }) => {
     emailInput.isDirty && emailInput.isEmpty
       ? setEmailEmptyError(composeEmptyErrorMessage('E-mail'))
       : setEmailEmptyError('');
-    emailValue || passwordValue
-      ? setErrorText('')
-      : setErrorText(textError);
+    emailValue || passwordValue ? setErrorText('') : setErrorText(textError);
   }, [
     emailInput.isDirty,
     emailInput.isEmailValid,
@@ -86,7 +83,7 @@ const SignInForm = observer(({ onLogin, textError }) => {
     passwordValue,
     textError,
   ]);
-  
+
   const resetForm = () => {
     setEmailValue('');
     setPasswordValue('');
@@ -95,9 +92,9 @@ const SignInForm = observer(({ onLogin, textError }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     /////////Авторизация//////
-    if(!emailValue || !passwordValue) return;
+    if (!emailValue || !passwordValue) return;
     onLogin(emailValue, passwordValue);
     /////////////////////////
 
@@ -150,10 +147,8 @@ const SignInForm = observer(({ onLogin, textError }) => {
         placeholder="Пароль"
         label="Пароль"
       />
-      
-      {errorText && <span className={style.textError}>
-      {errorText}
-      </span>}
+
+      {errorText && <span className={style.textError}>{errorText}</span>}
 
       <FormButton disabled={!isFormValid}>Войти</FormButton>
       <span
