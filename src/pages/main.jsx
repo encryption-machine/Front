@@ -5,11 +5,11 @@ import AboutProject from '../../src/components/AboutProject/AboutProject';
 
 export const MainPage = () => {
   const dataMachine = [
-    { name: 'Азбука Морзе', value: 'morse' },
-    { name: 'QR код', value: 'qr' },
-    { name: 'AES (Advanced Encryption Standard)', value: 'aes' },
-    { name: 'Шифр Виженера', value: 'vigenere' },
-    { name: 'Код Цезаря', value: 'caesar' },
+    { name: 'Азбука Морзе', value: 'morse', length: 30 },
+    { name: 'QR код', value: 'qr', length: 30 },
+    { name: 'AES (Advanced Encryption Standard)', value: 'aes', length: 30 },
+    { name: 'Шифр Виженера', value: 'vigenere', length: 30 },
+    { name: 'Код Цезаря', value: 'caesar', length: 2 },
   ];
   return (
     <>

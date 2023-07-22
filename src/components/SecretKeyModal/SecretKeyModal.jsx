@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import cn from 'classnames';
 import { Modal } from '../Modal/Modal';
-import styles from './AuthModal.module.scss';
+import styles from '../AuthModal/AuthModal.module.scss';
 
 const SecretKeyModal = ({ isOpen, setIsOpen, children }) => {
   return (

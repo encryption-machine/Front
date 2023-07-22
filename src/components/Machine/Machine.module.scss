@@ -5,8 +5,17 @@
   padding-top: 180px;
   padding-bottom: 140px;
   background-color: $gray_light;
+  @media (max-width: 960px) {
+    padding-top: 100px;
+  }
   &__button {
     width: 300px;
+    grid-column: span 2;
+    @media (max-width: 960px) {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
   }
 }
 .content {
@@ -14,13 +23,28 @@
   margin: 0 auto;
   display: grid;
   gap: 20px 20px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr 1fr;
   align-items: center;
+  @media (max-width: 1140px) {
+    width: 960px;
+    gap:20px 0;
+    justify-content: center;
+  }
+  @media (max-width: 960px) {
+    width: 100%;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    padding: 0 20px;
+  }
 }
 .switch {
   display: flex;
   align-items: center;
   gap: 20px;
+  @media (max-width: 960px) {
+    grid-column: span 2;
+    justify-content: center;
+  }
 }
 .tab {
   background: none;
@@ -39,6 +63,10 @@
 .select {
   position: relative;
   display: block;
+  @media (max-width: 960px) {
+    display: flex;
+    justify-content: center;
+  }
   &__title {
     width: 380px;
     height: 40px;
@@ -125,6 +153,9 @@
     position: relative;
     border-radius: 8px;
     overflow: hidden;
+    @media (max-width: 1140px) {
+      grid-column: span 2;
+    }
   }
   &__button {
     position: absolute;
@@ -188,5 +219,21 @@
     padding: 0 12px;
     border:none;
     border-radius: 8px;
+  }
+}
+.button{
+  width: 300px;
+  height: 44px;
+  @include font-source-sans(16px, $white, 600, 19px);
+  background-color: $green_light;
+  border: none;
+  border-radius: 8px;
+  padding: 0 25px;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: $black;
+  &:disabled {
+    cursor: default;
+    opacity: 0.6;
   }
 }

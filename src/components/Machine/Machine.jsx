@@ -1,13 +1,13 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { copyToClipboard } from '../../helpers';
-import { AppButton } from '../AppButton/AppButton';
-import SecretKeyModal from '../SecretKeyModal/AuthModal';
+import SecretKeyModal from '../SecretKeyModal/SecretKeyModal';
 import FormButton from '../FormButton/FormButton';
 import styles from './Machine.module.scss';
 import CopyMark from '../CopyMark/CopyMark';
 import * as apiMachine from '../../utils/apiMachine';
 import { observer } from 'mobx-react-lite';
 import { SecretKeyGlobalStore as secretStore } from '../../stores';
+import { Button } from '../Button/Button';
 
 export const Machine = observer(({ list }) => {
   const [current, setCurrent] = React.useState('encryption');
@@ -22,6 +22,7 @@ export const Machine = observer(({ list }) => {
   const [copyMessage, setCopyMessage] = useState('');
   const [encryption, SetEncryption] = useState('');
   const [secretKey, SetSecretKeyValue] = useState('');
+  const [keyLength, SetKeyLength] = useState(30);
   const selectRef = useRef(null);
   const activeClass = styles.tabActive;
 
@@ -45,13 +46,12 @@ export const Machine = observer(({ list }) => {
   const choiceType = (e, value) => {
     setSelected(value.name);
     setType(value.value);
-    console.log(type);
+    SetKeyLength(value.length);
     setFilteredList(list.filter((item) => item.name !== value.name));
     selectClick();
   };
 
   const handleEncrypt = (e) => {
-    console.log(type);
     apiMachine
       .getEncryption(
         encryption,
@@ -112,6 +112,7 @@ export const Machine = observer(({ list }) => {
   const setSecretKey = (e) => {
     secretStore.setSecretKeyText(secretKey);
     secretStore.setOpenSecretModal(false);
+    handleEncrypt();
   };
 
   const handleEncryptionValue = (e) => {
@@ -123,7 +124,7 @@ export const Machine = observer(({ list }) => {
   }, [encryption]);
 
   const handleChangeKey = (e) => {
-    SetSecretKeyValue(e.target.value);
+    SetSecretKeyValue(e.target.value.slice(0, keyLength));
   };
 
   const selectClasses = !isSelectOpen
@@ -133,6 +134,10 @@ export const Machine = observer(({ list }) => {
   const copyClasses = !isCopyShow
     ? styles.copy__message
     : `${styles.copy__messageShow} ${styles.copy__message}`;
+
+  const keyDesctiption = () => {
+    return 'любые символы в количестве от 1 до 30';
+  };
 
   return (
     <section className={styles.machine} id="ciphers">
@@ -210,17 +215,13 @@ export const Machine = observer(({ list }) => {
           </button>
         </div>
         <div className={styles.machine__button}>
-          <AppButton
-            action={() => handleEncrypt()}
-            isButtonDisabled={!encryption.length}
+          <Button
+            onClick={(e) => secretKeyClick(e)}
+            disabled={!encryption.length || !type.length}
+            className={styles.button}
           >
             Запустить
-          </AppButton>
-        </div>
-        <div className={styles.machine__button}>
-          <AppButton action={(e) => secretKeyClick(e)} type="outlined">
-            Ввести секретный ключ
-          </AppButton>
+          </Button>
         </div>
       </div>
       <SecretKeyModal
@@ -246,6 +247,10 @@ export const Machine = observer(({ list }) => {
               >
                 Ввести
               </FormButton>
+            </div>
+            <div className={styles.modal__desc}>
+              Для данного шифра необходимо ввести ключ:
+              <div>Использовать можно:</div>
             </div>
           </div>
         </div>
