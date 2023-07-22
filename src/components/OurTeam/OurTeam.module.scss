@@ -1,6 +1,6 @@
 @import '../../styles/colors.scss';
 @import '../../styles/mixins';
-.outTeam {
+.ourTeam {
   padding: 100px 9% 140px;
   margin: 0 auto;
   width: 100%;
@@ -15,9 +15,12 @@
     margin: 0;
     padding: 0;
     list-style: none;
+    display: flex;
+    justify-content: center;
     display: grid;
     grid-template-columns: repeat(4, 260px);
-    grid-template-rows: repeat(4, 1fr);
+    // grid-template-rows: repeat(4, 1fr);
+    grid-auto-rows: 1fr;
     column-gap: calc((100% - (4 * 260px)) / 3);
     row-gap: 52px;
   }
@@ -27,124 +30,29 @@
     list-style: none;
     width: 260px;
     height: 376px;
-
-    &:nth-child(1) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-aleks-pm.jpg);
-      }
-    }
-    &:nth-child(2) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-krist-pm.jpg);
-      }
-    }
-    &:nth-child(3) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-olga.jpg);
-      }
-    }
-    &:nth-child(4) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-ekat-ui.jpg);
-      }
-    }
-     &:nth-child(5) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-mari.jpg);
-      }
-    }
-    &:nth-child(6) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-grig.jpg);
-      }
-    }
-    &:nth-child(7) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-igor-fr.jpg);
-      }
-    }
-    &:nth-child(8) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-ekat-fr.jpg);
-      }
-    }
-    &:nth-child(9) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-svet.jpg);
-      }
-    }
-    &:nth-child(10) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-vital.jpg);
-      }
-    }
-    &:nth-child(11) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-team.jpg);
-      }
-    }
-    &:nth-child(12) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-aleks-back.jpg);
-      }
-    }
-    &:nth-child(13) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-petr.jpg);
-      }
-    }
-    &:nth-child(14) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-team.jpg);
-      }
-    }
-    &:nth-child(15) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-kseni.jpg);
-      }
-    }
-    &:nth-child(16) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-aleksa.jpg);
-      }
-    }
   }
   &_photo {
     width: 260px;
     height: 260px;
     border-radius: 50%;
   }
-  &_containerLast {
-    margin: 52px 0 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 3.24%;
-  }
-  &_cardLast {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    width: 260px;
-    height: 376px;
-
-    &:nth-child(1) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-ekat-qa.jpg);
-      }
-    }
-    &:nth-child(2) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-nata.jpg);
-      }
-    }
-    &:nth-child(3) {
-      .outTeam_photo {
-        background-image: url(../../assets/images/team-team.jpg);
-      }
-    }
-  }
+  // &_containerLast {
+  //   margin: 52px 0 0;
+  //   padding: 0;
+  //   list-style: none;
+  //   display: flex;
+  //   justify-content: center;
+  //   grid-template-columns: repeat(4, 260px);
+  //   column-gap: calc((100% - (4 * 260px)) / 3);
+  //   // gap: 3.24%;
+  // }
+  // &_cardLast {
+  //   margin: 0;
+  //   padding: 0;
+  //   list-style: none;
+  //   width: 260px;
+  //   height: 376px;
+  // }
   &_cardContent {
     margin-top: 20px;
   }
