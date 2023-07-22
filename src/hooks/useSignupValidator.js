@@ -152,6 +152,8 @@ const useSignupValidator = ({
     isMatch,
     isEmpty,
     isCustomValid,
+    email,
+    password,
   };
 };
 

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { FormGlobalStore as formStore } from '../../stores';
+import { AuthFormGlobalStore as formStore } from '../../stores';
 import { anyCharRegExp } from '../../constants/regExp';
 import FormButton from '../FormButton/FormButton';
 import useInputValidation from '../../hooks/useInputValidation';

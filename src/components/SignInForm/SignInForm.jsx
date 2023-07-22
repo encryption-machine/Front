@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { FormGlobalStore as formStore } from '../../stores';
+import { AuthFormGlobalStore as formStore } from '../../stores';
 import AuthForms from '../AuthForms/AuthForms';
 import FormButton from '../FormButton/FormButton';
 import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
-import FormValuesStore from '../../stores/forms/values';
+import AuthFormStore from '../../stores/auth-form-store';
 import {
   composeEmptyErrorMessage,
   passwordValidErrorMessage,
@@ -13,22 +14,24 @@ import {
 import useInputValidation from '../../hooks/useInputValidation';
 import style from '../AuthForms/AuthForms.module.scss';
 
-const SignInForm = observer(({ onLogin, textError }) => {
-  const [passwordValue, setPasswordValue] = useState('');
+const emailStore = new AuthFormStore();
+const passwordStore = new AuthFormStore();
+
+const SignInForm = observer(({ onLogin, loginErrorMessage }) => {
   const [isFormValid, setIsFormValid] = useState(false);
 
-  // errors
-  const [emailEmptyError, setEmailEmptyError] = useState('');
-  const [firstPasswordError, setFirstPasswordError] = useState('');
+  const email = emailStore;
+  const password = passwordStore;
 
   // Set show
   const [showPassword, setShowPassword] = useState('password');
   const [clickShowPassword, setClickShowPassword] = useState(false);
-  const [errorText, setErrorText] = useState(textError);
+  const [loginError, setLoginError] = useState(loginErrorMessage);
+  const isOpenModal = formStore.openAuthForm;
 
   // handlers
   const handleFirstPasswordValue = (e) => {
-    setPasswordValue(e.target.value);
+    password.setValue(e.target.value);
   };
 
   const handleShowPassword = (e) => {
@@ -37,8 +40,8 @@ const SignInForm = observer(({ onLogin, textError }) => {
   };
 
   const passwordInput = useInputValidation({
-    checkInputIsEmpty: passwordValue,
-    password: passwordValue,
+    checkInputIsEmpty: password.value,
+    password: password.value,
     length: { min: 8, max: 30 },
   });
 
@@ -61,39 +64,41 @@ const SignInForm = observer(({ onLogin, textError }) => {
   // Set errors
   useEffect(() => {
     passwordInput.isDirty && passwordInput.isEmpty
-      ? setFirstPasswordError(composeEmptyErrorMessage('Пароль'))
-      : setFirstPasswordError('');
+      ? password.setError({ emptyMessage: composeEmptyErrorMessage('Пароль') })
+      : password.setError({ emptyMessage: ' ' });
     emailInput.isDirty && emailInput.isEmpty
-      ? setEmailEmptyError(composeEmptyErrorMessage('E-mail'))
-      : setEmailEmptyError('');
-    emailValue || passwordValue ? setErrorText('') : setErrorText(textError);
+      ? email.setError({ emptyMessage: composeEmptyErrorMessage('E-mail') })
+      : email.setError({ emptyMessage: ' ' });
+    email.value || password.value
+      ? setLoginError('')
+      : setLoginError(loginErrorMessage);
   }, [
     emailInput.isDirty,
     emailInput.isEmailValid,
     passwordInput.isDirty,
     passwordInput.isEmpty,
     emailInput.isEmpty,
-    passwordInput.isPasswordInputValid,
-    passwordInput.isMatch,
-    emailValue,
-    passwordValue,
-    textError,
+    loginErrorMessage,
+    password,
+    email,
   ]);
+
+  //console.log(password.emptyMessage);
 
   const resetForm = () => {
     email.setValue('');
-    setPasswordValue('');
+    password.setValue('');
     setIsFormValid(false);
   };
 
+  useEffect(() => {
+    isOpenModal && resetForm();
+  }, [isOpenModal]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    /////////Авторизация//////
-    if (!emailValue || !passwordValue) return;
-    onLogin(emailValue, passwordValue);
-    /////////////////////////
-
+    onLogin(email.value, password.value);
+    setIsFormValid(false);
     resetForm();
     console.log('submit auth form');
   };
@@ -103,58 +108,64 @@ const SignInForm = observer(({ onLogin, textError }) => {
     callback();
   };
 
+  console.log(`loginErrorMessage: ${loginErrorMessage}`);
+
   return (
-    <AuthForms onSubmit={handleSubmit}>
-      <EmailInput
-        value={email.value}
-        onBlur={emailInput.onBlur}
-        onFocus={emailInput.onFocus}
-        onChange={(e) => email.setValue(e.target.value)}
-        isDirty={emailInput.isDirty}
-        isEmpty={emailInput.isEmpty}
-        isFocus={emailInput.isFocus}
-        isEmailValid={emailInput.isEmailValid}
-        emptyError={emailEmptyError}
-        emailValidError={emailValidErrorMessage}
-        onClickClearButton={(e) =>
-          handleClearButton(e, () => email.setValue(''))
-        }
-        placeholder="E-mail"
-        label="E-mail"
-      />
+    <>
+      <AuthForms onSubmit={handleSubmit}>
+        <EmailInput
+          value={email.value}
+          onBlur={emailInput.onBlur}
+          onFocus={emailInput.onFocus}
+          onChange={(e) => email.setValue(e.target.value)}
+          isDirty={emailInput.isDirty}
+          isEmpty={emailInput.isEmpty}
+          isFocus={emailInput.isFocus}
+          isEmailValid={emailInput.isEmailValid}
+          emptyError={email.emptyMessage}
+          emailValidError={emailValidErrorMessage}
+          onClickClearButton={(e) =>
+            handleClearButton(e, () => email.setValue(''))
+          }
+          placeholder="E-mail"
+          label="E-mail"
+        />
 
-      <PasswordInput
-        value={passwordValue}
-        onBlur={passwordInput.onBlur}
-        onFocus={passwordInput.onFocus}
-        isFocus={passwordInput.isFocus}
-        isDirty={passwordInput.isDirty}
-        isEmpty={passwordInput.isEmpty}
-        onChange={handleFirstPasswordValue}
-        passwordValidError={passwordValidErrorMessage}
-        isPasswordInputValid={passwordInput.isPasswordInputValid}
-        emptyError={firstPasswordError}
-        showPassword={showPassword}
-        onClickShowButton={(e) => handleShowPassword(e)}
-        onClickClearButton={(e) =>
-          handleClearButton(e, () => setPasswordValue(''))
-        }
-        clickShowPassword={clickShowPassword}
-        placeholder="Пароль"
-        label="Пароль"
-      />
+        <PasswordInput
+          value={password.value}
+          onBlur={passwordInput.onBlur}
+          onFocus={passwordInput.onFocus}
+          isFocus={passwordInput.isFocus}
+          isDirty={passwordInput.isDirty}
+          isEmpty={passwordInput.isEmpty}
+          onChange={handleFirstPasswordValue}
+          passwordValidError={passwordValidErrorMessage}
+          isPasswordInputValid={passwordInput.isPasswordInputValid}
+          emptyError={password.emptyMessage}
+          showPassword={showPassword}
+          onClickShowButton={(e) => handleShowPassword(e)}
+          onClickClearButton={(e) =>
+            handleClearButton(e, () => password.setValue(''))
+          }
+          clickShowPassword={clickShowPassword}
+          placeholder="Пароль"
+          label="Пароль"
+        />
 
-      {errorText && <span className={style.textError}>{errorText}</span>}
+        {loginError && (
+          <span className={style.loginErrorMessage}>{loginError}</span>
+        )}
 
-      <FormButton disabled={!isFormValid}>Войти</FormButton>
-      <span
-        onClick={() => formStore.setShowRecoveryPasswordForm(true)}
-        className={style.link}
-        type="button"
-      >
-        Забыли пароль?
-      </span>
-    </AuthForms>
+        <FormButton disabled={!isFormValid}>Войти</FormButton>
+        <span
+          onClick={() => formStore.setShowRecoveryPasswordForm(true)}
+          className={style.link}
+          type="button"
+        >
+          Забыли пароль?
+        </span>
+      </AuthForms>
+    </>
   );
 });
 

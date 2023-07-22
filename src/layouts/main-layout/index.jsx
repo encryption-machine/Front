@@ -4,7 +4,7 @@ import { Footer } from '../../components/Footer/Footer';
 import { Header } from '../../components/Header/Header';
 import { Outlet } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { FormGlobalStore as formStore } from '../../stores';
+import { AuthFormGlobalStore as formStore } from '../../stores';
 /////////Авторизация//////
 import {
   postApiAutorisation,
@@ -17,7 +17,7 @@ import CookiePopup from '../../components/CookiePopup/CookiePopup';
 const MainLayout = observer(() => {
   /////////Авторизация//////
   const [loggedIn, setLoggedIn] = useState(false);
-  const [textError, setTextError] = useState('');
+  const [loginErrorMessage, setTextError] = useState('');
 
   const handleLogin = (email, password) => {
     return postApiAutorisation(email, password)
@@ -88,7 +88,7 @@ const MainLayout = observer(() => {
       <Header
         loggedIn={loggedIn}
         onLogin={handleLogin}
-        textError={textError}
+        loginErrorMessage={loginErrorMessage}
         signOut={handleSignOut}
       />
       <section>
