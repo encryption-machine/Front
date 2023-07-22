@@ -1,0 +1,32 @@
+@import '../../styles/colors.scss';
+
+.authTabs {
+  &__content {
+    display: flex;
+    justify-content: center;
+    background: $violet;
+  }
+}
+
+.tabs {
+  display: flex;
+}
+
+.tab {
+  padding: 14px 12px;
+  font-size: 18px;
+  font-family: Inter;
+  font-weight: 700;
+  line-height: 20px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: $violet;
+  &Label {
+    color: $white;
+    background: $violet;
+    &__selected {
+      color: $green;
+    }
+  }
+}

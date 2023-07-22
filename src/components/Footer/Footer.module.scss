@@ -1,0 +1,19 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins';
+
+.footer {
+  height: 80px;
+  margin: 0 auto;
+  padding: 30px 0;
+  position: sticky;
+  background-color: $black;
+}
+
+.footer_container {
+  width: calc(100% - 130px * 2);
+  margin: 0 auto;
+}
+
+.telephone {
+  @include font-source-sans(16px, $white, 400, 20px);
+}
