@@ -8,10 +8,11 @@ import AuthTabs from '../AuthTabs/AuthTabs';
 import RecoveryPasswordForm from '../RecoveryPasswordForm/RecoveryPasswordForm';
 import { CustomLink } from '../CustomLink/CustomLink';
 import logotype from '../../assets/icons/logotype.svg';
-import { CustomLink } from '../CustomLink/CustomLink';
 
 export const Header = observer(({ onLogin, textError, loggedIn, signOut }) => {
 
+
+  const location = useLocation();
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
