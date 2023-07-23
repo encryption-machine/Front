@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import styles from './Header.module.scss';
 import AuthModal from '../AuthModal/AuthModal';
@@ -18,9 +18,7 @@ export const Header = observer(() => {
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
-        <CustomLink href={'/'} target="_self">
-          <img className={styles.logotype} src={logotype} alt="logo" />
-        </CustomLink>
+        <img className={styles.logotype} src={logotype} alt="logo" />
         <nav>
           {location.pathname === '/' && (
             <ul className={styles.list}>
@@ -53,16 +51,16 @@ export const Header = observer(() => {
               </li>
               {formStore.loggedIn && (
                 <li>
-                  <CustomLink href={'/profile'} target="_self">
+                  <Link to={'/profile'} className={styles.link}>
                     Личный&nbsp;кабинет
-                  </CustomLink>
+                  </Link>
                 </li>
               )}
             </ul>
           )}
         </nav>
         <div className={styles.entrance}>
-          {!formStore.loggedIn && (
+          {!formStore.formStore.loggedIn && (
             <button
               className={styles.button_header}
               type="button"
@@ -71,6 +69,11 @@ export const Header = observer(() => {
               Войти
             </button>
           )}
+
+          {location.pathname === '/profile' && formStore.loggedIn && (
+            <span className={styles.email}>email@mail.ru</span>
+          )}
+
           {formStore.loggedIn && (
             <button
               className={styles.button_header}
