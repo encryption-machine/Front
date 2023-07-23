@@ -42,16 +42,6 @@ const RecoveryPasswordForm = observer(() => {
   const secondPassword = secondPasswordStore;
   const answer = answerStore;
 
-  //const [email.value, setEmailValue] = useState('');
-  //const [answer.value, setAnswerValue] = useState('');
-  //const [passwordsValue, setPasswordsValue] = useState({
-  //  firstPassword: '',
-  //  secondPassword: '',
-  //});
-  //const [emailEmptyError, setEmailEmptyError] = useState('');
-  //const [firstPasswordError, setFirstPasswordError] = useState('');
-  //const [secondPasswordError, setSecondPasswordError] = useState('');
-  //const [passwordsIsMatchError, setPasswordsIsMatchError] = useState('');
   const [showPassword, setShowPassword] = useState('password');
   const [showConfirmPassword, setShowConfirmPassword] = useState('password');
   const [clickShowPassword, setClickShowPassword] = useState(false);
@@ -64,8 +54,6 @@ const RecoveryPasswordForm = observer(() => {
    * работы с зависимостями useEffect
    */
   const isOpenModal = formStore.openAuthForm;
-  //const [answerEmptyError, setAnswerEmptyError] = useState('');
-  //const [answerValidError, setAnswerValidError] = useState('');
 
   //  переменные для апи запроса по восстановлению пароля
   const [idUser, setIdUser] = useState('');
@@ -73,21 +61,6 @@ const RecoveryPasswordForm = observer(() => {
   const [secretQuestion, setSecretQuestion] = useState('');
   const [serverError, setServerError] = useState('');
 
-  //const handleEmailValue = (e) => {
-  //  setEmailValue(e.target.value);
-  //};
-  //const handleAnswerValue = (e) => {
-  //  setAnswerValue(e.target.value);
-  //};
-  //const handleFirstPasswordValue = (e) => {
-  //  setPasswordsValue({ ...passwordsValue, firstPassword: e.target.value });
-  //};
-  //const handleSecondPasswordValue = (e) => {
-  //  setPasswordsValue({
-  //    ...passwordsValue,
-  //    secondPassword: e.target.value,
-  //  });
-  //};
   const handleShowPassword = (e) => {
     e.preventDefault();
     setClickShowPassword(!clickShowPassword);
