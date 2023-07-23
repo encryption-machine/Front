@@ -2,10 +2,9 @@ import { AccordionHistoryItem } from '../AccordionHistoryItem/AccordionHistoryIt
 import styles from './AccordionHistory.module.scss';
 
 export const AccordionHistory = () => {
-    return (
-        <ul className={styles.accordionHistory}>
-            <AccordionHistoryItem />
-        </ul>
-    )
-
-}
+  return (
+    <ul className={styles.accordionHistory}>
+      <AccordionHistoryItem />
+    </ul>
+  );
+};

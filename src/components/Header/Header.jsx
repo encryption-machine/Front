@@ -10,8 +10,6 @@ import { CustomLink } from '../CustomLink/CustomLink';
 import logotype from '../../assets/icons/logotype.svg';
 
 export const Header = observer(({ onLogin, textError, loggedIn, signOut }) => {
-
-
   const location = useLocation();
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -23,46 +21,44 @@ export const Header = observer(({ onLogin, textError, loggedIn, signOut }) => {
       <div className={styles.header_container}>
         <img className={styles.logotype} src={logotype} alt="logo" />
         <nav>
-          {(location.pathname === '/') && <ul className={styles.list}>
-            <li className={styles.chapter}>
-              <CustomLink
-                href={'#ciphers'}
-                target="_self"
-                onClick={() => scrollToSection('ciphers')}
-              >
-                Шифрование
-              </CustomLink>
-            </li>
-            <li className={styles.chapter}>
-              <CustomLink
-                href={'#aboutCiphers'}
-                target="_self"
-                onClick={() => scrollToSection('aboutCiphers')}
-              >
-                О&nbsp;шифрах
-              </CustomLink>
-            </li>
-            <li className={styles.chapter}>
-              <CustomLink
-                href={'#aboutProject'}
-                target="_self"
-                onClick={() => scrollToSection('aboutProject')}
-              >
-                О&nbsp;проекте
-              </CustomLink>
-            </li>
-            {loggedIn &&
-              <li>
-                <Link
-                  to={'/profile'}
-                  className={styles.link}
+          {location.pathname === '/' && (
+            <ul className={styles.list}>
+              <li className={styles.chapter}>
+                <CustomLink
+                  href={'#ciphers'}
+                  target="_self"
+                  onClick={() => scrollToSection('ciphers')}
                 >
-                  Личный&nbsp;кабинет
-                </Link>
+                  Шифрование
+                </CustomLink>
               </li>
-
-            }
-          </ul>}
+              <li className={styles.chapter}>
+                <CustomLink
+                  href={'#aboutCiphers'}
+                  target="_self"
+                  onClick={() => scrollToSection('aboutCiphers')}
+                >
+                  О&nbsp;шифрах
+                </CustomLink>
+              </li>
+              <li className={styles.chapter}>
+                <CustomLink
+                  href={'#aboutProject'}
+                  target="_self"
+                  onClick={() => scrollToSection('aboutProject')}
+                >
+                  О&nbsp;проекте
+                </CustomLink>
+              </li>
+              {loggedIn && (
+                <li>
+                  <Link to={'/profile'} className={styles.link}>
+                    Личный&nbsp;кабинет
+                  </Link>
+                </li>
+              )}
+            </ul>
+          )}
         </nav>
         <div className={styles.entrance}>
           {!loggedIn && (
