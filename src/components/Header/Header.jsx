@@ -70,6 +70,11 @@ export const Header = observer(({ onLogin, textError, loggedIn, signOut }) => {
               Войти
             </button>
           )}
+
+          {location.pathname === '/profile' && loggedIn && (
+            <span className={styles.email}>email@mail.ru</span>
+          )}
+
           {loggedIn && (
             <button
               className={styles.button_header}
