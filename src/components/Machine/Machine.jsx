@@ -56,7 +56,7 @@ export const Machine = observer(({ list }) => {
     SetEncKey(value.desc);
     if (value.value === 'qr') {
       setCurrent('encryption');
-      SetEncryptionTextLength(300);
+      SetEncryptionTextLength(180);
     } else {
       SetEncryptionTextLength(2000);
     }
