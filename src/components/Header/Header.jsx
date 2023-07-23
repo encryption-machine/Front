@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { FormGlobalStore as formStore } from '../../stores/';
 import styles from './Header.module.scss';
@@ -21,12 +21,7 @@ export const Header = observer(({ onLogin, textError, loggedIn, signOut }) => {
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
-        <CustomLink
-          href={"/"}
-          target="_self"
-        >
-          <img className={styles.logotype} src={logotype} alt="logo" />
-        </CustomLink>
+        <img className={styles.logotype} src={logotype} alt="logo" />
         <nav>
           {(location.pathname === '/') && <ul className={styles.list}>
             <li className={styles.chapter}>
@@ -58,12 +53,12 @@ export const Header = observer(({ onLogin, textError, loggedIn, signOut }) => {
             </li>
             {loggedIn &&
               <li>
-                <CustomLink
-                  href={'/profile'}
-                  target="_self"
+                <Link
+                  to={'/profile'}
+                  className={styles.link}
                 >
                   Личный&nbsp;кабинет
-                </CustomLink>
+                </Link>
               </li>
 
             }

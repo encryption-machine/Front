@@ -16,7 +16,7 @@ import CookiePopup from '../../components/CookiePopup/CookiePopup';
 
 const MainLayout = observer(() => {
   /////////Авторизация//////
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [textError, setTextError] = useState('');
 
   const handleLogin = (email, password) => {
