@@ -13,7 +13,7 @@ import {
   emailValidErrorMessage,
 } from '../../constants/errorMessages';
 import useInputValidation from '../../hooks/useInputValidation';
-import style from '../AuthForms/AuthForms.module.scss';
+import styles from '../AuthForms/AuthForms.module.scss';
 
 const emailStore = new AuthFormStore();
 const passwordStore = new AuthFormStore();
@@ -23,9 +23,6 @@ const SignInForm = observer(() => {
   const password = passwordStore;
 
   const [loginErrorMessage, setLoginErrorMessage] = useState('');
-
-  console.log(formStore.loggedIn);
-
   const [isFormValid, setIsFormValid] = useState(false);
 
   // Set show
@@ -33,11 +30,6 @@ const SignInForm = observer(() => {
   const [clickShowPassword, setClickShowPassword] = useState(false);
   const [loginError, setLoginError] = useState(loginErrorMessage);
   const isOpenModal = formStore.openAuthForm;
-
-  // handlers
-  const handleFirstPasswordValue = (e) => {
-    password.setValue(e.target.value);
-  };
 
   const handleShowPassword = (e) => {
     e.preventDefault();
@@ -70,16 +62,17 @@ const SignInForm = observer(() => {
   useEffect(() => {
     passwordInput.isDirty && passwordInput.isEmpty
       ? password.setError({ emptyMessage: composeEmptyErrorMessage('Пароль') })
-      : password.setError({ emptyMessage: ' ' });
+      : password.setError({ emptyMessage: '' });
+
     emailInput.isDirty && emailInput.isEmpty
       ? email.setError({ emptyMessage: composeEmptyErrorMessage('E-mail') })
-      : email.setError({ emptyMessage: ' ' });
+      : email.setError({ emptyMessage: '' });
+
     email.value || password.value
       ? setLoginError('')
       : setLoginError(loginErrorMessage);
   }, [
     emailInput.isDirty,
-    emailInput.isEmailValid,
     passwordInput.isDirty,
     passwordInput.isEmpty,
     emailInput.isEmpty,
@@ -92,8 +85,8 @@ const SignInForm = observer(() => {
     email.setValue('');
     password.setValue('');
     passwordInput.setDirty(false);
-    emailInput.setDirty(false);
     passwordInput.setFocus(false);
+    emailInput.setDirty(false);
     emailInput.setFocus(false);
     setIsFormValid(false);
   };
@@ -184,7 +177,7 @@ const SignInForm = observer(() => {
           isFocus={passwordInput.isFocus}
           isDirty={passwordInput.isDirty}
           isEmpty={passwordInput.isEmpty}
-          onChange={handleFirstPasswordValue}
+          onChange={(e) => password.setValue(e.target.value)}
           passwordValidError={passwordValidErrorMessage}
           isPasswordInputValid={passwordInput.isPasswordInputValid}
           emptyError={password.emptyMessage}
@@ -199,13 +192,13 @@ const SignInForm = observer(() => {
         />
 
         {loginError && (
-          <span className={style.loginErrorMessage}>{loginError}</span>
+          <span className={styles.loginErrorMessage}>{loginError}</span>
         )}
 
         <FormButton disabled={!isFormValid}>Войти</FormButton>
         <span
           onClick={() => formStore.setShowRecoveryPasswordForm(true)}
-          className={style.link}
+          className={styles.link}
           type="button"
         >
           Забыли пароль?
