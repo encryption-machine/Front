@@ -60,7 +60,7 @@ export const Header = observer(() => {
           )}
         </nav>
         <div className={styles.entrance}>
-          {!formStore.formStore.loggedIn && (
+          {!formStore.loggedIn && (
             <button
               className={styles.button_header}
               type="button"
