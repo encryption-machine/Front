@@ -88,8 +88,6 @@ const SignInForm = observer(() => {
     email,
   ]);
 
-  //console.log(password.emptyMessage);
-
   const resetForm = () => {
     email.setValue('');
     password.setValue('');

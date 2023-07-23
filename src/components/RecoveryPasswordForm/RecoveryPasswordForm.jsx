@@ -20,7 +20,6 @@ import {
   emailValidErrorMessage,
 } from '../../constants/errorMessages';
 
-// тест по отправке апи запроса для восстановления пароля
 import * as apiPasswordRecovery from '../../utils/apiPasswordRecovery';
 
 const RecoveryPasswordForm = observer(() => {
