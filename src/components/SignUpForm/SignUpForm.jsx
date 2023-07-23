@@ -24,6 +24,9 @@ import {
 import FormButton from '../FormButton/FormButton';
 import styles from '../AuthForms/AuthForms.module.scss';
 
+/**
+ * Создаёт незвисимые инстансы стора для инпутов
+ */
 const emailStore = new AuthFormStore();
 const firstPasswordStore = new AuthFormStore();
 const secondPasswordStore = new AuthFormStore();
@@ -31,6 +34,10 @@ const answerStore = new AuthFormStore();
 const questionStore = new AuthFormStore();
 
 const SignUpForm = observer(() => {
+  /**
+   * Присваивает переменные инстансам для корректной
+   * работы с зависимостями useEffect
+   */
   const email = emailStore;
   const firstPassword = firstPasswordStore;
   const secondPassword = secondPasswordStore;
@@ -45,6 +52,12 @@ const SignUpForm = observer(() => {
   const [clickShowPassword, setClickShowPassword] = useState(false);
   const [clickShowConfirmPassword, setClickShowConfirmPassword] =
     useState(false);
+
+  /**
+   * Присваивает переменную глобальному состоянию
+   * открытия/закрытия формы для корректной
+   * работы с зависимостями useEffect
+   */
   const isOpenModal = formStore.openAuthForm;
 
   const handleShowPassword = (e) => {
@@ -97,6 +110,12 @@ const SignUpForm = observer(() => {
     secondPassword.setValue('');
     answer.setValue('');
     question.setValue('');
+
+    /**
+     * Отменяют стандартное поведение
+     * появления ошибок при потере фокуса
+     * пустого инпута после сброса значения инпутов
+     */
     confirmPasswordInput.setDirty(false);
     confirmPasswordInput.setFocus(false);
     secretQuestionInput.setDirty(false);
@@ -107,6 +126,7 @@ const SignUpForm = observer(() => {
     emailInput.setFocus(false);
     answerInput.setDirty(false);
     answerInput.setFocus(false);
+
     setIsFormValid(false);
   };
 

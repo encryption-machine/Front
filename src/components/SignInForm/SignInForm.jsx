@@ -6,7 +6,7 @@ import AuthForms from '../AuthForms/AuthForms';
 import FormButton from '../FormButton/FormButton';
 import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
 import AuthFormStore from '../../stores/auth-form-store';
-import * as apiSignIn from '../../utils/Auth';
+import * as api from '../../utils/Auth';
 import {
   composeEmptyErrorMessage,
   passwordValidErrorMessage,
@@ -15,10 +15,17 @@ import {
 import useInputValidation from '../../hooks/useInputValidation';
 import styles from '../AuthForms/AuthForms.module.scss';
 
+/**
+ * Создаёт незвисимые инстансы стора для инпутов
+ */
 const emailStore = new AuthFormStore();
 const passwordStore = new AuthFormStore();
 
 const SignInForm = observer(() => {
+  /**
+   * Присваивает переменные инстансам для корректной
+   * работы с зависимостями useEffect
+   */
   const email = emailStore;
   const password = passwordStore;
 
@@ -28,7 +35,13 @@ const SignInForm = observer(() => {
   // Set show
   const [showPassword, setShowPassword] = useState('password');
   const [clickShowPassword, setClickShowPassword] = useState(false);
-  const [loginError, setLoginError] = useState(loginErrorMessage);
+  const [serverError, setServerError] = useState(loginErrorMessage);
+
+  /**
+   * Присваивает переменную глобальному состоянию
+   * открытия/закрытия формы для корректной
+   * работы с зависимостями useEffect
+   */
   const isOpenModal = formStore.openAuthForm;
 
   const handleShowPassword = (e) => {
@@ -69,8 +82,8 @@ const SignInForm = observer(() => {
       : email.setError({ emptyMessage: '' });
 
     email.value || password.value
-      ? setLoginError('')
-      : setLoginError(loginErrorMessage);
+      ? setServerError('')
+      : setServerError(loginErrorMessage);
   }, [
     emailInput.isDirty,
     passwordInput.isDirty,
@@ -84,10 +97,17 @@ const SignInForm = observer(() => {
   const resetForm = () => {
     email.setValue('');
     password.setValue('');
+
+    /**
+     * Отменяют стандартное поведение
+     * появления ошибок при потере фокуса
+     * пустого инпута после сброса значения инпутов
+     */
     passwordInput.setDirty(false);
     passwordInput.setFocus(false);
     emailInput.setDirty(false);
     emailInput.setFocus(false);
+
     setIsFormValid(false);
   };
 
@@ -97,7 +117,7 @@ const SignInForm = observer(() => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    apiSignIn
+    api
       .postApiAutorisation(email.value, password.value)
       .then((data) => {
         const refresh = data.refresh;
@@ -106,11 +126,11 @@ const SignInForm = observer(() => {
           formStore.setLoggedIn(true);
           formStore.setOpenAuthForm(false);
         } else {
-          apiSignIn
+          api
             .postApiAuthorizeVerify(refresh)
             .then((data) => {
               if (data) {
-                apiSignIn
+                api
                   .postApiAuthorizeRefresh(refresh)
                   .then((data) => {
                     if (data.access) {
@@ -145,6 +165,7 @@ const SignInForm = observer(() => {
   const handleClearButton = (e, callback) => {
     e.preventDefault();
     callback();
+    serverError && setServerError('');
   };
 
   console.log(`loginErrorMessage: ${loginErrorMessage}`);
@@ -191,8 +212,8 @@ const SignInForm = observer(() => {
           label="Пароль"
         />
 
-        {loginError && (
-          <span className={styles.loginErrorMessage}>{loginError}</span>
+        {serverError && (
+          <span className={styles.loginErrorMessage}>{serverError}</span>
         )}
 
         <FormButton disabled={!isFormValid}>Войти</FormButton>
