@@ -6,6 +6,7 @@ import AuthForms from '../AuthForms/AuthForms';
 import FormButton from '../FormButton/FormButton';
 import { EmailInput, PasswordInput } from '../AuthFormsInputs/AuthFormsInputs';
 import AuthFormStore from '../../stores/auth-form-store';
+import * as apiSignIn from '../../utils/Auth';
 import {
   composeEmptyErrorMessage,
   passwordValidErrorMessage,
@@ -17,11 +18,15 @@ import style from '../AuthForms/AuthForms.module.scss';
 const emailStore = new AuthFormStore();
 const passwordStore = new AuthFormStore();
 
-const SignInForm = observer(({ onLogin, loginErrorMessage }) => {
-  const [isFormValid, setIsFormValid] = useState(false);
-
+const SignInForm = observer(() => {
   const email = emailStore;
   const password = passwordStore;
+
+  const [loginErrorMessage, setLoginErrorMessage] = useState('');
+
+  console.log(formStore.loggedIn);
+
+  const [isFormValid, setIsFormValid] = useState(false);
 
   // Set show
   const [showPassword, setShowPassword] = useState('password');
@@ -101,10 +106,49 @@ const SignInForm = observer(({ onLogin, loginErrorMessage }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onLogin(email.value, password.value);
+    apiSignIn
+      .postApiAutorisation(email.value, password.value)
+      .then((data) => {
+        const refresh = data.refresh;
+        if (data.access) {
+          document.cookie = `access=${data.access}; max-age=3600`;
+          formStore.setLoggedIn(true);
+          formStore.setOpenAuthForm(false);
+        } else {
+          apiSignIn
+            .postApiAuthorizeVerify(refresh)
+            .then((data) => {
+              if (data) {
+                apiSignIn
+                  .postApiAuthorizeRefresh(refresh)
+                  .then((data) => {
+                    if (data.access) {
+                      document.cookie = `access=${data.access}; max-age=3600`;
+                      formStore.setLoggedIn(true);
+                      formStore.setOpenAuthForm(false);
+                    }
+                  })
+                  .catch((err) => {
+                    console.error(err, '--authorizeRefresh,err');
+                    formStore.setLoggedIn(false);
+                    setLoginErrorMessage(err.message);
+                  });
+              }
+            })
+            .catch((err) => {
+              console.error(err, '--token,err');
+              formStore.setLoggedIn(false);
+              setLoginErrorMessage(err.message);
+            });
+        }
+      })
+      .catch((err) => {
+        console.error(err, '--authorize,err');
+        formStore.setLoggedIn(false);
+        setLoginErrorMessage(err.message);
+      });
     setIsFormValid(false);
     resetForm();
-    console.log('submit auth form');
   };
 
   const handleClearButton = (e, callback) => {

@@ -12,10 +12,19 @@ class AuthFormStore {
   emptyMessage = '';
   validMessage = '';
   serverMessage = '';
+  loggedIn = false;
 
   constructor() {
     makeAutoObservable(this);
   }
+
+  /**
+   * Изменяет состояние авторизации
+   * @param {boolean} bool
+   */
+  setLoggedIn = (bool) => {
+    this.loggedIn = bool;
+  };
 
   /**
    * Принимает значение инпута
