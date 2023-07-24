@@ -17,12 +17,12 @@
     list-style: none;
     display: flex;
     justify-content: center;
+    justify-items: center;
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(5, 1fr);
     column-gap: 3.2%;
     row-gap: 52px;
-    
   }
   &_card {
     margin: 0;
