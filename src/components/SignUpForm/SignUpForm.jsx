@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import AuthForms from '../AuthForms/AuthForms';
 import useInputValidation from '../../hooks/useInputValidation';
 import AuthFormStore from '../../stores/auth-form-store';
+import * as api from '../../utils/Registration';
 import { AuthFormGlobalStore as formStore } from '../../stores';
 import {
   EmailInput,
@@ -23,8 +24,6 @@ import {
 } from '../../constants/errorMessages';
 import FormButton from '../FormButton/FormButton';
 import styles from '../AuthForms/AuthForms.module.scss';
-import { postApiRegistration } from '../../utils/Registration';
-import { observer } from 'mobx-react-lite';
 
 /**
  * Создаёт незвисимые инстансы стора для инпутов
@@ -45,7 +44,7 @@ const SignUpForm = observer(() => {
   const secondPassword = secondPasswordStore;
   const answer = answerStore;
   const question = questionStore;
-
+  const [errorMessage, setErrorMessage] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
 
   // Set show
@@ -54,6 +53,7 @@ const SignUpForm = observer(() => {
   const [clickShowPassword, setClickShowPassword] = useState(false);
   const [clickShowConfirmPassword, setClickShowConfirmPassword] =
     useState(false);
+  const [serverError, setServerError] = useState(errorMessage);
 
   /**
    * Присваивает переменную глобальному состоянию
@@ -220,6 +220,20 @@ const SignUpForm = observer(() => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    api
+      .postApiRegistration(email.value, firstPassword.value, secondPassword.value, question.value, answer.value)
+    .then((res)=> {
+      console.log(res);
+/*       const authToken = res.accessToken.split("Bearer ")[1];
+      console.log('authToken',authToken); */
+    })
+    .catch((err)=>{
+      console.log(err, 'handleSubmitRegistration');
+      })
+    
+
+
     setIsFormValid(false);
     resetForm();
   };
@@ -230,7 +244,7 @@ const SignUpForm = observer(() => {
   };
 
   return (
-    <AuthForms onSubmit={userRegister}>
+    <AuthForms onSubmit={handleSubmit}>
       <EmailInput
         value={email.value}
         onBlur={emailInput.onBlur}
@@ -331,13 +345,11 @@ const SignUpForm = observer(() => {
         Секретный вопрос и ответ на него нужны для дальнейшей смены пароля
       </span>
 
-      {errorText && <span className={styles.textError}>
-      {errorText}
-      </span>}
+      {serverError && (
+          <span className={styles.loginErrorMessage}>{serverError}</span>
+        )}
 
-      <FormButton
-        /* onSubmit={(e) => e.preventDefault()}  */ disabled={!isFormValid}
-      >
+      <FormButton /* onSubmit={(e) => e.preventDefault()} */ disabled={!isFormValid}>
         Зарегистрироваться
       </FormButton>
     </AuthForms>
