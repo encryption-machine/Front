@@ -4,7 +4,8 @@ import { observer } from 'mobx-react-lite';
 import AuthForms from '../AuthForms/AuthForms';
 import useInputValidation from '../../hooks/useInputValidation';
 import AuthFormStore from '../../stores/auth-form-store';
-import * as api from '../../utils/Registration';
+import * as apiReg from '../../utils/Registration';
+import * as apiAuth from '../../utils/Auth';
 import { AuthFormGlobalStore as formStore } from '../../stores';
 import {
   EmailInput,
@@ -44,7 +45,8 @@ const SignUpForm = observer(() => {
   const secondPassword = secondPasswordStore;
   const answer = answerStore;
   const question = questionStore;
-  const [errorMessage, setErrorMessage] = useState('');
+
+  const [loginErrorMessage, setLoginErrorMessage] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
 
   // Set show
@@ -53,7 +55,7 @@ const SignUpForm = observer(() => {
   const [clickShowPassword, setClickShowPassword] = useState(false);
   const [clickShowConfirmPassword, setClickShowConfirmPassword] =
     useState(false);
-  const [serverError, setServerError] = useState(errorMessage);
+  const [serverError, setServerError] = useState(loginErrorMessage);
 
   /**
    * Присваивает переменную глобальному состоянию
@@ -203,6 +205,8 @@ const SignUpForm = observer(() => {
       : secondPassword.setError({
           validMessage: passwordMismatchErrorMessage,
         });
+
+    email.value ? setServerError('') : setServerError(loginErrorMessage);
   }, [
     confirmPasswordInput.isDirty,
     emailInput.isDirty,
@@ -216,23 +220,59 @@ const SignUpForm = observer(() => {
     secretQuestionInput.isDirty,
     secretQuestionInput.isEmpty,
     secretQuestionInput.isCustomValid,
+    loginErrorMessage,
   ]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    api
-      .postApiRegistration(email.value, firstPassword.value, secondPassword.value, question.value, answer.value)
-    .then((res)=> {
-      console.log(res);
-/*       const authToken = res.accessToken.split("Bearer ")[1];
-      console.log('authToken',authToken); */
-    })
-    .catch((err)=>{
-      console.log(err, 'handleSubmitRegistration');
+    apiReg
+      .postApiRegistration(
+        email.value,
+        firstPassword.value,
+        secondPassword.value,
+        question.value,
+        answer.value
+      )
+      .then((data) => {
+        console.log(data.refresh, data.access);
+        const refresh = data.refresh;
+        if (data.access) {
+          document.cookie = `access=${data.access}; max-age=3600`;
+          formStore.setLoggedIn(true);
+          formStore.setOpenAuthForm(false);
+        } else {
+          apiAuth
+            .postApiAuthorizeVerify(refresh)
+            .then((data) => {
+              if (data) {
+                apiAuth
+                  .postApiAuthorizeRefresh(refresh)
+                  .then((data) => {
+                    if (data.access) {
+                      document.cookie = `access=${data.access}; max-age=3600`;
+                      formStore.setLoggedIn(true);
+                      formStore.setOpenAuthForm(false);
+                    }
+                  })
+                  .catch((err) => {
+                    console.error(err, '--authorizeRefresh,err');
+                    formStore.setLoggedIn(false);
+                    setLoginErrorMessage(err.message);
+                  });
+              }
+            })
+            .catch((err) => {
+              console.error(err, '--token,err');
+              formStore.setLoggedIn(false);
+              setLoginErrorMessage(err.message);
+            });
+        }
       })
-    
-
+      .catch((err) => {
+        formStore.setLoggedIn(false);
+        setLoginErrorMessage(err.message);
+      });
 
     setIsFormValid(false);
     resetForm();
@@ -241,6 +281,7 @@ const SignUpForm = observer(() => {
   const handleClearButton = (e, callback) => {
     e.preventDefault();
     callback();
+    serverError && setServerError('');
   };
 
   return (
@@ -346,10 +387,12 @@ const SignUpForm = observer(() => {
       </span>
 
       {serverError && (
-          <span className={styles.loginErrorMessage}>{serverError}</span>
-        )}
+        <span className={styles.loginErrorMessage}>{serverError}</span>
+      )}
 
-      <FormButton /* onSubmit={(e) => e.preventDefault()} */ disabled={!isFormValid}>
+      <FormButton
+        /* onSubmit={(e) => e.preventDefault()} */ disabled={!isFormValid}
+      >
         Зарегистрироваться
       </FormButton>
     </AuthForms>
