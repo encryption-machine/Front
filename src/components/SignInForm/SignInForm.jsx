@@ -13,7 +13,21 @@ import {
   emailValidErrorMessage,
 } from '../../constants/errorMessages';
 import useInputValidation from '../../hooks/useInputValidation';
-import style from '../AuthForms/AuthForms.module.scss';
+import styles from '../AuthForms/AuthForms.module.scss';
+
+/**
+ * Создаёт незвисимые инстансы стора для инпутов
+ */
+const emailStore = new AuthFormStore();
+const passwordStore = new AuthFormStore();
+
+const SignInForm = observer(() => {
+  /**
+   * Присваивает переменные инстансам для корректной
+   * работы с зависимостями useEffect
+   */
+  const email = emailStore;
+  const password = passwordStore;
 
   const [loginErrorMessage, setLoginErrorMessage] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
@@ -154,8 +168,6 @@ import style from '../AuthForms/AuthForms.module.scss';
     serverError && setServerError('');
   };
 
-  console.log(`loginErrorMessage: ${loginErrorMessage}`);
-
   return (
     <>
       <AuthForms onSubmit={handleSubmit}>
@@ -216,4 +228,3 @@ import style from '../AuthForms/AuthForms.module.scss';
 });
 
 export default SignInForm;
-
