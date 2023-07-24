@@ -2,6 +2,7 @@ import React from 'react';
 import { Machine } from '../components/Machine/Machine';
 import AboutCiphers from '../components/AboutCiphers/AboutCiphers';
 import AboutProject from '../../src/components/AboutProject/AboutProject';
+import OurTeam from '../components/OurTeam/OurTeam';
 
 export const MainPage = () => {
   const dataMachine = [
@@ -41,6 +42,7 @@ export const MainPage = () => {
       <Machine list={dataMachine} />
       <AboutCiphers />
       <AboutProject />
+      <OurTeam />
     </>
   );
 };
