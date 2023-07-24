@@ -1,11 +1,9 @@
-/* eslint-disable react/jsx-pascal-case */ 
+/* eslint-disable react/jsx-pascal-case */
 import cn from 'classnames';
 import { Modal } from '../Modal/Modal';
 import styles from './AuthModal.module.scss';
 
-
 const AuthModal = ({ isOpen, setIsOpen, children }) => {
-
   return (
     <Modal.overlay
       className={isOpen ? cn(styles.overlay, styles.active) : styles.overlay}

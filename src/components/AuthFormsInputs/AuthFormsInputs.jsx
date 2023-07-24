@@ -42,22 +42,20 @@ const ClearButton = ({
   onClickClearButton,
   isFocus,
   value,
-}) => {
-  return (
-    <button
-      onBlur={() => onBlur}
-      onFocus={() => onFocus}
-      onClick={onClickClearButton}
-      className={
-        !isFocus
-          ? styleLocal.unfocused
-          : cn(styleLocal.focused, styleLocal.clearButton)
-      }
-    >
-      {value ? <img src={clearPassword} alt="Отчистить" /> : null}
-    </button>
-  );
-};
+}) => (
+  <button
+    onBlur={() => onBlur}
+    onFocus={() => onFocus}
+    onClick={onClickClearButton}
+    className={
+      !isFocus
+        ? styleLocal.unfocused
+        : cn(styleLocal.focused, styleLocal.clearButton)
+    }
+  >
+    {value ? <img src={clearPassword} alt="Отчистить" /> : null}
+  </button>
+);
 
 const ShowPasswordButton = ({
   onBlur,
@@ -65,30 +63,26 @@ const ShowPasswordButton = ({
   onClickShowButton,
   isFocus,
   clickShowPassword,
-}) => {
-  return (
-    <button
-      onBlur={onBlur}
-      onFocus={onFocus}
-      onClick={onClickShowButton}
-      className={!isFocus ? styleLocal.unfocused : styleLocal.focused}
-    >
-      {!clickShowPassword ? (
-        <img src={hidePassword} alt="Показать" />
-      ) : (
-        <img src={viewPassword} alt="Скрыть" />
-      )}
-    </button>
-  );
-};
+}) => (
+  <button
+    onBlur={onBlur}
+    onFocus={onFocus}
+    onClick={onClickShowButton}
+    className={!isFocus ? styleLocal.unfocused : styleLocal.focused}
+  >
+    {!clickShowPassword ? (
+      <img src={hidePassword} alt="Показать" />
+    ) : (
+      <img src={viewPassword} alt="Скрыть" />
+    )}
+  </button>
+);
 
-const Label = ({ children, htmlFor }) => {
-  return (
-    <label className={styles.label} htmlFor={htmlFor}>
-      {children}
-    </label>
-  );
-};
+const Label = ({ children, htmlFor }) => (
+  <label className={styles.label} htmlFor={htmlFor}>
+    {children}
+  </label>
+);
 
 export const EmailInput = ({
   value,
@@ -141,25 +135,25 @@ export const EmailInput = ({
 
       {isDirty && !isEmailValid && !isEmpty ? (
         <div>
-          {emailValidError.map((error) => {
-            return (
-              <div
-                className={cn(styles.hintError, styles.hintError__wrap)}
-                key={nanoid()}
-              >
-                <span className={styles.hintError__title}>
-                  {error.error_title}
-                </span>
-                <span>{error.format}</span>
-                <ul className={styles.hintError__list}>
-                  {error.list_title}
-                  <li className={styles.hintError__item}>{error.item_1}</li>
-                  <li className={styles.hintError__item}>{error.item_2}</li>
-                  <li className={styles.hintError__item}>{error.item_3}</li>
-                </ul>
-              </div>
-            );
-          })}
+          {emailValidError.map((error) => (
+            <div
+              className={cn(styles.hintError, styles.hintError__wrap)}
+              key={nanoid()}
+            >
+              <span className={styles.hintError__title}>
+                {error.error_title}
+              </span>
+              <span>{error.format}</span>
+              <ul className={styles.hintError__list}>
+                {error.list_title}
+                {error.items.map((item) => (
+                  <li key={nanoid()} className={styles.hintError__item}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       ) : null}
     </>
@@ -228,18 +222,16 @@ export const PasswordInput = ({
 
       {isDirty && !isPasswordInputValid && !isEmpty ? (
         <div className={cn(styles.hintError, styles.hintError__wrap)}>
-          {passwordValidError.map((error) => {
-            return (
-              <ul key={nanoid()} className={styles.hintError__list}>
-                {error.list_title}
-                <li className={styles.hintError__item}>{error.item_1}</li>
-                <li className={styles.hintError__item}>{error.item_2}</li>
-                <li className={styles.hintError__item}>{error.item_3}</li>
-                <li className={styles.hintError__item}>{error.item_4}</li>
-                <li className={styles.hintError__item}>{error.item_5}</li>
-              </ul>
-            );
-          })}
+          {passwordValidError.map((error) => (
+            <ul key={nanoid()} className={styles.hintError__list}>
+              {error.list_title}
+              {error.items.map((item) => (
+                <li key={nanoid()} className={styles.hintError__item}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          ))}
         </div>
       ) : null}
     </>

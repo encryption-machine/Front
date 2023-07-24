@@ -1,6 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 import AuthForms from '../AuthForms/AuthForms';
 import useInputValidation from '../../hooks/useInputValidation';
+import AuthFormStore from '../../stores/auth-form-store';
+import { AuthFormGlobalStore as formStore } from '../../stores';
 import {
   EmailInput,
   PasswordInput,
@@ -8,7 +12,7 @@ import {
   AnswerInput,
   SecretQuestionInput,
 } from '../AuthFormsInputs/AuthFormsInputs';
-import { answerRegExp, secretQuestionRegExp } from '../../constants/regExp';
+import { anyCharRegExp } from '../../constants/regExp';
 import {
   answerErrorMessage,
   composeEmptyErrorMessage,
@@ -22,29 +26,27 @@ import styles from '../AuthForms/AuthForms.module.scss';
 import { postApiRegistration } from '../../utils/Registration';
 import { observer } from 'mobx-react-lite';
 
-const SignUpForm = observer(({onLogin, loggedIn}) => {
-  // Set values
-  const [passwordsValue, setPasswordsValue] = useState({
-    firstPassword: '',
-    secondPassword: '',
-  });
-  const [emailValue, setEmailValue] = useState('');
-  const [answerValue, setAnswerValue] = useState('');
-  const [secretQuestionValue, setSecretQuestionValue] = useState('');
+/**
+ * Создаёт незвисимые инстансы стора для инпутов
+ */
+const emailStore = new AuthFormStore();
+const firstPasswordStore = new AuthFormStore();
+const secondPasswordStore = new AuthFormStore();
+const answerStore = new AuthFormStore();
+const questionStore = new AuthFormStore();
 
-  // errors
-  const [emailEmptyError, setEmailEmptyError] = useState('');
-  const [answerEmptyError, setAnswerEmptyError] = useState('');
-  const [answerValidError, setAnswerValidError] = useState('');
-  const [secretQuestionEmptyError, setSecretQuestionEmptyError] = useState('');
-  const [secretQuestionValidError, setSecretQuestionValidError] = useState('');
-  const [firstPasswordError, setFirstPasswordError] = useState('');
-  const [secondPasswordError, setSecondPasswordError] = useState('');
-  const [passwordsIsMatchError, setPasswordsIsMatchError] = useState('');
+const SignUpForm = observer(() => {
+  /**
+   * Присваивает переменные инстансам для корректной
+   * работы с зависимостями useEffect
+   */
+  const email = emailStore;
+  const firstPassword = firstPasswordStore;
+  const secondPassword = secondPasswordStore;
+  const answer = answerStore;
+  const question = questionStore;
 
-  // errors userRegister
-  // const [loggedIn, setLoggedIn] = useState(false);
-  const [errorText, setErrorText] = useState('');
+  const [isFormValid, setIsFormValid] = useState(false);
 
   // Set show
   const [showPassword, setShowPassword] = useState('password');
@@ -53,20 +55,12 @@ const SignUpForm = observer(({onLogin, loggedIn}) => {
   const [clickShowConfirmPassword, setClickShowConfirmPassword] =
     useState(false);
 
-  // handlers
-  const handleFirstPasswordValue = (e) => {
-    setPasswordsValue({ ...passwordsValue, firstPassword: e.target.value });
-  };
-  const handleSecondPasswordValue = (e) => {
-    setPasswordsValue({
-      ...passwordsValue,
-      secondPassword: e.target.value,
-    });
-  };
-  const handleEmailValue = (e) => {
-    setErrorText('');
-    setEmailValue(e.target.value);
-  };
+  /**
+   * Присваивает переменную глобальному состоянию
+   * открытия/закрытия формы для корректной
+   * работы с зависимостями useEffect
+   */
+  const isOpenModal = formStore.openAuthForm;
 
   const handleShowPassword = (e) => {
     e.preventDefault();
@@ -78,55 +72,76 @@ const SignUpForm = observer(({onLogin, loggedIn}) => {
     setClickShowConfirmPassword(!clickShowConfirmPassword);
   };
 
-  const handleAnswerValue = (e) => {
-    setAnswerValue(e.target.value);
-  };
-
-  const handleSecretQuestionValue = (e) => {
-    setSecretQuestionValue(e.target.value);
-  };
-
-  const [isFormValid, setIsFormValid] = useState(false);
-
   const passwordInput = useInputValidation({
-    checkInputIsEmpty: passwordsValue.firstPassword,
-    password: passwordsValue.firstPassword,
-    confirmPassword: passwordsValue.secondPassword,
-    length: { min: 6, max: 8 },
+    checkInputIsEmpty: firstPassword.value,
+    password: firstPassword.value,
+    confirmPassword: secondPassword.value,
+    length: { min: 8, max: 30 },
   });
 
   const confirmPasswordInput = useInputValidation({
-    checkInputIsEmpty: passwordsValue.secondPassword,
+    checkInputIsEmpty: secondPassword.value,
   });
 
   const emailInput = useInputValidation({
-    checkInputIsEmpty: emailValue,
-    email: emailValue,
+    checkInputIsEmpty: email.value,
+    email: email.value,
   });
 
   const secretQuestionInput = useInputValidation({
-    checkInputIsEmpty: secretQuestionValue,
+    checkInputIsEmpty: question.value,
     custom: {
-      regExp: secretQuestionRegExp,
-      value: secretQuestionValue,
+      regExp: anyCharRegExp,
+      value: question.value,
     },
-    length: { min: 6, max: 8 },
+    length: { min: 1, max: 100 },
   });
 
   const answerInput = useInputValidation({
-    checkInputIsEmpty: answerValue,
+    checkInputIsEmpty: answer.value,
     custom: {
-      regExp: answerRegExp,
-      value: answerValue,
+      regExp: anyCharRegExp,
+      value: answer.value,
     },
-    length: { min: 3, max: 4 },
+    length: { min: 1, max: 30 },
   });
+
+  const resetForm = () => {
+    email.setValue('');
+    firstPassword.setValue('');
+    secondPassword.setValue('');
+    answer.setValue('');
+    question.setValue('');
+
+    /**
+     * Отменяют стандартное поведение
+     * появления ошибок при потере фокуса
+     * пустого инпута после сброса значения инпутов
+     */
+    confirmPasswordInput.setDirty(false);
+    confirmPasswordInput.setFocus(false);
+    secretQuestionInput.setDirty(false);
+    secretQuestionInput.setFocus(false);
+    passwordInput.setDirty(false);
+    passwordInput.setFocus(false);
+    emailInput.setDirty(false);
+    emailInput.setFocus(false);
+    answerInput.setDirty(false);
+    answerInput.setFocus(false);
+
+    setIsFormValid(false);
+  };
+
+  useEffect(() => {
+    isOpenModal && resetForm();
+  }, [isOpenModal]);
 
   useEffect(() => {
     passwordInput.isPasswordInputValid &&
     emailInput.isEmailValid &&
     passwordInput.isMatch &&
-    answerInput.isCustomValid
+    answerInput.isCustomValid &&
+    secretQuestionInput.isCustomValid
       ? setIsFormValid(true)
       : setIsFormValid(false);
   }, [
@@ -134,6 +149,7 @@ const SignUpForm = observer(({onLogin, loggedIn}) => {
     passwordInput.isMatch,
     passwordInput.isPasswordInputValid,
     answerInput.isCustomValid,
+    secretQuestionInput.isCustomValid,
   ]);
 
   // Change show passwords
@@ -147,80 +163,65 @@ const SignUpForm = observer(({onLogin, loggedIn}) => {
   // Set errors
   useEffect(() => {
     passwordInput.isDirty && passwordInput.isEmpty
-      ? setFirstPasswordError(composeEmptyErrorMessage('Пароль'))
-      : setFirstPasswordError('');
+      ? firstPassword.setError({
+          emptyMessage: composeEmptyErrorMessage('Пароль'),
+        })
+      : firstPassword.setError({ emptyMessage: '' });
+
     confirmPasswordInput.isDirty && passwordInput.isEmpty
-      ? setSecondPasswordError(composeEmptyErrorMessage('Повтор пароля'))
-      : setSecondPasswordError('');
+      ? secondPassword.setError({
+          emptyMessage: composeEmptyErrorMessage('Повтор пароля'),
+        })
+      : secondPassword.setError({ emptyMessage: '' });
+
     emailInput.isDirty && emailInput.isEmpty
-      ? setEmailEmptyError(composeEmptyErrorMessage('E-mail'))
-      : setEmailEmptyError('');
+      ? email.setError({ emptyMessage: composeEmptyErrorMessage('E-mail') })
+      : email.setError({ emptyMessage: '' });
+
     answerInput.isDirty && answerInput.isEmpty
-      ? setAnswerEmptyError(composeEmptyErrorMessage('Ответ'))
-      : setAnswerEmptyError('');
+      ? answer.setError({ emptyMessage: composeEmptyErrorMessage('Ответ') })
+      : answer.setError({ emptyMessage: '' });
+
     answerInput.isCustomValid
-      ? setAnswerValidError('')
-      : setAnswerValidError(answerErrorMessage);
+      ? answer.setError({ validMessage: '' })
+      : answer.setError({ validMessage: answerErrorMessage });
+
     secretQuestionInput.isDirty && secretQuestionInput.isEmpty
-      ? setSecretQuestionEmptyError(
-          composeEmptyErrorMessage('Секретный вопрос')
-        )
-      : setSecretQuestionEmptyError('');
+      ? question.setError({
+          emptyMessage: composeEmptyErrorMessage('Секретный вопрос'),
+        })
+      : question.setError({ emptyMessage: '' });
+
     secretQuestionInput.isCustomValid
-      ? setSecretQuestionValidError('')
-      : setSecretQuestionValidError(secretQuestionErrorMessage);
+      ? question.setError({ validMessage: '' })
+      : question.setError({
+          validMessage: secretQuestionErrorMessage,
+        });
+
     passwordInput.isMatch
-      ? setPasswordsIsMatchError('')
-      : setPasswordsIsMatchError(passwordMismatchErrorMessage);
+      ? secondPassword.setError({ validMessage: '' })
+      : secondPassword.setError({
+          validMessage: passwordMismatchErrorMessage,
+        });
   }, [
     confirmPasswordInput.isDirty,
     emailInput.isDirty,
-    emailInput.isEmailValid,
     passwordInput.isDirty,
     passwordInput.isEmpty,
     emailInput.isEmpty,
     answerInput.isDirty,
     answerInput.isEmpty,
     answerInput.isCustomValid,
-    passwordInput.isPasswordInputValid,
     passwordInput.isMatch,
     secretQuestionInput.isDirty,
     secretQuestionInput.isEmpty,
     secretQuestionInput.isCustomValid,
   ]);
 
-  const resetForm = () => {
-    setEmailValue('');
-    setPasswordsValue({
-      firstPassword: '',
-      secondPassword: '',
-    });
-    setAnswerValue('');
-    setIsFormValid(false);
-  };
-
-  const userRegister = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    return postApiRegistration(
-      emailValue,
-      passwordsValue.firstPassword,
-      passwordsValue.secondPassword,
-      secretQuestionValue,
-      answerValue
-    )
-      .then((res) => {
-
-        //!!!!!! пароля нет в res
-        onLogin(res.email, passwordsValue.firstPassword);
-        console.log('res', res);
-      })
-      .catch((err) => {
-        console.log('err:', err.message);
-        // setLoggedIn(false);
-        setErrorText(err.message);
-      });
-
-    // resetForm();
+    setIsFormValid(false);
+    resetForm();
   };
 
   const handleClearButton = (e, callback) => {
@@ -231,102 +232,98 @@ const SignUpForm = observer(({onLogin, loggedIn}) => {
   return (
     <AuthForms onSubmit={userRegister}>
       <EmailInput
-        value={emailValue}
+        value={email.value}
         onBlur={emailInput.onBlur}
         onFocus={emailInput.onFocus}
-        onChange={handleEmailValue}
+        onChange={(e) => email.setValue(e.target.value)}
         isDirty={emailInput.isDirty}
         isEmpty={emailInput.isEmpty}
         isFocus={emailInput.isFocus}
         isEmailValid={emailInput.isEmailValid}
-        emptyError={emailEmptyError}
+        emptyError={email.emptyMessage}
         emailValidError={emailValidErrorMessage}
         onClickClearButton={(e) =>
-          handleClearButton(e, () => setEmailValue(''))
+          handleClearButton(e, () => email.setValue(''))
         }
         placeholder="E-mail"
         label="E-mail"
       />
 
       <PasswordInput
-        value={passwordsValue.firstPassword}
+        value={firstPassword.value}
         onBlur={passwordInput.onBlur}
         onFocus={passwordInput.onFocus}
-        onChange={handleFirstPasswordValue}
+        onChange={(e) => firstPassword.setValue(e.target.value)}
         isFocus={passwordInput.isFocus}
         isDirty={passwordInput.isDirty}
         isEmpty={passwordInput.isEmpty}
         passwordValidError={passwordValidErrorMessage}
         isPasswordInputValid={passwordInput.isPasswordInputValid}
-        emptyError={firstPasswordError}
+        emptyError={firstPassword.emptyMessage}
         showPassword={showPassword}
         placeholder="Пароль"
         label="Пароль"
         onClickShowButton={(e) => handleShowPassword(e)}
         onClickClearButton={(e) =>
-          handleClearButton(e, () =>
-            setPasswordsValue({ ...passwordsValue, firstPassword: '' })
-          )
+          handleClearButton(e, () => firstPassword.setValue(''))
         }
         clickShowPassword={clickShowPassword}
       />
 
       <ConfirmPasswordInput
-        value={passwordsValue.secondPassword}
+        value={secondPassword.value}
         onBlur={confirmPasswordInput.onBlur}
         onFocus={confirmPasswordInput.onFocus}
         isFocus={confirmPasswordInput.isFocus}
         isDirty={confirmPasswordInput.isDirty}
         isEmpty={confirmPasswordInput.isEmpty}
         isMatch={passwordInput.isMatch}
-        onChange={handleSecondPasswordValue}
-        emptyError={secondPasswordError}
-        matchError={passwordsIsMatchError}
+        onChange={(e) => secondPassword.setValue(e.target.value)}
+        emptyError={secondPassword.emptyMessage}
+        matchError={secondPassword.validMessage}
         showPassword={showConfirmPassword}
         placeholder="Ещё раз пароль"
         label="Ещё раз пароль"
         onClickShowButton={(e) => handleShowConfirmPassword(e)}
         onClickClearButton={(e) =>
-          handleClearButton(e, () =>
-            setPasswordsValue({ ...passwordsValue, secondPassword: '' })
-          )
+          handleClearButton(e, () => secondPassword.setValue(''))
         }
         clickShowPassword={clickShowConfirmPassword}
       />
 
       <SecretQuestionInput
-        value={secretQuestionValue}
+        value={question.value}
         onBlur={secretQuestionInput.onBlur}
         onFocus={secretQuestionInput.onFocus}
-        onChange={handleSecretQuestionValue}
+        onChange={(e) => question.setValue(e.target.value)}
         isDirty={secretQuestionInput.isDirty}
         isEmpty={secretQuestionInput.isEmpty}
         isFocus={secretQuestionInput.isFocus}
-        emptyError={secretQuestionEmptyError}
-        validError={secretQuestionValidError}
+        emptyError={question.emptyMessage}
+        validError={question.validMessage}
         isCustomValid={secretQuestionInput.isCustomValid}
         placeholder="Секретный вопрос"
         label="Секретный вопрос"
         onClickClearButton={(e) =>
-          handleClearButton(e, () => setSecretQuestionValue(''))
+          handleClearButton(e, () => question.setValue(''))
         }
       />
 
       <AnswerInput
-        value={answerValue}
+        value={answer.value}
         onBlur={answerInput.onBlur}
         onFocus={answerInput.onFocus}
-        onChange={handleAnswerValue}
+        onChange={(e) => answer.setValue(e.target.value)}
         isDirty={answerInput.isDirty}
         isEmpty={answerInput.isEmpty}
         isFocus={answerInput.isFocus}
-        emptyError={answerEmptyError}
-        validError={answerValidError}
+        emptyError={answer.emptyMessage}
+        validError={answer.validMessage}
         isCustomValid={answerInput.isCustomValid}
         placeholder="Ответ"
         label="Ответ"
         onClickClearButton={(e) =>
-          handleClearButton(e, () => setAnswerValue(''))
+          handleClearButton(e, () => answer.setValue(''))
         }
       />
 

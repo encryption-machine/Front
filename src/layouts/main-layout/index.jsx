@@ -3,6 +3,7 @@ import { Footer } from '../../components/Footer/Footer';
 import { Header } from '../../components/Header/Header';
 import { Outlet } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+
 import CookiePopup from '../../components/CookiePopup/CookiePopup';
 
 const MainLayout = observer(() => {
