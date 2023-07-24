@@ -29,7 +29,7 @@ const MainLayout = observer(() => {
         if (data.access) {
           //если получили токен доступа access
           //токен доступа access в куки, максимальное время хранения 1 час (max-age=3600)?
-          document.cookie = `access=${data.access}; max-age=3600`;
+          document.cookie = `access=${data.access}; max-age=86400`;
 
           //делаем стейт залогиненного
           setLoggedIn(true);
