@@ -7,8 +7,8 @@ function handleResponce(res) {
   return Promise.reject(new Error(res.status));
 }
 
-export const sendEmail = (data) => {
-  return fetch(`${BASE_URL}users/reset_password/`, {
+export const sendEmail = (data) =>
+  fetch(`${BASE_URL}users/reset_password/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -17,10 +17,9 @@ export const sendEmail = (data) => {
       email: data,
     }),
   }).then(handleResponce);
-};
 
-export const sendSecretQuestion = (id, answer) => {
-  return fetch(`${BASE_URL}users/reset_password_question/`, {
+export const sendSecretQuestion = (id, answer) =>
+  fetch(`${BASE_URL}users/reset_password_question/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -30,10 +29,9 @@ export const sendSecretQuestion = (id, answer) => {
       answer: answer,
     }),
   }).then(handleResponce);
-};
 
-export const sendNewPassword = (id, password, confirmPassword, token) => {
-  return fetch(`${BASE_URL}users/reset_password_confirm/`, {
+export const sendNewPassword = (id, password, confirmPassword, token) =>
+  fetch(`${BASE_URL}users/reset_password_confirm/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -45,4 +43,3 @@ export const sendNewPassword = (id, password, confirmPassword, token) => {
       token: token,
     }),
   }).then(handleResponce);
-};
