@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable default-case */
 import { useEffect, useState } from 'react';
 import { emailRegExp, symbolsRegExp, numbersRegExp } from '../constants/regExp';
 
@@ -84,7 +83,6 @@ const useSignupValidator = ({
         length.min &&
         custom.regExp.test(String(custom.value))
       ) {
-        // console.log('length');
         if (
           custom.value.length >= length.min &&
           custom.value.length <= length.max
@@ -121,9 +119,6 @@ const useSignupValidator = ({
     } else if (!!checkInputIsEmpty) {
       setIsEmpty(null);
     }
-
-    // console.log(isEmpty);
-    // console.log(checkInputIsEmpty);
   }, [checkInputIsEmpty, isEmpty]);
 
   useEffect(() => {

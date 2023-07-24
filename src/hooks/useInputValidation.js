@@ -21,6 +21,8 @@ const useInputValidation = (validations) => {
     isFocus,
     isDirty,
     ...valid,
+    setDirty,
+    setFocus,
   };
 };
 
