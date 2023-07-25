@@ -18,7 +18,9 @@ export const Header = observer(() => {
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
-        <img className={styles.logotype} src={logotype} alt="logo" />
+        <CustomLink href={'/'} target="_self">
+          <img className={styles.logotype} src={logotype} alt="logo" />
+        </CustomLink>
         <nav>
           {location.pathname === '/' && (
             <ul className={styles.list}>
