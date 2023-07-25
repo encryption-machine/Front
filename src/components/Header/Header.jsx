@@ -51,6 +51,15 @@ export const Header = observer(() => {
                   О&nbsp;проекте
                 </CustomLink>
               </li>
+              <li className={styles.chapter}>
+                <CustomLink
+                  href={'#outTeam'}
+                  target="_self"
+                  onClick={() => scrollToSection('outTeam')}
+                >
+                  Наша&nbsp;команда
+                </CustomLink>
+              </li>
               {formStore.loggedIn && (
                 <li>
                   <Link to={'/profile'} className={styles.link}>
