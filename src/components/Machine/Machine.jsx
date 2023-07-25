@@ -9,9 +9,7 @@ import * as apiMachine from '../../utils/apiMachine';
 import { observer } from 'mobx-react-lite';
 import { SecretKeyGlobalStore as secretStore } from '../../stores';
 import { Button } from '../Button/Button';
-import useSignupValidator from '../../hooks/useSignupValidator';
 import useInputValidation from '../../hooks/useInputValidation';
-import { anyCharRegExp } from '../../constants/regExp';
 
 export const Machine = observer(({ list }) => {
   const [current, setCurrent] = React.useState('encryption');
@@ -37,12 +35,15 @@ export const Machine = observer(({ list }) => {
   const [currentMaxLength, setCurrentMaxLength] = useState(2000);
   const [currentMinLength, setCurrentMinLength] = useState(1);
 
+  console.log(currentMaxLength);
+
   const commonCipher = useInputValidation({
+    checkInputIsEmpty: encryption,
     custom: {
       regExp: validEnc,
       value: encryption,
     },
-    length: { min: 1, max: 2000 },
+    length: { min: `${currentMinLength}`, max: `${currentMaxLength}` },
   });
 
   const clickTab = (e) => {
@@ -71,11 +72,11 @@ export const Machine = observer(({ list }) => {
     if (current === 'encryption') {
       setCurrentMaxLength(value.maxLengthEnc);
       setCurrentMinLength(value.minLengthEnc);
-      setValidEnc(value.validEnc);
+      setValidEnc(value.validEncryption);
     } else {
       setCurrentMaxLength(value.maxLengthDec);
-      setCurrentMinLength(value.minLengthEnc);
-      setValidEnc(value.validDec);
+      setCurrentMinLength(value.minLengthDec);
+      setValidEnc(value.validDecryption);
     }
     setCurrentMaxLength();
     if (value.value === 'qr') {
