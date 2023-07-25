@@ -3,6 +3,10 @@ import { Machine } from '../components/Machine/Machine';
 import AboutCiphers from '../components/AboutCiphers/AboutCiphers';
 import AboutProject from '../../src/components/AboutProject/AboutProject';
 import OurTeam from '../components/OurTeam/OurTeam';
+import {
+  morseInputCodeRegExp,
+  morseInputTextRegExp,
+} from '../constants/regExp';
 
 export const MainPage = () => {
   const dataMachine = [
@@ -11,6 +15,13 @@ export const MainPage = () => {
       value: 'morse',
       length: 30,
       desc: 'любые символы в количестве от 1 до 30',
+      validEnc: morseInputTextRegExp,
+      validDec: morseInputCodeRegExp,
+      maxLengthEnc: 2000,
+      minLengthEnc: 1,
+      maxLengthDec: 15000,
+      minLengthDec: 1,
+      // keyReg: 'regul',
     },
     {
       name: 'QR код',

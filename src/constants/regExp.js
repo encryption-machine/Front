@@ -7,7 +7,7 @@ export const symbolsRegExp = /[ `!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/;
 
 export const numbersRegExp = /\d/;
 
-export const morseInputTextRegExp = /^[а-яА-я\d\s.,:;)(?!=+-/$@&_"']*$/gm;
+export const morseInputTextRegExp = /^[а-яА-я\d\s.,:;)(?!=+-\/$@&_"']*$/gm;
 
 export const morseInputCodeRegExp = /[-.\s]/gm;
 
