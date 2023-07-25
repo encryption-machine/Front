@@ -1,4 +1,4 @@
-import { BASE_URL } from './apiPasswordRecovery';
+import { BASE_URL } from '../constants/url';
 
 function handleResponce(res) {
   if (res.ok) {
