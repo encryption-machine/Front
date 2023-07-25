@@ -1,19 +1,20 @@
-import React, {
-  useRef,
-  useEffect,
-  useState,
-  useCallback,
-  useMemo,
-} from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
+import QRCode from 'react-qr-code';
 import { copyToClipboard } from '../../helpers';
-import { AppButton } from '../AppButton/AppButton';
+import SecretKeyModal from '../SecretKeyModal/SecretKeyModal';
+import FormButton from '../FormButton/FormButton';
 import styles from './Machine.module.scss';
 import CopyMark from '../CopyMark/CopyMark';
+import * as apiMachine from '../../utils/apiMachine';
+import { observer } from 'mobx-react-lite';
+import { SecretKeyGlobalStore as secretStore } from '../../stores';
+import { Button } from '../Button/Button';
 
-export const Machine = ({ list }) => {
+export const Machine = observer(({ list }) => {
   const [current, setCurrent] = React.useState('encryption');
   const [isSelectOpen, setSelectOpen] = React.useState(false);
   const [selected, setSelected] = React.useState('Выберите язык шифрования');
+  const [type, setType] = React.useState('');
   const [filteredList, setFilteredList] = React.useState(
     list.filter((item) => item !== selected)
   );
@@ -21,11 +22,17 @@ export const Machine = ({ list }) => {
   const [isCopyShow, setIsCopyShow] = useState(false);
   const [copyMessage, setCopyMessage] = useState('');
   const [encryption, SetEncryption] = useState('');
+  const [secretKey, SetSecretKeyValue] = useState('');
+  const [keyLength, SetKeyLength] = useState(30);
+  const [qrResult, SetQrResult] = useState('');
+  const [qrCopy, SetQrCopy] = useState(false);
+  const [encryptionTextLength, SetEncryptionTextLength] = useState(2000);
+  const [descKey, SetEncKey] = useState('');
   const selectRef = useRef(null);
   const activeClass = styles.tabActive;
 
-  const clickTab = (event) => {
-    setCurrent(event.target.value);
+  const clickTab = (e) => {
+    setCurrent(e.target.value);
   };
 
   const selectClick = () => {
@@ -42,20 +49,46 @@ export const Machine = ({ list }) => {
   };
 
   const choiceType = (e, value) => {
-    // здесь будет запрос к серверу
-    // в случае успеха код ниже
-    setSelected(value);
-    setFilteredList(list.filter((item) => item !== value));
+    setSelected(value.name);
+    setType(value.value);
+    SetKeyLength(value.length);
+    setFilteredList(list.filter((item) => item.name !== value.name));
+    SetEncKey(value.desc);
+    if (value.value === 'qr') {
+      setCurrent('encryption');
+      SetEncryptionTextLength(180);
+    } else {
+      SetEncryptionTextLength(2000);
+    }
     selectClick();
   };
 
-  const handleEncrypt = useCallback(async () => {
-    // здесь будет запрос к серверу
-
-    setResult('hsdfjdsfihsls');
-    // }, [encryption.target?.value, current]);
-    // временная запись, чтобы eslint не ругался
-  }, []);
+  const handleEncrypt = (e) => {
+    apiMachine
+      .getEncryption(
+        encryption,
+        type,
+        secretStore.secretKeyText,
+        current === 'encryption'
+      )
+      .then((response) => {
+        if (response) {
+          if (type === 'qr') {
+            SetQrResult(response.encrypted_text);
+            secretStore.setOpenSecretModal(true);
+          } else {
+            setResult(response.encrypted_text);
+          }
+          SetSecretKeyValue('');
+          secretStore.setSecretKeyText('');
+        } else {
+          console.error('ошибка  при шифровании');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const copyCode = () => {
     try {
@@ -89,15 +122,45 @@ export const Machine = ({ list }) => {
     return () => {
       window.removeEventListener('click', handleClick);
     };
-    //   }, [isSelectOpen]);
-    // временное решение, чтобы lint не ругался
   });
 
+  const secretKeyClick = () => {
+    setResult('');
+    SetQrResult('');
+    if (type !== 'morse' && type !== 'qr') {
+      secretStore.setOpenSecretModal(true);
+    } else {
+      handleEncrypt();
+    }
+  };
+
+  const setSecretKey = (e) => {
+    secretStore.setSecretKeyText(secretKey);
+    secretStore.setOpenSecretModal(false);
+    handleEncrypt();
+  };
+
+  const handleEncryptionValue = (e) => {
+    SetEncryption(e.target.value.slice(0, encryptionTextLength));
+  };
+
   const lengthOfText = useMemo(() => {
-    return encryption.target?.value.length
-      ? encryption.target?.value.length
-      : 0;
+    return encryption.length ? encryption.length : 0;
   }, [encryption]);
+
+  const handleChangeKey = (e) => {
+    SetSecretKeyValue(e.target.value.slice(0, keyLength));
+  };
+
+  const copyQrClick = () => {
+    SetQrCopy(true);
+    copyToClipboard(qrResult);
+    setTimeout(() => {
+      secretStore.setOpenSecretModal(false);
+      SetQrResult('');
+      SetQrCopy(false);
+    }, 2000);
+  };
 
   const selectClasses = !isSelectOpen
     ? styles.select
@@ -116,7 +179,7 @@ export const Machine = ({ list }) => {
               current === 'encryption' ? activeClass : ''
             }`}
             value="encryption"
-            onClick={clickTab}
+            onClick={(e) => clickTab(e)}
           >
             Шифрование
           </button>
@@ -126,6 +189,7 @@ export const Machine = ({ list }) => {
             }`}
             value="decryption"
             onClick={clickTab}
+            disabled={type === 'qr'}
           >
             Дешифрование
           </button>
@@ -136,18 +200,17 @@ export const Machine = ({ list }) => {
               {selected}
               <div className={styles.select__icon}>
                 <div className="icon-check"></div>
-                {/*  <Chevron /> */}
               </div>
             </div>
             <div className={styles.select__hide} id="hide">
               <ul className={styles.select__list} id="list">
                 {filteredList.map((item) => (
                   <li
-                    key={item}
+                    key={item.value}
                     className={styles.select__option}
                     onClick={(event) => choiceType(event, item)}
                   >
-                    {item}
+                    {item.name}
                   </li>
                 ))}
               </ul>
@@ -160,10 +223,12 @@ export const Machine = ({ list }) => {
             id="leftArea"
             className={styles.text}
             placeholder="Исходный текст "
-            defaultValue={encryption}
-            onChange={SetEncryption}
+            value={encryption}
+            onInput={(event) => handleEncryptionValue(event)}
           />
-          <div className={styles.count}>{lengthOfText} / 2000</div>
+          <div className={styles.count}>
+            {lengthOfText} / {encryptionTextLength}
+          </div>
         </div>
         <div className={styles.copy__cont}>
           <div className={copyClasses}>{copyMessage}</div>
@@ -173,29 +238,78 @@ export const Machine = ({ list }) => {
             className={styles.text}
             placeholder="Результат"
             defaultValue={result}
+            readOnly
           />
           <button
-            disabled={isCopyShow}
+            disabled={isCopyShow || !result.length}
             onClick={copyCode}
             className={styles.copy__button}
           >
-            {/* <div className="icon-copy"></div> */}
             <CopyMark />
-            {/* <Copy /> */}
           </button>
         </div>
         <div className={styles.machine__button}>
-          <AppButton
-            action={() => handleEncrypt()}
-            isButtonDisabled={!encryption.target?.value.length}
+          <Button
+            onClick={(e) => secretKeyClick(e)}
+            disabled={!encryption.length || !type.length}
+            className={styles.button}
           >
             Запустить
-          </AppButton>
-        </div>
-        <div className={styles.machine__button}>
-          <AppButton type="outlined">Ввести секретный ключ</AppButton>
+          </Button>
         </div>
       </div>
+      <SecretKeyModal
+        isOpen={secretStore.openSecretKeyModal}
+        setIsOpen={secretStore.setOpenSecretModal}
+      >
+        <div className={styles.modal}>
+          {!qrResult.length && (
+            <div className={styles.modal__key}>
+              <div className={styles.modal__title}>Ввод секретного ключа</div>
+              <div className={styles.modal__form}>
+                <div className={styles.modal__item}>
+                  <input
+                    type="text"
+                    placeholder="Секретный ключ"
+                    className={styles.modal__input}
+                    value={secretKey}
+                    onChange={handleChangeKey}
+                  />
+                </div>
+                <div className={styles.modal__item}>
+                  <FormButton
+                    onClick={(e) => setSecretKey(e)}
+                    disabled={secretKey.length === 0}
+                  >
+                    Ввести
+                  </FormButton>
+                </div>
+                <div className={styles.modal__desc}>
+                  Для данного шифра необходимо ввести ключ.
+                  <div>
+                    Использовать можно:
+                    <div>{descKey}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          {qrResult.length > 1 && (
+            <div className={styles.modal__qr}>
+              <div className={styles.modal__title}>QR код</div>
+              {!qrCopy && <QRCode value={qrResult} />}
+              {qrCopy && (
+                <div className={styles.modal__desc}>Код с копирован</div>
+              )}
+              <div className={styles.modal__item}>
+                <FormButton onClick={() => copyQrClick()} disabled={qrCopy}>
+                  Копировать
+                </FormButton>
+              </div>
+            </div>
+          )}
+        </div>
+      </SecretKeyModal>
     </section>
   );
-};
+});
