@@ -5,8 +5,17 @@
   padding-top: 180px;
   padding-bottom: 140px;
   background-color: $gray_light;
+  @media (max-width: 960px) {
+    padding-top: 100px;
+  }
   &__button {
     width: 300px;
+    grid-column: span 2;
+    @media (max-width: 960px) {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
   }
 }
 .content {
@@ -14,13 +23,28 @@
   margin: 0 auto;
   display: grid;
   gap: 20px 20px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr 1fr;
   align-items: center;
+  @media (max-width: 1140px) {
+    width: 960px;
+    gap: 20px 0;
+    justify-content: center;
+  }
+  @media (max-width: 960px) {
+    width: 100%;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    padding: 0 20px;
+  }
 }
 .switch {
   display: flex;
   align-items: center;
   gap: 20px;
+  @media (max-width: 960px) {
+    grid-column: span 2;
+    justify-content: center;
+  }
 }
 .tab {
   background: none;
@@ -35,10 +59,19 @@
   &Active {
     color: $violet;
   }
+  &:disabled {
+    color: $gray;
+  }
 }
 .select {
   position: relative;
   display: block;
+  &__cont {
+  }
+  @media (max-width: 960px) {
+    display: flex;
+    justify-content: center;
+  }
   &__title {
     width: 380px;
     height: 40px;
@@ -108,13 +141,12 @@
 }
 .text {
   width: 100% !important;
-  height: 250px !important;
-  padding: 20px;
+  min-height: 250px;
+  padding: 20px 20px 30px;
   background: $white;
-  // border-radius: 20px;
   resize: none;
   border: none;
-  @include font-source-sans(16px, $gray_light, 600, 19px);
+  @include font-source-sans(16px, $black, 600, 19px);
   &:focus-visible {
     outline: none;
     border: 1.5px solid $violet;
@@ -126,6 +158,9 @@
     position: relative;
     border-radius: 8px;
     overflow: hidden;
+    @media (max-width: 1140px) {
+      grid-column: span 2;
+    }
   }
   &__button {
     position: absolute;
@@ -147,8 +182,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: $background_select;
-    @include font-source-sans(16px, $black, 600, 19px);
+    background-color: $green;
+    @include font-source-sans(16px, $white, 600, 19px);
     overflow: hidden;
     transition: 0.3s ease-in;
     &Show {
@@ -167,4 +202,64 @@
   bottom: 12px;
   left: 12px;
   color: $gray_dark;
+}
+.modal {
+  &__title {
+    color: $white;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 14px 0;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  &__form {
+    display: grid;
+    gap: 24px;
+  }
+  &__input {
+    width: 100%;
+    background-color: $white;
+    height: 48px;
+    padding: 0 12px;
+    border: none;
+    border-radius: 8px;
+  }
+  &__key {
+    width: 276px;
+  }
+  &__qr {
+    width: 276px;
+    display: grid;
+    justify-content: center;
+    svg {
+      width: 256px;
+      height: 256px;
+    }
+    .modal__desc {
+      display: flex;
+      height: 256px;
+      align-items: center;
+    }
+  }
+  &__desc {
+    color: $white;
+    font-size: 16px;
+    text-align: center;
+  }
+}
+.button {
+  width: 300px;
+  height: 44px;
+  @include font-source-sans(16px, $white, 600, 19px);
+  background-color: $green_light;
+  border: none;
+  border-radius: 8px;
+  padding: 0 25px;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: $black;
+  &:disabled {
+    cursor: default;
+    opacity: 0.6;
+  }
 }
