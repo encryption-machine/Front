@@ -1,5 +1,5 @@
 // авторизация
-const BASE_URL = 'http://shifmachine.acceleratorpracticum.ru/api/v1/';
+import { BASE_URL } from '../constants/url';
 
 const getResponseData = (res) =>
   res.json().then((response) => {

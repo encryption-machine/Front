@@ -168,8 +168,6 @@ const SignInForm = observer(() => {
     serverError && setServerError('');
   };
 
-  console.log(`loginErrorMessage: ${loginErrorMessage}`);
-
   return (
     <>
       <AuthForms onSubmit={handleSubmit}>
