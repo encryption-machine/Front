@@ -27,15 +27,18 @@ export const Machine = observer(({ list }) => {
   const [keyLength, SetKeyLength] = useState(30);
   const [qrResult, SetQrResult] = useState('');
   const [qrCopy, SetQrCopy] = useState(false);
-  const [encryptionTextLength, SetEncryptionTextLength] = useState(2000);
+  const [encryptionTextLength, SetEncryptionTextLength] = useState(0);
   const [descKey, SetEncKey] = useState('');
   const selectRef = useRef(null);
   const activeClass = styles.tabActive;
-  const [validEnc, setValidEnc] = useState();
+  const [validEnc, setValidEnc] = useState(null);
+  const [currentMinLength, setCurrentMinLength] = useState(0);
   const [currentMaxLength, setCurrentMaxLength] = useState(2000);
-  const [currentMinLength, setCurrentMinLength] = useState(1);
 
-  console.log(currentMaxLength);
+  const [disabled, setDisabled] = useState(true);
+  const [placeholder, setPlaceholder] = useState(selected);
+
+  console.log(placeholder);
 
   const commonCipher = useInputValidation({
     checkInputIsEmpty: encryption,
@@ -43,7 +46,7 @@ export const Machine = observer(({ list }) => {
       regExp: validEnc,
       value: encryption,
     },
-    length: { min: `${currentMinLength}`, max: `${currentMaxLength}` },
+    length: { min: currentMinLength, max: currentMaxLength },
   });
 
   const clickTab = (e) => {
@@ -70,22 +73,27 @@ export const Machine = observer(({ list }) => {
     setFilteredList(list.filter((item) => item.name !== value.name));
     SetEncKey(value.desc);
     if (current === 'encryption') {
-      setCurrentMaxLength(value.maxLengthEnc);
       setCurrentMinLength(value.minLengthEnc);
+      setCurrentMaxLength(value.maxLengthEnc);
+      SetEncryptionTextLength(value.maxLengthEnc);
       setValidEnc(value.validEncryption);
     } else {
       setCurrentMaxLength(value.maxLengthDec);
       setCurrentMinLength(value.minLengthDec);
+      SetEncryptionTextLength(value.maxLengthDec);
       setValidEnc(value.validDecryption);
     }
-    setCurrentMaxLength();
     if (value.value === 'qr') {
       setCurrent('encryption');
       SetEncryptionTextLength(180);
-    } else {
-      SetEncryptionTextLength(2000);
     }
     selectClick();
+    if (!value) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+      setPlaceholder('Исходный текст');
+    }
   };
 
   const handleEncrypt = (e) => {
@@ -167,7 +175,7 @@ export const Machine = observer(({ list }) => {
   };
 
   const handleEncryptionValue = (e) => {
-    SetEncryption(e.target.value.slice(0, encryptionTextLength));
+    SetEncryption(e.target.value.slice(0, Infinity));
   };
 
   const lengthOfText = useMemo(() => {
@@ -245,10 +253,11 @@ export const Machine = observer(({ list }) => {
         </div>
         <div className={styles.copy__cont}>
           <textarea
+            disabled={disabled}
             name="leftArea"
             id="leftArea"
             className={styles.text}
-            placeholder="Исходный текст "
+            placeholder={placeholder}
             value={encryption}
             onInput={(event) => handleEncryptionValue(event)}
           />
