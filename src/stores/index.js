@@ -1,7 +1,9 @@
 //import { useContext, createContext } from 'react';
 import AuthFormStore from './auth-form-store';
+import SecretKeyStore from './secret-key';
 
 const AuthFormGlobalStore = new AuthFormStore();
+const SecretKeyGlobalStore = new SecretKeyStore();
 
 /**
  * Пример использования глобального стора
@@ -17,4 +19,4 @@ const AuthFormGlobalStore = new AuthFormStore();
  * ПРИМЕЧАНИЕ! Деструктуризировать нужно внутри компонента
  */
 
-export { AuthFormGlobalStore };
+export { AuthFormGlobalStore, SecretKeyGlobalStore };

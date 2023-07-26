@@ -72,4 +72,8 @@
 .link{
   text-decoration: none;
   @include font-source-sans(18px, $white, 500, 20px);
+
+  &:hover {
+    color: $green;
+  }
 }
