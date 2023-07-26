@@ -121,6 +121,7 @@ const SignInForm = observer(() => {
       .postApiAutorisation(email.value, password.value)
       .then((data) => {
         const refresh = data.refresh;
+        console.log(data.refresh, data.access);
         if (data.access) {
           document.cookie = `access=${data.access}; max-age=3600`;
           formStore.setLoggedIn(true);

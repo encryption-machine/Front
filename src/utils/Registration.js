@@ -19,8 +19,9 @@ export const postApiRegistration = (
   return fetch(`${BASE_URL}users/`, {
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
+      Authorization: 'Bearer ' + document.cookie.slice(7),
     },
-    method: 'POST',
+    method: 'GET',
     body: JSON.stringify({
       question: question,
       answer: answer,

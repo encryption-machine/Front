@@ -47,6 +47,7 @@
 .accordionHistoryItem {
   @include font-source-sans(18px, $white, 400, 24px);
   background-color: transparent;
+  margin-bottom: 16px;
 
   .dataRequest {
     &_description {
