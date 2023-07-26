@@ -1,7 +1,10 @@
 @import '../../styles/colors.scss';
 @import '../../styles/mixins';
 
-.dataRequest {
+.accordionHistoryItem {
+  @include font-source-sans(18px, $white, 400, 24px);
+  background-color: transparent;
+  margin-bottom: 16px;
   display: grid;
   grid-template-columns:
     minmax(min-content, 180px) minmax(min-content, 380px) minmax(
@@ -9,54 +12,66 @@
       280px
     )
     minmax(min-content, 200px) 24px;
-  // grid-template-columns: 180px 380px 280px 200px 24px;
-  gap: 20px;
+  grid-template-rows: 24px 1fr;
+  column-gap: 20px;
+  row-gap: 6px;
   border-radius: 8px;
-  height: 48px;
-  padding: 0 12px;
-  align-items: center;
+  grid-template-areas:
+    'date is_encryption algorithm key btn'
+    'request request encrypted_text encrypted_text encrypted_text';
+  padding: 12px 12px 0;
+  box-sizing: border-box;
+  vertical-align: center;
 
-  &_description {
-    display: grid;
-    gap: 44px;
-    width: 100%;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: 'request response';
-    padding: 12px;
+  &_date {
+    grid-area: date;
+    grid-row-start: 1;
+    grid-row-end: 2;
   }
-
+  &_is_encryption {
+    grid-area: is_encryption;
+  }
+  &_algorithm {
+    grid-area: algorithm;
+  }
+  &_key {
+    grid-area: key;
+  }
+  &_btn {
+    grid-area: btn;
+    background-color: transparent;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    border: none;
+    background-image: url('../../assets/icons/arrow-down-light.svg');
+  }
+  &_btn_dark {
+    grid-area: btn;
+    background-color: transparent;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    border: none;
+    background-image: url('../../assets/icons/arrow-down-dark.svg');
+  }
   &_request {
     grid-area: request;
+    word-wrap: break-word;
+    word-break: break-all;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    @include font-source-sans(16px, 400, 20px);
+    margin-bottom: 12px;
   }
-
   &_response {
+    word-wrap: break-word;
+    word-break: break-all;
     grid-area: response;
-  }
-}
-
-.btn {
-  background-color: transparent;
-  cursor: pointer;
-  width: 16px;
-  height: 8px;
-  background-repeat: no-repeat;
-  background-position: center;
-  border: none;
-}
-
-.accordionHistoryItem {
-  @include font-source-sans(18px, $white, 400, 24px);
-  background-color: transparent;
-  margin-bottom: 16px;
-
-  .dataRequest {
-    &_description {
-      @include font-source-sans(18px, $white, 400, 24px);
-    }
-  }
-
-  .btn {
-    background-image: url('../../assets/icons/arrow-down-light.svg');
+    grid-column-start: 3;
+    grid-column-end: 6;
+    grid-row-start: 3;
+    @include font-source-sans(16px, 400, 20px);
+    margin-bottom: 12px;
   }
 }
 
@@ -65,13 +80,12 @@
   background-color: $white;
   border-radius: 8px;
 
-  .dataRequest {
-    &_description {
-      @include font-source-sans(18px, $violet, 400, 24px);
-    }
-  }
-
-  .btn {
+  &_btn {
     background-image: url('../../assets/icons/arrow-down-dark.svg');
   }
+}
+
+button .accordionHistoryItem_btn {
+  background-image: url('../../assets/icons/arrow-down-dark.svg');
+  color: red;
 }

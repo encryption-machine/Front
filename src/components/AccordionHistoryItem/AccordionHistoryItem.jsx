@@ -8,23 +8,43 @@ export const AccordionHistoryItem = ({ item, index }) => {
     setShowHistory(!showHistory);
   };
 
+  const updateDate = item.date
+    .slice(0, 10)
+    .replaceAll('-', '.')
+    .split('.')
+    .reverse()
+    .join('.');
+  console.log(index);
+
   return (
     <>
       <li className={styles.accordionHistoryItem} key={index}>
-        <div className={styles.dataRequest}>
-          <p className={styles.text}>{item.date}</p>
-          <p className={styles.text}>
-            {item.is_encryption === true ? `Шифрование` : `Дешифрование`}
-          </p>
-          <p className={styles.text}>{item.algorithm}</p>
-          <p className={styles.text}></p>
-          <button className={styles.btn} onClick={handleShowHistory}></button>
-        </div>
+        <p className={styles.accordionHistoryItem_date}>{updateDate}</p>
+        <p className={styles.accordionHistoryItem_is_encryption}>
+          {item.is_encryption === true ? `Шифрование` : `Дешифрование`}
+        </p>
+        <p className={styles.accordionHistoryItem_algorithm}>
+          {item.algorithm}
+        </p>
+        <p className={styles.accordionHistoryItem_key}>{item.key}</p>
+        {index % 2 !== 0 ? (
+          <button
+            className={styles.accordionHistoryItem_btn_dark}
+            onClick={handleShowHistory}
+          ></button>
+        ) : (
+          <button
+            className={styles.accordionHistoryItem_btn}
+            onClick={handleShowHistory}
+          ></button>
+        )}
         {showHistory ? (
-          <div className={styles.dataRequest_description}>
-            <p className={styles.dataRequest_request}>{item.text}</p>
-            <p className={styles.dataRequest_response}>{item.encrypted_text}</p>
-          </div>
+          <>
+            <p className={styles.accordionHistoryItem_request}>{item.text}</p>
+            <p className={styles.accordionHistoryItem_response}>
+              {item.encrypted_text}
+            </p>
+          </>
         ) : null}
       </li>
     </>
