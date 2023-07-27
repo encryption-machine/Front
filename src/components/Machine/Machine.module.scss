@@ -64,13 +64,14 @@
   }
 }
 .select {
-  position: relative;
   display: block;
+  position: relative;
   &__cont {
-  }
-  @media (max-width: 960px) {
-    display: flex;
-    justify-content: center;
+    display: block;
+    @media (max-width: 960px) {
+      display: flex;
+      justify-content: center;
+    }
   }
   &__title {
     width: 380px;
@@ -115,14 +116,10 @@
       justify-content: flex-start;
       padding: 0 12px;
       background: $white;
-      // border-top: 1.5px solid $black;
       cursor: pointer;
       @include font-source-sans(16px, $gray_dark, 600, 20px);
       &:first-child {
         border-top: 0;
-      }
-      &:last-child {
-        border-bottom: 1.5px solid $violet;
       }
     }
   }
@@ -142,15 +139,15 @@
 .text {
   width: 100% !important;
   min-height: 250px;
-  padding: 20px 20px 30px;
+  padding: 0;
   background: $white;
   resize: none;
   border: none;
+  outline: none;
+  border-radius: 8px;
   @include font-source-sans(16px, $black, 600, 19px);
   &:focus-visible {
     outline: none;
-    border: 1.5px solid $violet;
-    border-radius: 8px;
   }
 }
 .copy {
@@ -158,13 +155,34 @@
     position: relative;
     border-radius: 8px;
     overflow: hidden;
+    padding: 20px 20px 30px;
+    background-color: $white;
+    border: 1.5px solid $white;
     @media (max-width: 1140px) {
       grid-column: span 2;
+    }
+    &:focus-within {
+      border: 1.5px solid $violet;
+      border-radius: 8px;
+    }
+  }
+  &__input {
+    position: relative;
+    border-radius: 8px;
+    padding: 20px 20px 30px;
+    background-color: $white;
+    border: 1.5px solid $white;
+    @media (max-width: 1140px) {
+      grid-column: span 2;
+    }
+    &:focus-within {
+      border: 1.5px solid $violet;
+      border-radius: 8px;
     }
   }
   &__button {
     position: absolute;
-    bottom: 12px;
+    bottom: 3px;
     left: 12px;
     border: none;
     cursor: pointer;
@@ -182,7 +200,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: $green;
+    background-color: $violet;
     @include font-source-sans(16px, $white, 600, 19px);
     overflow: hidden;
     transition: 0.3s ease-in;
@@ -262,4 +280,86 @@
     cursor: default;
     opacity: 0.6;
   }
+}
+.alert{
+  position: absolute;
+  top:2px;
+  right:-1px;
+  @media (max-width: 1140px) {
+    width: calc(100% - 20px);
+    display: flex;
+    justify-content: flex-end;
+  }
+  &__cont{
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  &__button{
+    background: none;
+    border:none;
+    cursor: pointer;
+      svg{
+      stroke:$gray_dark;
+    }
+    &:hover{
+      animation: alert .3s ease-in-out infinite ;
+    }
+  }
+  &__hide{
+    position: absolute;
+    top:30px;
+    left:5px;
+    padding: 16px;
+    background-color: $gray;
+    z-index: 8;
+    width: 536px;
+    display: flex;
+    gap:12px;
+    @include font-source-sans(18px, $black, 400, 24px);
+    box-shadow: 4px 4px 20px 0px rgba(14, 14, 15, 0.16);
+    border-radius: 8px;
+    @media (max-width: 1140px) {
+      left:initial;
+      right: 5px;
+    }
+    @media (max-width: 600px) {
+      width: calc(100% - 20px);
+    }
+    ul{
+      padding-left: 18px;
+      margin-top: 10px;
+    }
+  }
+  &__close{
+    display: block;
+    background: none;
+    border:none;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    cursor: pointer;
+     &::after, &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10px;
+      height: 20px;
+      width: 1px;
+      background-color: $black;
+    }
+    &::after {
+      transform: rotate(-45deg);
+    }
+    &::before {
+      transform: rotate(45deg);
+    }
+  }
+}
+
+@keyframes alert {
+  40% {transform: none}
+  70% {transform: rotate(-10deg)}
+  95% {transform: rotate(10deg)}
 }
