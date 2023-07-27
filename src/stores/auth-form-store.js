@@ -13,10 +13,20 @@ class AuthFormStore {
   validMessage = '';
   serverMessage = '';
   loggedIn = false;
+  emailUser = '';
 
   constructor() {
     makeAutoObservable(this);
   }
+
+  /**
+   * Изменяет состояние авторизации
+   * @param {string} value
+   */
+  setEmailUser = (value) => {
+    console.log(value);
+    this.emailUser = value;
+  };
 
   /**
    * Изменяет состояние авторизации

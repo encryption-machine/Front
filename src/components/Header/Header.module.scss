@@ -13,7 +13,7 @@
 }
 
 .header_container {
-  max-width: calc(100% - 130px * 2);
+  max-width: calc(100% - 9% * 2);
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -72,7 +72,6 @@
 .link {
   text-decoration: none;
   @include font-source-sans(18px, $white, 500, 20px);
-  font-style: normal;
 
   &:hover {
     color: $green;
