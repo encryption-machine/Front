@@ -1,4 +1,5 @@
 import { BASE_URL } from '../constants/url';
+import { AuthFormGlobalStore as formStore } from '../stores';
 
 function handleResponce(res) {
   if (res.ok) {
@@ -16,7 +17,7 @@ export const getEncryption = (text, algorithm, key, is_encryption) => {
     body: JSON.stringify({
       text: text,
       algorithm: algorithm,
-      key: key.length ? key : null,
+      key: key,
       is_encryption: is_encryption,
     }),
   }).then(handleResponce);

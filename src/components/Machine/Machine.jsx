@@ -5,6 +5,7 @@ import SecretKeyModal from '../SecretKeyModal/SecretKeyModal';
 import FormButton from '../FormButton/FormButton';
 import styles from './Machine.module.scss';
 import CopyMark from '../CopyMark/CopyMark';
+import { AlertMark } from '../AlertMark';
 import * as apiMachine from '../../utils/apiMachine';
 import { observer } from 'mobx-react-lite';
 import { SecretKeyGlobalStore as secretStore } from '../../stores';
@@ -28,6 +29,7 @@ export const Machine = observer(({ list }) => {
   const [qrCopy, SetQrCopy] = useState(false);
   const [encryptionTextLength, SetEncryptionTextLength] = useState(2000);
   const [descKey, SetEncKey] = useState('');
+  const [showHint, setShowHint] = useState(false);
   const selectRef = useRef(null);
   const activeClass = styles.tabActive;
 
@@ -162,6 +164,10 @@ export const Machine = observer(({ list }) => {
     }, 2000);
   };
 
+  const hintClick = () => {
+    setShowHint(!showHint);
+  };
+
   const selectClasses = !isSelectOpen
     ? styles.select
     : `${styles.select__open} ${styles.select}`;
@@ -194,7 +200,7 @@ export const Machine = observer(({ list }) => {
             Дешифрование
           </button>
         </div>
-        <div>
+        <div className={styles.select__cont}>
           <div className={selectClasses} ref={selectRef}>
             <div className={styles.select__title} onClick={selectClick}>
               {selected}
@@ -217,7 +223,34 @@ export const Machine = observer(({ list }) => {
             </div>
           </div>
         </div>
-        <div className={styles.copy__cont}>
+        <div className={styles.copy__input}>
+          <div className={styles.alert}>
+            <div className={styles.alert__cont}>
+              <button className={styles.alert__button} onClick={hintClick}>
+                <AlertMark />
+              </button>
+              {showHint && (
+                <div className={styles.alert__hide}>
+                  <div>
+                    Содержание должно удовлетворять условиям для:
+                    <ul>
+                      <li>Азбука морзе — пробел, точка, тире</li>
+                      <li>AES, Шифр Виженера — любые символы</li>
+                      <li>
+                        Код Цезаря — буквы русского алфавита (кроме Ёё), пробел,
+                        0 1 2 3 4 5 6 7 8 9 ! . , " # $ % & ' ( ) * + - /
+                      </li>
+                      <li> QR-код — не дешифруется</li>
+                    </ul>
+                  </div>
+                  <button
+                    onClick={() => setShowHint(false)}
+                    className={styles.alert__close}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
           <textarea
             name="leftArea"
             id="leftArea"
