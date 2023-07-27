@@ -76,7 +76,7 @@ export const Header = observer(() => {
                 <CustomLink
                   href={'#outTeam'}
                   target="_self"
-                  onClick={() => scrollToSection('outTeam')}
+                  onClick={() => scrollToSection('ourTeam')}
                 >
                   Наша&nbsp;команда
                 </CustomLink>

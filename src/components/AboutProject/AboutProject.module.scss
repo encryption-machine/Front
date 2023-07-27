@@ -2,10 +2,20 @@
 @import '../../styles/mixins';
 
 .aboutProject {
-  padding: 100px 9% 140px;
-  margin: 0 auto;
+  padding: 100px 0 140px;
   width: 100%;
   background-color: $black;
+
+  @media screen and (max-width: 1200px) {
+    padding: 90px 0 130px;
+  }
+  @media screen and (max-width: 880px) {
+    padding: 80px 0 100px;
+  }
+  &_content {
+    width: 82%;
+    margin: 0 auto;
+  }
   &_title {
     @include font-source-sans(40px, $white, 800, 52px, 'Inter');
     text-align: left;
@@ -32,9 +42,26 @@
     display: flex;
     justify-content: space-between;
 
+    @media screen and (max-width: 880px) {
+      padding: 20px 40px 20px 20px;
+    }
+    @media screen and (max-width: 620px) {
+      flex-direction: column;
+      gap: 20px;
+    }
+    @media screen and (max-width: 420px) {
+      padding: 18px;
+    }
+    @media screen and (max-width: 380px) {
+      padding: 12px;
+    }
+
     &__content {
-      // width: calc(100% - 260px);
       width: 50%;
+
+      @media screen and (max-width: 620px) {
+        width: 100%;
+      }
     }
     &:nth-child(1) {
       .aboutProject_image {
@@ -59,15 +86,39 @@
     background-repeat: no-repeat;
     background-size: cover;
     align-self: center;
+
+    @media screen and (max-width: 880px) {
+      width: 160px;
+      height: 160px;
+    }
+    @media screen and (max-width: 620px) {
+      width: 80px;
+      height: 80px;
+      align-self: end;
+    }
   }
 
   &_titleItem {
     @include font-source-sans(28px, $white, 700, 32px, 'Inter');
     text-align: start;
     margin-bottom: 20px;
+
+    @media screen and (max-width: 880px) {
+      @include font-source-sans(24px, $white, 700, 28px, 'Inter');
+    }
+    @media screen and (max-width: 420px) {
+      @include font-source-sans(22px, $white, 700, 26px, 'Inter');
+    }
+    @media screen and (max-width: 380px) {
+      @include font-source-sans(20px, $white, 700, 24px, 'Inter');
+    }
   }
   &_description {
     @include font-source-sans(18px, $white, 400, 24px, 'Inter');
     text-align: start;
+
+    @media screen and (max-width: 380px) {
+      @include font-source-sans(16px, $white, 700, 22px, 'Inter');
+    }
   }
 }
