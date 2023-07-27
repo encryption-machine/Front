@@ -8,10 +8,10 @@ export const symbolsRegExp = /[ `!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/;
 export const numbersRegExp = /\d/;
 
 export const morseInputTextRegExp =
-  /^[а-яА-я\d\s`!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]*$/m;
+  /^[а-яА-я\d\s`!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]*$/;
 
 export const morseInputCodeRegExp = /[-.\s]/;
 
-export const caesarRegExp = /^[а-яА-я\d\s.,:;)(*#%!+-/$&"']*$/gm;
+export const caesarRegExp = /^[а-яА-я\d\s.,:;)(*#%!+-/$&"']*$/;
 
 export const caesarReplaceCharRegExp = /[Ёё]/gim;

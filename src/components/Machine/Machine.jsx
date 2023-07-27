@@ -40,8 +40,6 @@ export const Machine = observer(({ list }) => {
   const [disabled, setDisabled] = useState(true);
   const [placeholder, setPlaceholder] = useState(selected);
 
-  console.log(placeholder);
-
   const commonCipher = useInputValidation({
     checkInputIsEmpty: encryption,
     custom: {
