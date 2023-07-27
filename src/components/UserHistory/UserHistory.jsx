@@ -13,7 +13,6 @@ export const UserHistory = () => {
             <li>Метод преобразования</li>
             <li>Секретный ключ</li>
           </ul>
-          {/*    <hr className={styles.hr} /> */}
           <AccordionHistory />
         </div>
       </div>

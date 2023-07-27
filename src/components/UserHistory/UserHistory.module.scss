@@ -9,7 +9,7 @@
 }
 
 .container {
-  width: calc(100% - 2 * 130px);
+  width: 82%;
   margin: 0 auto;
 
   .title {
@@ -35,20 +35,18 @@
         280px
       )
       minmax(min-content, 200px) 24px;
-    // grid-template-columns: 180px 380px 280px 200px 24px;
     gap: 20px;
     margin: 0;
     @include font-source-sans(18px, $white, 400, 24px);
     border-bottom: 1px solid $white;
     margin-bottom: 20px;
+
+    @media screen and (max-width: 1125px) {
+      @include font-source-sans(14px, $white, 400, 18px);
+    }
   }
 
-  .hr {
-    width: 100%;
-    color: $white;
-  }
-
-  .textLight {
+  /*   .textLight {
     @include font-source-sans(18px, $white, 400, 24px);
-  }
+  } */
 }
