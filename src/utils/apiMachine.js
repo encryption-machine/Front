@@ -1,4 +1,5 @@
 import { BASE_URL } from '../constants/url';
+import { getCookie } from './cookie';
 
 function handleResponce(res) {
   if (res.ok) {
@@ -12,6 +13,7 @@ export const getEncryption = (text, algorithm, key, is_encryption) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: getCookie('access'),
     },
     body: JSON.stringify({
       text: text,

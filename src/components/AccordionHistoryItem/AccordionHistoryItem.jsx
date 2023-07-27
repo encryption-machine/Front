@@ -14,7 +14,6 @@ export const AccordionHistoryItem = ({ item, index }) => {
     .split('.')
     .reverse()
     .join('.');
-  console.log(index);
 
   return (
     <>

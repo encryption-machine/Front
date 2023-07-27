@@ -73,6 +73,7 @@ export const Machine = observer(({ list }) => {
       )
       .then((response) => {
         if (response) {
+          console.log(response);
           if (type === 'qr') {
             SetQrResult(response.encrypted_text);
             secretStore.setOpenSecretModal(true);

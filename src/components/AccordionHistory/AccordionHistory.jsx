@@ -2,21 +2,22 @@ import { AccordionHistoryItem } from '../AccordionHistoryItem/AccordionHistoryIt
 import styles from './AccordionHistory.module.scss';
 import * as apiList from '../../utils/apiMachineList';
 import { useEffect, useState } from 'react';
+import { getCookie } from '../../utils/cookie';
 
 export const AccordionHistory = () => {
-  const [encryptionList, setencryptionList] = useState([]);
+  const [encryptionList, setEncryptionList] = useState([]);
   const [serverError, setServerError] = useState('');
   useEffect(() => {
     getEncryptionList();
   }, []);
 
   const getEncryptionList = () => {
-    /*     const token = document.cookie.slice(7); */
-    const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkwNDcyMzQzLCJpYXQiOjE2OTAzODU5NDMsImp0aSI6IjBlYmQ2ZTgwZDE4NjQ0N2Y4NGY3MGMxMzk1YTg2YTg2IiwidXNlcl9pZCI6Mjl9.glQh_QyRGHxtfSRH-G-hKZzKEdKiifSJ6DoZrVqg_mo`;
+    const token = getCookie('access');
+
     apiList
       .getApiEncryptionList(token)
       .then((data) => {
-        setencryptionList(data);
+        setEncryptionList(data);
       })
       .catch((err) => {
         setServerError(err.message);
