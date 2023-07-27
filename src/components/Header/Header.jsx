@@ -7,22 +7,55 @@ import RecoveryPasswordForm from '../RecoveryPasswordForm/RecoveryPasswordForm';
 import { AuthFormGlobalStore as formStore } from '../../stores/';
 import { CustomLink } from '../CustomLink/CustomLink';
 import logotype from '../../assets/icons/logotype.svg';
-import { getCookie } from '../../utils/cookie';
-
+import { deleteCookie, getCookie, setCookie } from '../../utils/cookie';
+import * as apiAuth from '../../utils/Auth';
 import * as apiUser from '../../utils/User';
 import { useEffect } from 'react';
-/* import AuthFormStore from '../../stores/auth-form-store'; */
 
 export const Header = observer(() => {
   const { emailUser } = formStore;
   const accessToken = getCookie('access');
+  const refreshToken = localStorage.getItem('refresh');
   const location = useLocation();
+
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   };
 
+  const logOut = () => {
+    formStore.setLoggedIn(false);
+    deleteCookie('access');
+    localStorage.removeItem('refresh');
+  };
+
+  const updateToken = (refreshToken) => {
+    apiAuth
+      .postApiAuthorizeRefresh(refreshToken)
+      .then((data) => {
+        setCookie('access', data.access);
+        formStore.setLoggedIn(true);
+      })
+      .catch((err) => {
+        formStore.setLoggedIn(false);
+        console.error(err, '--updateRefresh,err');
+      });
+  };
+
   useEffect(() => {
+    const verifyToken = (refreshToken) => {
+      apiAuth
+        .postApiAuthorizeVerify(refreshToken)
+        .then((data) => {
+          console.log(data);
+          formStore.setLoggedIn(true);
+        })
+        .catch((err) => {
+          updateToken();
+          console.error(err, '--verifyRefresh,err');
+        });
+    };
+
     const getUser = () => {
       apiUser
         .getApiUser(accessToken)
@@ -33,10 +66,17 @@ export const Header = observer(() => {
           console.log(err);
         });
     };
-    if (!emailUser && accessToken && formStore.loggedIn) {
+    if (!emailUser && refreshToken && accessToken) {
       getUser();
     }
-  }, [emailUser, accessToken]);
+    if (!accessToken && refreshToken) {
+      updateToken(refreshToken);
+    }
+    if (accessToken && refreshToken && emailUser) {
+      verifyToken(refreshToken);
+      formStore.setLoggedIn(true);
+    }
+  }, [emailUser, accessToken, refreshToken]);
 
   return (
     <header className={styles.header}>
@@ -110,7 +150,7 @@ export const Header = observer(() => {
             <button
               className={styles.button_header}
               type="button"
-              onClick={() => formStore.setLoggedIn(false)}
+              onClick={logOut}
             >
               Выйти
             </button>
