@@ -149,6 +149,9 @@
   &:focus-visible {
     outline: none;
   }
+  &.error {
+    color: $red;
+  }
 }
 .copy {
   &__cont {
@@ -178,6 +181,9 @@
     &:focus-within {
       border: 1.5px solid $violet;
       border-radius: 8px;
+    }
+    &.error {
+      border: 1px solid $red;
     }
   }
   &__button {
@@ -302,6 +308,11 @@
     cursor: pointer;
     svg {
       stroke: $gray_dark;
+    }
+    &.error {
+      svg {
+        stroke: $red;
+      }
     }
     &:hover {
       animation: alert 0.3s ease-in-out infinite;

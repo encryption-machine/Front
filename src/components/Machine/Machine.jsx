@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import QRCode from 'react-qr-code';
+import cn from 'classnames';
 import { copyToClipboard } from '../../helpers';
 import SecretKeyModal from '../SecretKeyModal/SecretKeyModal';
 import FormButton from '../FormButton/FormButton';
@@ -15,6 +16,7 @@ import useInputValidation from '../../hooks/useInputValidation';
 export const Machine = observer(({ list }) => {
   const [current, setCurrent] = React.useState('encryption');
   const [isSelectOpen, setSelectOpen] = React.useState(false);
+  const [isSelectCipher, setSelectCipher] = React.useState(false);
   const [selected, setSelected] = React.useState('Выберите язык шифрования');
   const [type, setType] = React.useState('');
   const [filteredList, setFilteredList] = React.useState(
@@ -67,6 +69,7 @@ export const Machine = observer(({ list }) => {
   };
 
   const choiceType = (e, value) => {
+    value && setSelectCipher(true);
     setSelected(value.name);
     setType(value.value);
     SetKeyLength(value.length);
@@ -208,6 +211,18 @@ export const Machine = observer(({ list }) => {
     ? styles.copy__message
     : `${styles.copy__messageShow} ${styles.copy__message}`;
 
+  const setClassError = (...classes) => {
+    if (
+      !commonCipher.isCustomValid &&
+      !commonCipher.isEmpty &&
+      isSelectCipher
+    ) {
+      return cn(...classes, styles.error);
+    } else {
+      return classes;
+    }
+  };
+
   return (
     <section className={styles.machine} id="ciphers">
       <div className={styles.content}>
@@ -255,10 +270,13 @@ export const Machine = observer(({ list }) => {
             </div>
           </div>
         </div>
-        <div className={styles.copy__input}>
+        <div className={setClassError(styles.copy__input)}>
           <div className={styles.alert}>
             <div className={styles.alert__cont}>
-              <button className={styles.alert__button} onClick={hintClick}>
+              <button
+                className={setClassError(styles.alert__button)}
+                onClick={hintClick}
+              >
                 <AlertMark />
               </button>
               {showHint && (
@@ -300,7 +318,7 @@ export const Machine = observer(({ list }) => {
             disabled={disabled}
             name="leftArea"
             id="leftArea"
-            className={styles.text}
+            className={setClassError(styles.text)}
             placeholder={placeholder}
             value={encryption}
             onInput={(event) => handleEncryptionValue(event)}
