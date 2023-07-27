@@ -7,7 +7,6 @@ const AuthForms = ({ children, onSubmit }) => {
         onSubmit={onSubmit}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
-            console.log('Enter press');
             onSubmit(e);
           }
         }}
