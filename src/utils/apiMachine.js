@@ -1,6 +1,6 @@
 import { BASE_URL } from '../constants/url';
 import { AuthFormGlobalStore as formStore } from '../stores';
-import { getCookie } from './getCookie';
+import { getCookie } from './cookie';
 
 function handleResponce(res) {
   if (res.ok) {
