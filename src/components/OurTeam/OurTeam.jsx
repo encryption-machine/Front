@@ -68,7 +68,6 @@ const OurTeam = () => {
           </ul>
         </div>
       </div>
-
     </section>
   );
 };

@@ -130,6 +130,7 @@ const SignInForm = observer(() => {
             .postApiAuthorizeVerify(refresh)
             .then((data) => {
               if (data) {
+                console.log(data);
                 api
                   .postApiAuthorizeRefresh(refresh)
                   .then((data) => {
