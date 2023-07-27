@@ -122,7 +122,7 @@ const SignInForm = observer(() => {
       .then((data) => {
         const refresh = data.refresh;
         if (data.access) {
-          document.cookie = `access=${data.access}; max-age=3600`;
+          document.cookie = `access=${data.access}; max-age=86400`;
           formStore.setLoggedIn(true);
           formStore.setOpenAuthForm(false);
         } else {
@@ -130,11 +130,12 @@ const SignInForm = observer(() => {
             .postApiAuthorizeVerify(refresh)
             .then((data) => {
               if (data) {
+                console.log(data);
                 api
                   .postApiAuthorizeRefresh(refresh)
                   .then((data) => {
                     if (data.access) {
-                      document.cookie = `access=${data.access}; max-age=3600`;
+                      document.cookie = `access=${data.access}; max-age=86400`;
                       formStore.setLoggedIn(true);
                       formStore.setOpenAuthForm(false);
                     }

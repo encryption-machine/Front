@@ -235,10 +235,9 @@ const SignUpForm = observer(() => {
         answer.value
       )
       .then((data) => {
-        console.log(data.refresh, data.access);
         const refresh = data.refresh;
         if (data.access) {
-          document.cookie = `access=${data.access}; max-age=3600`;
+          document.cookie = `access=${data.access}; max-age=86400`;
           formStore.setLoggedIn(true);
           formStore.setOpenAuthForm(false);
         } else {
@@ -250,7 +249,7 @@ const SignUpForm = observer(() => {
                   .postApiAuthorizeRefresh(refresh)
                   .then((data) => {
                     if (data.access) {
-                      document.cookie = `access=${data.access}; max-age=3600`;
+                      document.cookie = `access=${data.access}; max-age=86400`;
                       formStore.setLoggedIn(true);
                       formStore.setOpenAuthForm(false);
                     }
