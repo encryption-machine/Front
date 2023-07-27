@@ -32,6 +32,7 @@ export const Machine = observer(({ list }) => {
   const [qrCopy, SetQrCopy] = useState(false);
   const [encryptionTextLength, SetEncryptionTextLength] = useState(0);
   const [descKey, SetEncKey] = useState('');
+  const [validKey, setValidKey] = useState('');
   const [showHint, setShowHint] = useState(false);
   const selectRef = useRef(null);
   const activeClass = styles.tabActive;
@@ -49,6 +50,15 @@ export const Machine = observer(({ list }) => {
       value: encryption,
     },
     length: { min: currentMinLength, max: currentMaxLength },
+  });
+
+  const key = useInputValidation({
+    checkInputIsEmpty: secretKey,
+    custom: {
+      regExp: validEnc,
+      value: secretKey,
+    },
+    length: { min: 1, max: keyLength },
   });
 
   const clickTab = (e) => {
@@ -72,6 +82,7 @@ export const Machine = observer(({ list }) => {
     value && setSelectCipher(true);
     setSelected(value.name);
     setType(value.value);
+    setValidKey(value.key);
     SetKeyLength(value.length);
     setFilteredList(list.filter((item) => item.name !== value.name));
     SetEncKey(value.desc);
@@ -223,6 +234,14 @@ export const Machine = observer(({ list }) => {
     }
   };
 
+  const setClassErrorKey = (...classes) => {
+    if (!key.isCustomValid && !key.isEmpty) {
+      return cn(...classes, styles.error);
+    } else {
+      return classes;
+    }
+  };
+
   return (
     <section className={styles.machine} id="ciphers">
       <div className={styles.content}>
@@ -348,7 +367,9 @@ export const Machine = observer(({ list }) => {
         <div className={styles.machine__button}>
           <Button
             onClick={(e) => secretKeyClick(e)}
-            disabled={!encryption.length || !type.length}
+            disabled={
+              !encryption.length || !type.length || !commonCipher.isCustomValid
+            }
             className={styles.button}
           >
             Запустить
@@ -368,7 +389,7 @@ export const Machine = observer(({ list }) => {
                   <input
                     type="text"
                     placeholder="Секретный ключ"
-                    className={styles.modal__input}
+                    className={setClassErrorKey(styles.modal__input)}
                     value={secretKey}
                     onChange={handleChangeKey}
                   />
@@ -376,7 +397,7 @@ export const Machine = observer(({ list }) => {
                 <div className={styles.modal__item}>
                   <FormButton
                     onClick={(e) => setSecretKey(e)}
-                    disabled={secretKey.length === 0}
+                    disabled={key.isEmpty || !key.isCustomValid}
                   >
                     Ввести
                   </FormButton>
