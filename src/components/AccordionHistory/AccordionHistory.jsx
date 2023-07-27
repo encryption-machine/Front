@@ -35,7 +35,9 @@ export const AccordionHistory = () => {
           })}
         </ul>
       ) : (
-        <p>У вас пока нет запросов на шифрование</p>
+        <p className={styles.accordionHistory_text}>
+          У вас пока нет запросов на шифрование
+        </p>
       )}
 
       {serverError && (
