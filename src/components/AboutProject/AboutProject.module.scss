@@ -2,10 +2,13 @@
 @import '../../styles/mixins';
 
 .aboutProject {
-  padding: 100px 9% 140px;
-  margin: 0 auto;
+  padding: 100px 0 140px;
   width: 100%;
   background-color: $black;
+  &_content {
+    width: 82%;
+    margin: 0 auto;
+  }
   &_title {
     @include font-source-sans(40px, $white, 800, 52px, 'Inter');
     text-align: left;

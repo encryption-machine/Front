@@ -3,8 +3,6 @@
 
 .machine {
   padding-top: 180px;
-  padding-left: 9%;
-  padding-right: 9%;
   padding-bottom: 140px;
   background-color: $gray_light;
   @media (max-width: 960px) {
@@ -21,8 +19,8 @@
   }
 }
 .content {
-  // max-width: 1140px;
-  // margin: 0 auto;
+  width: 82%;
+  margin: 0 auto;
   display: grid;
   gap: 20px 20px;
   grid-template-columns: 1fr 1fr;

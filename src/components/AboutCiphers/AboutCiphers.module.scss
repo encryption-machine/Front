@@ -3,7 +3,13 @@
 
 .aboutCiphers {
   background-color: $violet;
-  padding: 100px 9% 140px;
+  padding: 100px 0 140px;
+  width: 100%;
+
+  &_content {
+    width: 82%;
+    margin: 0 auto;
+  }
 
   &_title {
     @include font-source-sans(40px, $white, 800, 52px);

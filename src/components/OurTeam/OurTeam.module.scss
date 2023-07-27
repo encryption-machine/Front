@@ -1,9 +1,13 @@
 @import '../../styles/colors.scss';
 @import '../../styles/mixins';
 .ourTeam {
-  padding: 100px 9% 140px;
-  margin: 0 auto;
+  padding: 100px 0 140px;
   width: 100%;
+
+  &_content {
+    width: 82%;
+    margin: 0 auto;
+  }
 
   &_title {
     @include font-source-sans(40px, $black, 800, 52px, 'Inter');
