@@ -67,7 +67,7 @@ export const Machine = observer(({ list }) => {
 
   const handleEncrypt = (e) => {
     apiMachine
-      .getEncryption(
+      .postEncryption(
         encryption,
         type,
         secretStore.secretKeyText,
