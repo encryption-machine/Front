@@ -3,15 +3,17 @@ export const emailRegExp =
 
 export const anyCharRegExp = /./;
 
-export const symbolsRegExp = /[ `!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/;
+export const symbolsRegExp = /[\s~\\|/{}[]()<>@#$%&!?_-+=*^`'":;.,]/;
 
 export const numbersRegExp = /\d/;
 
 export const morseInputTextRegExp =
-  /^[а-яА-я\d\s`!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]*$/;
+  /^[а-яА-я\d\s`!^@#$%&*()_+\-=\][{};':"\\|,.<>?~]*$/;
 
 export const morseInputCodeRegExp = /[-.\s]/;
 
 export const caesarRegExp = /^[а-яА-я\d\s.,:;)(*#%!+-/$&"']*$/;
+
+export const vigenereRegExp = /^[а-яА-я\d\s.,:;)(*#%!+-/$&"']*$/;
 
 export const caesarReplaceCharRegExp = /[Ёё]/gim;

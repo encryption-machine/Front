@@ -8,6 +8,7 @@ import {
   caesarRegExp,
   morseInputCodeRegExp,
   morseInputTextRegExp,
+  vigenereRegExp,
 } from '../constants/regExp';
 
 export const MainPage = () => {
@@ -50,7 +51,7 @@ export const MainPage = () => {
       value: 'vigenere',
       length: 30,
       desc: 'русские буквы от А до Я (без ё) в количестве от 1 до 30',
-      validEncryption: null,
+      validEncryption: vigenereRegExp,
       validDecryption: null,
       maxLengthEnc: 2000,
       minLengthEnc: 1,
