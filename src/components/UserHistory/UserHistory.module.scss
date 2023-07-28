@@ -29,12 +29,9 @@
     width: 100%;
     padding: 12px;
     display: grid;
-    grid-template-columns:
-      minmax(min-content, 180px) minmax(min-content, 380px) minmax(
-        min-content,
-        280px
-      )
-      minmax(min-content, 200px) 24px;
+    grid-auto-columns: 1fr 1fr 1fr 1fr 24px;
+    grid-template-rows: 1fr;
+    grid-template-areas: 'date is_encryption algorithm key btn';
     gap: 20px;
     margin: 0;
     @include font-source-sans(18px, $white, 400, 24px);
@@ -43,6 +40,24 @@
 
     @media screen and (max-width: 1125px) {
       @include font-source-sans(14px, $white, 400, 18px);
+    }
+
+    &li {
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+
+    &_date {
+      grid-area: date;
+    }
+    &_is_encryption {
+      grid-area: is_encryption;
+    }
+    &_algorithm {
+      grid-area: algorithm;
+    }
+    &_key {
+      grid-area: key;
     }
   }
 }

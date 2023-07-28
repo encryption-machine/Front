@@ -8,10 +8,12 @@ export const UserHistory = () => {
         <h2 className={styles.title}>История</h2>
         <div className={styles.table}>
           <ul className={styles.header}>
-            <li>Дата</li>
-            <li>Процесс преобразования</li>
-            <li>Метод преобразования</li>
-            <li>Секретный ключ</li>
+            <li className={styles.header_date}>Дата</li>
+            <li className={styles.header_is_encryption}>
+              Процесс преобразования
+            </li>
+            <li className={styles.header_algorithm}>Метод преобразования</li>
+            <li className={styles.header_key}>Секретный ключ</li>
           </ul>
           <AccordionHistory />
         </div>

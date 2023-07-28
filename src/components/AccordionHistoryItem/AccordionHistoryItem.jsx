@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './AccordionHistoryItem.module.scss';
+import QRCode from 'react-qr-code';
 
 export const AccordionHistoryItem = ({ item, index }) => {
   const [showHistory, setShowHistory] = useState(false);
@@ -58,7 +59,11 @@ export const AccordionHistoryItem = ({ item, index }) => {
           <>
             <p className={styles.accordionHistoryItem_request}>{item.text}</p>
             <p className={styles.accordionHistoryItem_response}>
-              {item.encrypted_text}
+              {item.algorithm !== 'qr' ? (
+                item.encrypted_text
+              ) : (
+                <QRCode value={item.encrypted_text} />
+              )}
             </p>
           </>
         ) : null}

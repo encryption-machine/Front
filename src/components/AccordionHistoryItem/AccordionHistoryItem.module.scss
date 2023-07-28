@@ -6,12 +6,7 @@
   background-color: transparent;
   margin-bottom: 16px;
   display: grid;
-  grid-template-columns:
-    minmax(min-content, 180px) minmax(min-content, 380px) minmax(
-      min-content,
-      280px
-    )
-    minmax(min-content, 200px) 24px;
+  grid-auto-columns: 1fr 1fr 1fr 1fr 24px;
   grid-template-rows: minmax(24px, max-content) 1fr;
   column-gap: 20px;
   row-gap: 6px;
