@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './AccordionHistoryItem.module.scss';
+import QRCode from 'react-qr-code';
 
 export const AccordionHistoryItem = ({ item, index }) => {
   const [showHistory, setShowHistory] = useState(false);
@@ -15,6 +16,25 @@ export const AccordionHistoryItem = ({ item, index }) => {
     .reverse()
     .join('.');
 
+  const setAlgorithm = (algorithm) => {
+    switch (algorithm) {
+      case 'caesar':
+        return 'Код Цезаря';
+      case 'morse':
+        return 'Азбука Морзе';
+      case 'vigenere':
+        return 'Шифр Виженера';
+      case 'aes':
+        return 'AES';
+      case 'qr':
+        return 'QR код';
+      default:
+        break;
+    }
+  };
+
+  const nameAlgorithm = setAlgorithm(item.algorithm);
+
   return (
     <>
       <li className={styles.accordionHistoryItem} key={index}>
@@ -22,9 +42,7 @@ export const AccordionHistoryItem = ({ item, index }) => {
         <p className={styles.accordionHistoryItem_is_encryption}>
           {item.is_encryption === true ? `Шифрование` : `Дешифрование`}
         </p>
-        <p className={styles.accordionHistoryItem_algorithm}>
-          {item.algorithm}
-        </p>
+        <p className={styles.accordionHistoryItem_algorithm}>{nameAlgorithm}</p>
         <p className={styles.accordionHistoryItem_key}>{item.key}</p>
         {index % 2 !== 0 ? (
           <button
@@ -41,7 +59,11 @@ export const AccordionHistoryItem = ({ item, index }) => {
           <>
             <p className={styles.accordionHistoryItem_request}>{item.text}</p>
             <p className={styles.accordionHistoryItem_response}>
-              {item.encrypted_text}
+              {item.algorithm !== 'qr' ? (
+                item.encrypted_text
+              ) : (
+                <QRCode value={item.encrypted_text} />
+              )}
             </p>
           </>
         ) : null}

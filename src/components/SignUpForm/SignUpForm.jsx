@@ -5,7 +5,7 @@ import AuthForms from '../AuthForms/AuthForms';
 import useInputValidation from '../../hooks/useInputValidation';
 import AuthFormStore from '../../stores/auth-form-store';
 import * as apiReg from '../../utils/Registration';
-import * as apiAuth from '../../utils/Auth';
+/* import * as apiAuth from '../../utils/Auth'; */
 import { AuthFormGlobalStore as formStore } from '../../stores';
 import {
   EmailInput,
@@ -25,6 +25,7 @@ import {
 } from '../../constants/errorMessages';
 import FormButton from '../FormButton/FormButton';
 import styles from '../AuthForms/AuthForms.module.scss';
+import { setCookie } from '../../utils/cookie';
 
 /**
  * Создаёт незвисимые инстансы стора для инпутов
@@ -235,38 +236,10 @@ const SignUpForm = observer(() => {
         answer.value
       )
       .then((data) => {
-        const refresh = data.refresh;
-        if (data.access) {
-          document.cookie = `access=${data.access}; max-age=86400`;
-          formStore.setLoggedIn(true);
-          formStore.setOpenAuthForm(false);
-        } else {
-          apiAuth
-            .postApiAuthorizeVerify(refresh)
-            .then((data) => {
-              if (data) {
-                apiAuth
-                  .postApiAuthorizeRefresh(refresh)
-                  .then((data) => {
-                    if (data.access) {
-                      document.cookie = `access=${data.access}; max-age=86400`;
-                      formStore.setLoggedIn(true);
-                      formStore.setOpenAuthForm(false);
-                    }
-                  })
-                  .catch((err) => {
-                    console.error(err, '--authorizeRefresh,err');
-                    formStore.setLoggedIn(false);
-                    setLoginErrorMessage(err.message);
-                  });
-              }
-            })
-            .catch((err) => {
-              console.error(err, '--token,err');
-              formStore.setLoggedIn(false);
-              setLoginErrorMessage(err.message);
-            });
-        }
+        localStorage.setItem('refresh', data.refresh);
+        setCookie('access', data.access);
+        formStore.setLoggedIn(true);
+        formStore.setOpenAuthForm(false);
       })
       .catch((err) => {
         formStore.setLoggedIn(false);

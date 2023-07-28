@@ -98,7 +98,7 @@ export const Machine = observer(({ list }) => {
       copyToClipboard(result);
       setCopyMessage('Результат скопирован');
     } catch (error) {
-      setCopyMessage('Неудалось скопировать');
+      setCopyMessage('Не удалось скопировать');
     } finally {
       showMessage();
     }
