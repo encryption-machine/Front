@@ -24,7 +24,6 @@ class AuthFormStore {
    * @param {string} value
    */
   setEmailUser = (value) => {
-    console.log(value);
     this.emailUser = value;
   };
 
@@ -34,6 +33,7 @@ class AuthFormStore {
    */
   setLoggedIn = (bool) => {
     this.loggedIn = bool;
+    /*     localStorage.removeItem("refresh"); */
   };
 
   /**

@@ -6,7 +6,7 @@ import gitIcon from '../../assets/icons/team-git.svg';
 
 const OurTeam = () => {
   return (
-    <section className={styles.ourTeam} id="outTeam">
+    <section className={styles.ourTeam} id="ourTeam">
       <div className={styles.ourTeam_content}>
         <h1 className={styles.ourTeam_title}>НАША КОМАНДА</h1>
         <div className={styles.ourTeam_cards}>
