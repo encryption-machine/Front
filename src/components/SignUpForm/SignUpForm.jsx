@@ -14,7 +14,11 @@ import {
   AnswerInput,
   SecretQuestionInput,
 } from '../AuthFormsInputs/AuthFormsInputs';
-import { anyCharRegExp } from '../../constants/regExp';
+import {
+  anyCharRegExp,
+  emailRegExp,
+  passwordRegExp,
+} from '../../constants/regExp';
 import {
   answerErrorMessage,
   composeEmptyErrorMessage,
@@ -76,37 +80,31 @@ const SignUpForm = observer(() => {
   };
 
   const passwordInput = useInputValidation({
-    checkInputIsEmpty: firstPassword.value,
-    password: firstPassword.value,
-    confirmPassword: secondPassword.value,
-    length: { min: 8, max: 30 },
+    value: firstPassword.value,
+    regExp: passwordRegExp,
+    length: { from: 8, to: 30 },
   });
 
   const confirmPasswordInput = useInputValidation({
-    checkInputIsEmpty: secondPassword.value,
+    value: secondPassword.value,
+    compare: firstPassword.value,
   });
 
   const emailInput = useInputValidation({
-    checkInputIsEmpty: email.value,
-    email: email.value,
+    value: email.value,
+    regExp: emailRegExp,
   });
 
   const secretQuestionInput = useInputValidation({
-    checkInputIsEmpty: question.value,
-    custom: {
-      regExp: anyCharRegExp,
-      value: question.value,
-    },
-    length: { min: 1, max: 100 },
+    value: question.value,
+    regExp: anyCharRegExp,
+    length: { from: 1, to: 100 },
   });
 
   const answerInput = useInputValidation({
-    checkInputIsEmpty: answer.value,
-    custom: {
-      regExp: anyCharRegExp,
-      value: answer.value,
-    },
-    length: { min: 1, max: 30 },
+    value: answer.value,
+    regExp: anyCharRegExp,
+    length: { from: 1, to: 30 },
   });
 
   const resetForm = () => {
@@ -140,19 +138,19 @@ const SignUpForm = observer(() => {
   }, [isOpenModal]);
 
   useEffect(() => {
-    passwordInput.isPasswordInputValid &&
-    emailInput.isEmailValid &&
-    passwordInput.isMatch &&
-    answerInput.isCustomValid &&
-    secretQuestionInput.isCustomValid
+    passwordInput.isValid &&
+    emailInput.isValid &&
+    confirmPasswordInput.isMatch &&
+    answerInput.isValid &&
+    secretQuestionInput.isValid
       ? setIsFormValid(true)
       : setIsFormValid(false);
   }, [
-    emailInput.isEmailValid,
-    passwordInput.isMatch,
-    passwordInput.isPasswordInputValid,
-    answerInput.isCustomValid,
-    secretQuestionInput.isCustomValid,
+    emailInput.isValid,
+    confirmPasswordInput.isMatch,
+    passwordInput.isValid,
+    answerInput.isValid,
+    secretQuestionInput.isValid,
   ]);
 
   // Change show passwords
@@ -171,7 +169,7 @@ const SignUpForm = observer(() => {
         })
       : firstPassword.setError({ emptyMessage: '' });
 
-    confirmPasswordInput.isDirty && passwordInput.isEmpty
+    confirmPasswordInput.isDirty && confirmPasswordInput.isEmpty
       ? secondPassword.setError({
           emptyMessage: composeEmptyErrorMessage('Повтор пароля'),
         })
@@ -185,7 +183,7 @@ const SignUpForm = observer(() => {
       ? answer.setError({ emptyMessage: composeEmptyErrorMessage('Ответ') })
       : answer.setError({ emptyMessage: '' });
 
-    answerInput.isCustomValid
+    answerInput.isValid
       ? answer.setError({ validMessage: '' })
       : answer.setError({ validMessage: answerErrorMessage });
 
@@ -195,13 +193,13 @@ const SignUpForm = observer(() => {
         })
       : question.setError({ emptyMessage: '' });
 
-    secretQuestionInput.isCustomValid
+    secretQuestionInput.isValid
       ? question.setError({ validMessage: '' })
       : question.setError({
           validMessage: secretQuestionErrorMessage,
         });
 
-    passwordInput.isMatch
+    confirmPasswordInput.isMatch
       ? secondPassword.setError({ validMessage: '' })
       : secondPassword.setError({
           validMessage: passwordMismatchErrorMessage,
@@ -216,11 +214,11 @@ const SignUpForm = observer(() => {
     emailInput.isEmpty,
     answerInput.isDirty,
     answerInput.isEmpty,
-    answerInput.isCustomValid,
-    passwordInput.isMatch,
+    answerInput.isValid,
+    confirmPasswordInput.isMatch,
     secretQuestionInput.isDirty,
     secretQuestionInput.isEmpty,
-    secretQuestionInput.isCustomValid,
+    secretQuestionInput.isValid,
     loginErrorMessage,
   ]);
 
@@ -266,9 +264,9 @@ const SignUpForm = observer(() => {
         isDirty={emailInput.isDirty}
         isEmpty={emailInput.isEmpty}
         isFocus={emailInput.isFocus}
-        isEmailValid={emailInput.isEmailValid}
+        isValid={emailInput.isValid}
         emptyError={email.emptyMessage}
-        emailValidError={emailValidErrorMessage}
+        validError={emailValidErrorMessage}
         onClickClearButton={(e) =>
           handleClearButton(e, () => email.setValue(''))
         }
@@ -284,8 +282,8 @@ const SignUpForm = observer(() => {
         isFocus={passwordInput.isFocus}
         isDirty={passwordInput.isDirty}
         isEmpty={passwordInput.isEmpty}
-        passwordValidError={passwordValidErrorMessage}
-        isPasswordInputValid={passwordInput.isPasswordInputValid}
+        validError={passwordValidErrorMessage}
+        isValid={passwordInput.isValid}
         emptyError={firstPassword.emptyMessage}
         showPassword={showPassword}
         placeholder="Пароль"
@@ -304,10 +302,10 @@ const SignUpForm = observer(() => {
         isFocus={confirmPasswordInput.isFocus}
         isDirty={confirmPasswordInput.isDirty}
         isEmpty={confirmPasswordInput.isEmpty}
-        isMatch={passwordInput.isMatch}
+        isValid={confirmPasswordInput.isMatch}
         onChange={(e) => secondPassword.setValue(e.target.value)}
         emptyError={secondPassword.emptyMessage}
-        matchError={secondPassword.validMessage}
+        validError={secondPassword.validMessage}
         showPassword={showConfirmPassword}
         placeholder="Ещё раз пароль"
         label="Ещё раз пароль"
@@ -328,7 +326,7 @@ const SignUpForm = observer(() => {
         isFocus={secretQuestionInput.isFocus}
         emptyError={question.emptyMessage}
         validError={question.validMessage}
-        isCustomValid={secretQuestionInput.isCustomValid}
+        isValid={secretQuestionInput.isValid}
         placeholder="Секретный вопрос"
         label="Секретный вопрос"
         onClickClearButton={(e) =>
@@ -346,7 +344,7 @@ const SignUpForm = observer(() => {
         isFocus={answerInput.isFocus}
         emptyError={answer.emptyMessage}
         validError={answer.validMessage}
-        isCustomValid={answerInput.isCustomValid}
+        isValid={answerInput.isValid}
         placeholder="Ответ"
         label="Ответ"
         onClickClearButton={(e) =>

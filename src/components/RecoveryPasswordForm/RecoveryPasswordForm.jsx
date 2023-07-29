@@ -21,6 +21,7 @@ import {
   emailValidErrorMessage,
   passwordMismatchErrorMessage,
 } from '../../constants/errorMessages';
+import { emailRegExp, passwordRegExp } from '../../constants/regExp';
 
 import * as api from '../../utils/apiPasswordRecovery';
 
@@ -72,28 +73,25 @@ const RecoveryPasswordForm = observer(() => {
   };
 
   const emailInput = useInputValidation({
-    checkInputIsEmpty: email.value,
-    email: email.value,
+    value: email.value,
+    regExp: emailRegExp,
   });
 
   const answerInput = useInputValidation({
-    checkInputIsEmpty: answer.value,
-    custom: {
-      regExp: anyCharRegExp,
-      value: answer.value,
-    },
-    length: { min: 1, max: 30 },
+    value: answer.value,
+    regExp: anyCharRegExp,
+    length: { from: 1, to: 30 },
   });
 
   const passwordInput = useInputValidation({
-    checkInputIsEmpty: firstPassword.value,
-    password: firstPassword.value,
-    confirmPassword: secondPassword.value,
-    length: { min: 8, max: 30 },
+    value: firstPassword.value,
+    regExp: passwordRegExp,
+    length: { from: 8, to: 30 },
   });
 
   const confirmPasswordInput = useInputValidation({
-    checkInputIsEmpty: secondPassword.value,
+    value: secondPassword.value,
+    compare: firstPassword.value,
   });
 
   const resetForm = () => {
@@ -135,7 +133,7 @@ const RecoveryPasswordForm = observer(() => {
         })
       : firstPassword.setError({ emptyMessage: '' });
 
-    confirmPasswordInput.isDirty && passwordInput.isEmpty
+    confirmPasswordInput.isDirty && confirmPasswordInput.isEmpty
       ? secondPassword.setError({
           emptyMessage: composeEmptyErrorMessage('Повтор пароля'),
         })
@@ -149,13 +147,13 @@ const RecoveryPasswordForm = observer(() => {
       ? answer.setError({ emptyMessage: composeEmptyErrorMessage('Ответ') })
       : answer.setError({ emptyMessage: '' });
 
-    passwordInput.isMatch
+    confirmPasswordInput.isMatch
       ? secondPassword.setError({ validMessage: '' })
       : secondPassword.setError({
           validMessage: passwordMismatchErrorMessage,
         });
 
-    answerInput.isCustomValid
+    answerInput.isValid
       ? answer.setError({ validMessage: '' })
       : answer.setError({ validMessage: answerErrorMessage });
 
@@ -163,16 +161,16 @@ const RecoveryPasswordForm = observer(() => {
       ? setServerError('')
       : setServerError(serverError);
   }, [
-    answerInput.isCustomValid,
+    answerInput.isValid,
     answerInput.isDirty,
     answerInput.isEmpty,
     confirmPasswordInput.isDirty,
     emailInput.isDirty,
-    emailInput.isEmailValid,
+    emailInput.isValid,
     emailInput.isEmpty,
     passwordInput.isDirty,
     passwordInput.isEmpty,
-    passwordInput.isMatch,
+    confirmPasswordInput.isMatch,
     email.value,
     answer.value,
   ]);
@@ -265,9 +263,9 @@ const RecoveryPasswordForm = observer(() => {
               isDirty={emailInput.isDirty}
               isEmpty={emailInput.isEmpty}
               isFocus={emailInput.isFocus}
-              isEmailValid={emailInput.isEmailValid}
+              isValid={emailInput.isValid}
               emptyError={email.emptyMessage}
-              emailValidError={emailValidErrorMessage}
+              validError={emailValidErrorMessage}
               onClickClearButton={(e) =>
                 handleClearButton(e, () => email.setValue(''))
               }
@@ -280,7 +278,7 @@ const RecoveryPasswordForm = observer(() => {
 
             <FormButton
               disabled={
-                emailInput.isEmpty || !emailInput.isEmailValid || serverError
+                emailInput.isEmpty || !emailInput.isValid || serverError
               }
               onClick={(e) => handleSubmitEmail(e)}
             >
@@ -302,9 +300,9 @@ const RecoveryPasswordForm = observer(() => {
             isFocus={answerInput.isFocus}
             emptyError={answer.emptyMessage}
             validError={answer.validMessage}
-            isCustomValid={answerInput.isCustomValid}
+            isValid={answerInput.isValid}
             placeholder="Ответ"
-            label={secretQuestion}
+            label={`${secretQuestion}?`}
             onClickClearButton={(e) =>
               handleClearButton(e, () => answer.setValue(''))
             }
@@ -314,7 +312,7 @@ const RecoveryPasswordForm = observer(() => {
           )}
           <FormButton
             disabled={
-              answerInput.isEmpty || !answerInput.isCustomValid || serverError
+              answerInput.isEmpty || !answerInput.isValid || serverError
             }
             onClick={(e) => handleSubmitAnswer(e)}
           >
@@ -333,8 +331,8 @@ const RecoveryPasswordForm = observer(() => {
             isFocus={passwordInput.isFocus}
             isDirty={passwordInput.isDirty}
             isEmpty={passwordInput.isEmpty}
-            passwordValidError={passwordValidErrorMessage}
-            isPasswordInputValid={passwordInput.isPasswordInputValid}
+            validError={passwordValidErrorMessage}
+            isValid={passwordInput.isValid}
             emptyError={firstPassword.emptyMessage}
             showPassword={showPassword}
             placeholder="Пароль"
@@ -353,10 +351,10 @@ const RecoveryPasswordForm = observer(() => {
             isFocus={confirmPasswordInput.isFocus}
             isDirty={confirmPasswordInput.isDirty}
             isEmpty={confirmPasswordInput.isEmpty}
-            isMatch={passwordInput.isMatch}
+            isValid={confirmPasswordInput.isMatch}
             onChange={(e) => secondPassword.setValue(e.target.value)}
             emptyError={secondPassword.emptyMessage}
-            matchError={secondPassword.validMessage}
+            validError={secondPassword.validMessage}
             showPassword={showConfirmPassword}
             placeholder="Ещё раз пароль"
             label="Ещё раз пароль"
@@ -370,8 +368,8 @@ const RecoveryPasswordForm = observer(() => {
             disabled={
               passwordInput.isEmpty ||
               confirmPasswordInput.isEmpty ||
-              !passwordInput.isPasswordInputValid ||
-              !passwordInput.isMatch ||
+              !passwordInput.isValid ||
+              !confirmPasswordInput.isMatch ||
               serverError
             }
             onClick={(e) => handleSubmitNewPassword(e)}

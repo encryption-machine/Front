@@ -44,21 +44,15 @@ export const Machine = observer(({ list }) => {
   const [placeholder, setPlaceholder] = useState(selected);
 
   const commonCipher = useInputValidation({
-    checkInputIsEmpty: encryption,
-    custom: {
-      regExp: validEnc,
-      value: encryption,
-    },
-    length: { min: currentMinLength, max: currentMaxLength },
+    value: encryption,
+    regExp: validEnc,
+    length: { from: currentMinLength, to: currentMaxLength },
   });
 
   const key = useInputValidation({
-    checkInputIsEmpty: secretKey,
-    custom: {
-      regExp: validKey,
-      value: secretKey,
-    },
-    length: { min: 1, max: keyLength },
+    value: secretKey,
+    regExp: validKey,
+    length: { from: 1, to: keyLength },
   });
 
   const clickTab = (e) => {
@@ -111,7 +105,7 @@ export const Machine = observer(({ list }) => {
   };
 
   const handleEncrypt = (e) => {
-    console.log(commonCipher.isCustomValid);
+    console.log(commonCipher.isValid);
     apiMachine
       .postEncryption(
         encryption,
@@ -224,11 +218,7 @@ export const Machine = observer(({ list }) => {
     : `${styles.copy__messageShow} ${styles.copy__message}`;
 
   const setClassError = (...classes) => {
-    if (
-      !commonCipher.isCustomValid &&
-      !commonCipher.isEmpty &&
-      isSelectCipher
-    ) {
+    if (!commonCipher.isValid && !commonCipher.isEmpty && isSelectCipher) {
       return cn(...classes, styles.error);
     } else {
       return classes;
@@ -236,7 +226,7 @@ export const Machine = observer(({ list }) => {
   };
 
   const setClassErrorKey = (...classes) => {
-    if (!key.isCustomValid && !key.isEmpty) {
+    if (!key.isValid && !key.isEmpty) {
       return cn(...classes, styles.error);
     } else {
       return classes;
@@ -369,7 +359,7 @@ export const Machine = observer(({ list }) => {
           <Button
             onClick={(e) => secretKeyClick(e)}
             disabled={
-              !encryption.length || !type.length || !commonCipher.isCustomValid
+              !encryption.length || !type.length || !commonCipher.isValid
             }
             className={styles.button}
           >
@@ -398,7 +388,7 @@ export const Machine = observer(({ list }) => {
                 <div className={styles.modal__item}>
                   <FormButton
                     onClick={(e) => setSecretKey(e)}
-                    disabled={key.isEmpty || !key.isCustomValid}
+                    disabled={key.isEmpty || !key.isValid}
                   >
                     Ввести
                   </FormButton>

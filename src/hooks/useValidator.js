@@ -1,152 +1,57 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
-import { emailRegExp, symbolsRegExp, numbersRegExp } from '../constants/regExp';
 
 const useValidator = ({
-  password = '',
-  confirmPassword = '',
-  email = '',
-  checkInputIsEmpty = '',
-  length = { min: null, max: null },
-  numberCheck = true,
-  lengthCheck = true,
-  uppercaseCheck = true,
-  lowercaseCheck = true,
-  specialCharCheck = true,
-  custom = { regExp: '', value: '' },
+  length = { from: null, to: null },
+  regExp = /./,
+  value = '',
+  compare = '',
 }) => {
-  const [isPasswordInputValid, setPasswordInputValid] = useState(false);
-  const [isMinLengthError, setMinLengthError] = useState(false);
-  const [isMaxLengthError, setMaxLengthError] = useState(false);
-  const [isSpecialChar, setSpecialChar] = useState(false);
-  const [isValidLength, setValidLength] = useState(false);
-  const [isUpperCase, setUpperCase] = useState(false);
-  const [isLowerCase, setLowerCase] = useState(false);
-  const [isNumber, setIsNumber] = useState(false);
+  const [isValid, setValid] = useState(false);
+  const [isEmpty, setEmpty] = useState(null);
   const [isMatch, setMatch] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isCustomValid, setIsCustomValid] = useState(false);
-  const [minLengthValid, setMinLengthValid] = useState(false);
-  const [maxLengthValid, setMaxLengthValid] = useState(false);
-  const [isEmpty, setIsEmpty] = useState(null);
 
   useEffect(() => {
-    if (lengthCheck) {
-      if (password.length >= length.min) {
-        setMinLengthValid(true);
-        setMinLengthError(false);
-      } else {
-        setMinLengthValid(false);
-        setMinLengthError(true);
-      }
-
-      if (password.length <= length.max) {
-        setMaxLengthValid(true);
-        setMaxLengthError(false);
-      } else {
-        setMaxLengthValid(false);
-        setMaxLengthError(true);
-      }
-
-      maxLengthValid && minLengthValid
-        ? setValidLength(true)
-        : setValidLength(false);
-    }
-
-    uppercaseCheck && setUpperCase(password.toLowerCase() !== password);
-    lowercaseCheck && setLowerCase(password.toUpperCase() !== password);
-    numberCheck && setIsNumber(numbersRegExp.test(password));
-    specialCharCheck && setSpecialChar(symbolsRegExp.test(password));
-    setMatch(password && password === confirmPassword);
-  }, [
-    password,
-    confirmPassword,
-    length.min,
-    length.max,
-    lengthCheck,
-    uppercaseCheck,
-    lowercaseCheck,
-    numberCheck,
-    specialCharCheck,
-    maxLengthValid,
-    minLengthValid,
-  ]);
-
-  useEffect(() => {
-    email && setIsEmailValid(emailRegExp.test(String(email).toLowerCase()));
-  }, [isEmailValid, email]);
-
-  useEffect(() => {
-    if (custom.value && custom.regExp.test(String(custom.value))) {
-      if (
-        length.max &&
-        length.min &&
-        custom.regExp.test(String(custom.value))
-      ) {
-        if (
-          custom.value.length >= length.min &&
-          custom.value.length <= length.max
-        ) {
-          setIsCustomValid(true);
+    if (value && regExp.test(String(value))) {
+      if (length.to && length.from && regExp.test(String(value))) {
+        if (value.length >= length.from && value.length <= length.to) {
+          setValid(true);
         } else {
-          setIsCustomValid(false);
+          setValid(false);
         }
-      } else if (
-        !length.max &&
-        !length.min &&
-        custom.regExp.test(String(custom.value))
-      ) {
-        setIsCustomValid(true);
+      } else if (!length.to && !length.from && regExp.test(String(value))) {
+        setValid(true);
       }
     } else {
-      setIsCustomValid(false);
+      setValid(false);
     }
-  }, [isCustomValid, custom.value, length.max, length.min, custom.regExp]);
+  }, [isValid, value, length.to, length.from, regExp]);
 
   useEffect(() => {
-    if (length.max === undefined || length.min === undefined) {
+    if (length.to === undefined || length.from === undefined) {
       console.error(
-        'length.max or length.min undefined! Try `length: { min: Number, max: Number }`'
+        'length.to or length.from undefined! Try `length: { from: Number, to: Number }`'
       );
     }
-  }, [length.max, length.min]);
+  }, [length.to, length.from]);
 
   useEffect(() => {
-    if (checkInputIsEmpty.length === 0) {
-      setIsEmpty(true);
-    } else if (checkInputIsEmpty.length !== 0) {
-      setIsEmpty(false);
-    } else if (!!checkInputIsEmpty) {
-      setIsEmpty(null);
+    if (value.length === 0) {
+      setEmpty(true);
+    } else if (value.length !== 0) {
+      setEmpty(false);
+    } else if (!!value) {
+      setEmpty(null);
     }
-  }, [checkInputIsEmpty, isEmpty]);
+  }, [value]);
 
   useEffect(() => {
-    isValidLength && isUpperCase && isNumber && isLowerCase && isSpecialChar
-      ? setPasswordInputValid(true)
-      : setPasswordInputValid(false);
-  }, [
-    isValidLength,
-    isUpperCase,
-    isNumber,
-    isLowerCase,
-    isSpecialChar,
-    isPasswordInputValid,
-  ]);
+    setMatch(value && value === compare);
+  }, [value, compare]);
 
   return {
-    isMinLengthError,
-    isMaxLengthError,
-    isPasswordInputValid,
-    isEmailValid,
-    isSpecialChar,
-    isValidLength,
-    isUpperCase,
-    isLowerCase,
-    isNumber,
-    isMatch,
     isEmpty,
-    isCustomValid,
+    isValid,
+    isMatch,
   };
 };
 
