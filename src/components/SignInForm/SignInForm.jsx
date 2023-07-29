@@ -14,6 +14,7 @@ import {
 } from '../../constants/errorMessages';
 import useInputValidation from '../../hooks/useInputValidation';
 import styles from '../AuthForms/AuthForms.module.scss';
+import { setCookie } from '../../utils/cookie';
 
 /**
  * Создаёт незвисимые инстансы стора для инпутов
@@ -120,39 +121,11 @@ const SignInForm = observer(() => {
     api
       .postApiAutorisation(email.value, password.value)
       .then((data) => {
-        const refresh = data.refresh;
-        if (data.access) {
-          document.cookie = `access=${data.access}; max-age=86400`;
-          formStore.setLoggedIn(true);
-          formStore.setOpenAuthForm(false);
-        } else {
-          api
-            .postApiAuthorizeVerify(refresh)
-            .then((data) => {
-              if (data) {
-                console.log(data);
-                api
-                  .postApiAuthorizeRefresh(refresh)
-                  .then((data) => {
-                    if (data.access) {
-                      document.cookie = `access=${data.access}; max-age=86400`;
-                      formStore.setLoggedIn(true);
-                      formStore.setOpenAuthForm(false);
-                    }
-                  })
-                  .catch((err) => {
-                    console.error(err, '--authorizeRefresh,err');
-                    formStore.setLoggedIn(false);
-                    setLoginErrorMessage(err.message);
-                  });
-              }
-            })
-            .catch((err) => {
-              console.error(err, '--token,err');
-              formStore.setLoggedIn(false);
-              setLoginErrorMessage(err.message);
-            });
-        }
+        /* const refresh = data.refresh; */
+        localStorage.setItem('refresh', data.refresh);
+        setCookie('access', data.access);
+        formStore.setLoggedIn(true);
+        formStore.setOpenAuthForm(false);
       })
       .catch((err) => {
         console.error(err, '--authorize,err');

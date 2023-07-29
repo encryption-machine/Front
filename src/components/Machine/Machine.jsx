@@ -121,6 +121,7 @@ export const Machine = observer(({ list }) => {
       )
       .then((response) => {
         if (response) {
+          console.log(response);
           if (type === 'qr') {
             SetQrResult(response.encrypted_text);
             secretStore.setOpenSecretModal(true);
@@ -143,7 +144,7 @@ export const Machine = observer(({ list }) => {
       copyToClipboard(result);
       setCopyMessage('Результат скопирован');
     } catch (error) {
-      setCopyMessage('Неудалось скопировать');
+      setCopyMessage('Не удалось скопировать');
     } finally {
       showMessage();
     }

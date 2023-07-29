@@ -9,7 +9,7 @@
 }
 
 .container {
-  width: calc(100% - 2 * 130px);
+  width: 82%;
   margin: 0 auto;
 
   .title {
@@ -22,31 +22,42 @@
   display: flex;
   flex-direction: column;
   max-width: 1180px;
-  margin: 0 auto;
+  margin: 0;
 
   .header {
     list-style: none;
     width: 100%;
     padding: 12px;
     display: grid;
-    grid-template-columns:
-      minmax(min-content, 180px) minmax(min-content, 380px) minmax(
-        min-content,
-        280px
-      )
-      minmax(min-content, 200px) 24px;
-    // grid-template-columns: 180px 380px 280px 200px 24px;
+    grid-auto-columns: 1fr 1fr 1fr 1fr 24px;
+    grid-template-rows: 1fr;
+    grid-template-areas: 'date is_encryption algorithm key btn';
     gap: 20px;
     margin: 0;
     @include font-source-sans(18px, $white, 400, 24px);
-  }
+    border-bottom: 1px solid $white;
+    margin-bottom: 20px;
 
-  .hr {
-    width: 100%;
-    color: $white;
-  }
+    @media screen and (max-width: 1125px) {
+      @include font-source-sans(14px, $white, 400, 18px);
+    }
 
-  .textLight {
-    @include font-source-sans(18px, $white, 400, 24px);
+    &li {
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+
+    &_date {
+      grid-area: date;
+    }
+    &_is_encryption {
+      grid-area: is_encryption;
+    }
+    &_algorithm {
+      grid-area: algorithm;
+    }
+    &_key {
+      grid-area: key;
+    }
   }
 }

@@ -4,6 +4,14 @@
 .accordionHistory {
   list-style: none;
   margin: 0;
-  padding: 12px 0;
-  margin: 0;
+  padding: 0;
+
+  &_text {
+    @include font-source-sans(28px, $white, 700, 32px);
+    margin: 20px auto;
+    text-align: center;
+    @media screen and (max-width: 850px) {
+      @include font-source-sans(18px, $white, 400, 22px);
+    }
+  }
 }
