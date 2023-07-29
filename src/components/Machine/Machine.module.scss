@@ -318,6 +318,7 @@
     &.error {
       svg {
         stroke: $red;
+        animation: pulse 0.8s linear infinite;
       }
     }
     &:hover {
@@ -385,5 +386,17 @@
   }
   95% {
     transform: rotate(10deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(0.9);
   }
 }
