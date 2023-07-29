@@ -6,6 +6,13 @@
   <h1>Шифровальная машина</h1>
   
   <a href='http://shifmachine.acceleratorpracticum.ru'>http://shifmachine.acceleratorpracticum.ru</a>
+  
+  <a href="http://shifmachine.acceleratorpracticum.ru">
+    <img src="https://img.shields.io/badge/-frontend-0D1117?style=for-the-badge" alt="http://shifmachine.acceleratorpracticum.ru"><img src='https://img.shields.io/website?down_color=red&down_message=offline&label=&style=for-the-badge&up_color=%23238636&up_message=online&url=http%3A%2F%2Fshifmachine.acceleratorpracticum.ru'/>
+  </a>
+    <a href="http://shifmachine.acceleratorpracticum.ru">
+    <img src="https://img.shields.io/badge/-backend-0D1117?style=for-the-badge" alt="http://shifmachine.acceleratorpracticum.ru"><img src='https://img.shields.io/website?down_color=red&down_message=down&label=&style=for-the-badge&up_color=%23238636&up_message=up&url=http%3A%2F%2Fshifmachine.acceleratorpracticum.ru/api/v1'/>
+  </a>
 </div>
 
 **Текущий репозиторий является frontend частью проекта "[Шифровальная машина](https://github.com/encryption-machine)"**
