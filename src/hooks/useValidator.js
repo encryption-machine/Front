@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { emailRegExp, symbolsRegExp, numbersRegExp } from '../constants/regExp';
 
-const useSignupValidator = ({
+const useValidator = ({
   password = '',
   confirmPassword = '',
   email = '',
@@ -150,4 +150,4 @@ const useSignupValidator = ({
   };
 };
 
-export default useSignupValidator;
+export default useValidator;
