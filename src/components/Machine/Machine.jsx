@@ -55,7 +55,7 @@ export const Machine = observer(({ list }) => {
   const key = useInputValidation({
     checkInputIsEmpty: secretKey,
     custom: {
-      regExp: validEnc,
+      regExp: validKey,
       value: secretKey,
     },
     length: { min: 1, max: keyLength },

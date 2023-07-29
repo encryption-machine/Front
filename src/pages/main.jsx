@@ -66,7 +66,7 @@ export const MainPage = () => {
       name: 'Код Цезаря',
       value: 'caesar',
       length: 2,
-      key: /[\d]/,
+      key: /^(([1-9]|1[0-4]|15)([,-](?=\d)|$))+$/,
       desc: 'только одно натуральное число от 1 до 15',
       validEncryption: caesarRegExp,
       validDecryption: caesarRegExp,
