@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
+import { useState, useEffect } from 'react';
 import { Modal } from '../Modal/Modal';
 import styles from './CookiePopup.module.scss';
-import { useState } from 'react';
-import { useEffect } from 'react';
 
 const CookiePopup = () => {
   const [isShow, setIsShow] = useState(
