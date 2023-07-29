@@ -6,9 +6,11 @@ import OurTeam from '../components/OurTeam/OurTeam';
 import {
   anyCharRegExp,
   caesarRegExp,
+  caesarSecretKeyRegExp,
   morseInputCodeRegExp,
   morseInputTextRegExp,
   vigenereRegExp,
+  vigenereSecretKeyRegExp,
 } from '../constants/regExp';
 
 export const MainPage = () => {
@@ -40,7 +42,7 @@ export const MainPage = () => {
       name: 'AES (Advanced Encryption Standard)',
       value: 'aes',
       length: 30,
-      key: null,
+      key: anyCharRegExp,
       desc: 'любые символы в количестве от 1 до 30',
       validEncryption: anyCharRegExp,
       validDecryption: anyCharRegExp,
@@ -53,7 +55,7 @@ export const MainPage = () => {
       name: 'Шифр Виженера',
       value: 'vigenere',
       length: 30,
-      key: /^[а-яА-Я]{1,}$/,
+      key: vigenereSecretKeyRegExp,
       desc: 'русские буквы от А до Я (без ё) в количестве от 1 до 30',
       validEncryption: vigenereRegExp,
       validDecryption: vigenereRegExp,
@@ -66,7 +68,7 @@ export const MainPage = () => {
       name: 'Код Цезаря',
       value: 'caesar',
       length: 2,
-      key: /^(([1-9]|1[0-4]|15)([,-](?=\d)|$))+$/,
+      key: caesarSecretKeyRegExp,
       desc: 'только одно натуральное число от 1 до 15',
       validEncryption: caesarRegExp,
       validDecryption: caesarRegExp,

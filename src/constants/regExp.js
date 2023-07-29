@@ -14,6 +14,10 @@ export const morseInputCodeRegExp = /[-.\s]/;
 
 export const caesarRegExp = /^[а-яА-я\d\s.,:;)(*#%!+-/$&"']*$/;
 
+export const caesarSecretKeyRegExp = /^(([1-9]|1[0-4]|15)([,-](?=\d)|$))+$/;
+
 export const vigenereRegExp = /^[а-яА-я\d\s.,:;)(*#%!+-/$&"']*$/;
+
+export const vigenereSecretKeyRegExp = /^[а-яА-Я]{1,}$/;
 
 export const caesarReplaceCharRegExp = /[Ёё]/gim;
