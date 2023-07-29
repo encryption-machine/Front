@@ -53,7 +53,7 @@ export const MainPage = () => {
       name: 'Шифр Виженера',
       value: 'vigenere',
       length: 30,
-      key: null,
+      key: /^[а-яА-Я]{1,}$/,
       desc: 'русские буквы от А до Я (без ё) в количестве от 1 до 30',
       validEncryption: vigenereRegExp,
       validDecryption: vigenereRegExp,
