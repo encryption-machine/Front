@@ -1,11 +1,9 @@
 //import { useContext, createContext } from 'react';
 import AuthFormStore from './auth-form-store';
 import SecretKeyStore from './secret-key';
-import SyferStore from './syfer';
 
 const AuthFormGlobalStore = new AuthFormStore();
 const SecretKeyGlobalStore = new SecretKeyStore();
-const SyferGlobalStore = new SyferStore();
 
 /**
  * Пример использования глобального стора
@@ -21,4 +19,4 @@ const SyferGlobalStore = new SyferStore();
  * ПРИМЕЧАНИЕ! Деструктуризировать нужно внутри компонента
  */
 
-export { AuthFormGlobalStore, SecretKeyGlobalStore, SyferGlobalStore };
+export { AuthFormGlobalStore, SecretKeyGlobalStore };
