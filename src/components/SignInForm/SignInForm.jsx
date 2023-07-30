@@ -12,6 +12,7 @@ import {
   passwordValidErrorMessage,
   emailValidErrorMessage,
 } from '../../constants/errorMessages';
+import { emailRegExp, passwordRegExp } from '../../constants/regExp';
 import useInputValidation from '../../hooks/useInputValidation';
 import styles from '../AuthForms/AuthForms.module.scss';
 import { setCookie } from '../../utils/cookie';
@@ -51,21 +52,21 @@ const SignInForm = observer(() => {
   };
 
   const passwordInput = useInputValidation({
-    checkInputIsEmpty: password.value,
-    password: password.value,
-    length: { min: 8, max: 30 },
+    value: password.value,
+    regExp: passwordRegExp,
+    length: { from: 8, to: 30 },
   });
 
   const emailInput = useInputValidation({
-    checkInputIsEmpty: email.value,
-    email: email.value,
+    value: email.value,
+    regExp: emailRegExp,
   });
 
   useEffect(() => {
-    passwordInput.isPasswordInputValid && emailInput.isEmailValid
+    passwordInput.isValid && emailInput.isValid
       ? setIsFormValid(true)
       : setIsFormValid(false);
-  }, [emailInput.isEmailValid, passwordInput.isPasswordInputValid]);
+  }, [emailInput.isValid, passwordInput.isValid]);
 
   // Change show passwords
   useEffect(() => {
@@ -153,9 +154,9 @@ const SignInForm = observer(() => {
           isDirty={emailInput.isDirty}
           isEmpty={emailInput.isEmpty}
           isFocus={emailInput.isFocus}
-          isEmailValid={emailInput.isEmailValid}
+          isValid={emailInput.isValid}
           emptyError={email.emptyMessage}
-          emailValidError={emailValidErrorMessage}
+          validError={emailValidErrorMessage}
           onClickClearButton={(e) =>
             handleClearButton(e, () => email.setValue(''))
           }
@@ -171,8 +172,8 @@ const SignInForm = observer(() => {
           isDirty={passwordInput.isDirty}
           isEmpty={passwordInput.isEmpty}
           onChange={(e) => password.setValue(e.target.value)}
-          passwordValidError={passwordValidErrorMessage}
-          isPasswordInputValid={passwordInput.isPasswordInputValid}
+          validError={passwordValidErrorMessage}
+          isValid={passwordInput.isValid}
           emptyError={password.emptyMessage}
           showPassword={showPassword}
           onClickShowButton={(e) => handleShowPassword(e)}
