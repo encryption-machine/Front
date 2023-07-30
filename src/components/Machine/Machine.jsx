@@ -225,54 +225,65 @@ export const Machine = observer(({ list }) => {
           </div>
         </div>
         <div className={styles.copy__input}>
-          <div className={styles.alert}>
-            <div className={styles.alert__cont}>
-              <button className={styles.alert__button} onClick={hintClick}>
-                <AlertMark />
-              </button>
-              {showHint && (
-                <div className={styles.alert__hide}>
-                  <div>
-                    Содержание должно соответствовать следующим условиям:
-                    {current === 'encryption' ? (
-                      <ul>
-                        <li>
-                          Азбука Морзе – только кириллица, числа, символы . , :
-                          ; ) ( ? ! = + - / $ @ & _ " '
-                        </li>
-                        <li>Шифр Виженера – только кириллица, символы</li>
-                        <li>
-                          Код Цезаря – только кириллица (без ё), числа, символы
-                          ! , " # $ % & ' ( ) * + - .
-                        </li>
-                      </ul>
-                    ) : (
-                      <ul>
-                        <li>Азбука Морзе – только символы - .</li>
-                        <li>Шифр Виженера – только кириллица, символы</li>
-                        <li>
-                          Код Цезаря – только кириллица (без ё), числа, символы
-                          ! , " # $ % & ' ( ) * + - .
-                        </li>
-                      </ul>
-                    )}
+          <div className={styles.copy__container}>
+            <textarea
+              name="leftArea"
+              id="leftArea"
+              className={styles.text}
+              placeholder="Исходный текст "
+              value={encryption}
+              onInput={(event) => handleEncryptionValue(event)}
+            />
+            <div className={styles.alert}>
+              <div className={styles.alert__cont}>
+                <button className={styles.alert__button} onClick={hintClick}>
+                  <AlertMark />
+                </button>
+                {showHint && (
+                  <div className={styles.alert__hide}>
+                    <div>
+                      Содержание должно соответствовать следующим условиям:
+                      {current === 'encryption' ? (
+                        <ul>
+                          <li>
+                            Азбука Морзе – только кириллица, числа, символы . , :
+                            ; ) ( ? ! = + - / $ @ & _ " '
+                          </li>
+                          <li>Шифр Виженера – только кириллица, символы</li>
+                          <li>
+                            Код Цезаря – только кириллица (без ё), числа, символы
+                            ! , " # $ % & ' ( ) * + - .
+                          </li>
+                        </ul>
+                      ) : (
+                        <ul>
+                          <li>Азбука Морзе – только символы - .</li>
+                          <li>Шифр Виженера – только кириллица, символы</li>
+                          <li>
+                            Код Цезаря – только кириллица (без ё), числа, символы
+                            ! , " # $ % & ' ( ) * + - .
+                          </li>
+                        </ul>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => setShowHint(false)}
+                      className={styles.alert__close}
+                    />
                   </div>
-                  <button
-                    onClick={() => setShowHint(false)}
-                    className={styles.alert__close}
-                  />
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
-          <textarea
+          
+          {/* <textarea
             name="leftArea"
             id="leftArea"
             className={styles.text}
             placeholder="Исходный текст "
             value={encryption}
             onInput={(event) => handleEncryptionValue(event)}
-          />
+          /> */}
           <div className={styles.count}>
             {lengthOfText} / {encryptionTextLength}
           </div>

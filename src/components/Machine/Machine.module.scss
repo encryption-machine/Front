@@ -26,12 +26,10 @@
   grid-template-columns: 1fr 1fr;
   align-items: center;
   @media (max-width: 1140px) {
-    // max-width: 960px;
     gap: 20px 0;
     justify-content: center;
   }
   @media (max-width: 960px) {
-    // width: 100%;
     grid-template-columns: 1fr;
     justify-content: center;
     // padding: 0 20px;
@@ -152,10 +150,12 @@
 }
 .copy {
   &__cont {
+    min-height: 300px;
     position: relative;
     border-radius: 8px;
     overflow: hidden;
-    padding: 20px 20px 30px;
+    // padding: 20px 20px 30px;
+    padding: 12px;
     background-color: $white;
     border: 1.5px solid $white;
     @media (max-width: 1140px) {
@@ -167,11 +167,14 @@
     }
   }
   &__input {
+    min-height: 300px;
     position: relative;
     border-radius: 8px;
-    padding: 20px 20px 30px;
+    // padding: 20px 20px 30px;
+    padding: 12px;
     background-color: $white;
     border: 1.5px solid $white;
+    // display: flex;
     @media (max-width: 1140px) {
       grid-column: span 2;
     }
@@ -180,9 +183,13 @@
       border-radius: 8px;
     }
   }
+  &__container {
+    display: flex;
+  }
   &__button {
+    padding: 0;
     position: absolute;
-    bottom: 3px;
+    bottom: 7px;
     left: 12px;
     border: none;
     cursor: pointer;
@@ -282,14 +289,16 @@
   }
 }
 .alert {
-  position: absolute;
-  top: 2px;
-  right: -1px;
-  @media (max-width: 1140px) {
-    width: calc(100% - 20px);
-    display: flex;
-    justify-content: flex-end;
-  }
+  // position: absolute;
+  // top: 2px;
+  // right: -1px;
+  // top: 12px;
+  // right: 14px;
+  // @media (max-width: 1140px) {
+  //   width: calc(100% - 20px);
+  //   display: flex;
+  //   justify-content: flex-end;
+  // }
   &__cont {
     position: relative;
     width: 100%;
@@ -297,6 +306,7 @@
     justify-content: flex-end;
   }
   &__button {
+    padding: 0;
     background: none;
     border: none;
     cursor: pointer;
