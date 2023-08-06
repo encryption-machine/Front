@@ -80,6 +80,7 @@ export const Machine = observer(({ list }) => {
     SetKeyLength(value.length);
     setFilteredList(list.filter((item) => item.name !== value.name));
     SetEncKey(value.desc);
+    setResult('');
     if (current === 'encryption') {
       setCurrentMinLength(value.minLengthEnc);
       setCurrentMaxLength(value.maxLengthEnc);
@@ -185,6 +186,7 @@ export const Machine = observer(({ list }) => {
 
   const handleEncryptionValue = (e) => {
     SetEncryption(e.target.value.slice(0, Infinity));
+    setResult('');
   };
 
   const lengthOfText = useMemo(() => {
