@@ -1,0 +1,56 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins';
+
+.container {
+  position: fixed;
+  bottom: 64px;
+  right: 130px;
+  z-index: 999;
+  display: inline-flex;
+}
+
+.button {
+  background: $blue;
+  width: 56px;
+  height: 56px;
+  border-radius: 40px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all ease 1s;
+  box-shadow: 4px 4px 16px 0px rgba(33, 57, 165, 0.2);
+
+  &:hover {
+    width: 180px;
+    transition: all ease 1s;
+  }
+}
+
+.shadow {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  height: 24px;
+  width: 180px;
+  text-align: center;
+  overflow: hidden;
+  transition: all ease 1s;
+}
+
+.telegram_span {
+  opacity: 0;
+  transition: all ease 0.5s;
+  @include font-source-sans(18px, $white, 400, 24px);
+}
+
+.button:hover .telegram_span {
+  opacity: 1;
+}
+
+.telegram_icon {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
