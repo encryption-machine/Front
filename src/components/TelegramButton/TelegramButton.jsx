@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import styles from './TelegramButton.module.scss';
 import IconTelegram from '../../assets/icons/telegram_btn.svg';
 import { Modal } from '../Modal/Modal';

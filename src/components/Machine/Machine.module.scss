@@ -149,6 +149,9 @@
   &:focus-visible {
     outline: none;
   }
+  &.error {
+    color: $red;
+  }
 }
 .copy {
   &__cont {
@@ -178,6 +181,9 @@
     &:focus-within {
       border: 1.5px solid $violet;
       border-radius: 8px;
+    }
+    &.error {
+      border: 1px solid $red;
     }
   }
   &__button {
@@ -241,7 +247,13 @@
     padding: 0 12px;
     border: none;
     border-radius: 8px;
+    outline: none;
+    &.error {
+      color: $red;
+      border: 1px solid $red;
+    }
   }
+
   &__key {
     width: 276px;
   }
@@ -302,6 +314,12 @@
     cursor: pointer;
     svg {
       stroke: $gray_dark;
+    }
+    &.error {
+      svg {
+        stroke: $red;
+        animation: pulse 0.8s linear infinite;
+      }
     }
     &:hover {
       animation: alert 0.3s ease-in-out infinite;
@@ -368,5 +386,17 @@
   }
   95% {
     transform: rotate(10deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(0.9);
   }
 }

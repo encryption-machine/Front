@@ -95,8 +95,8 @@ export const EmailInput = ({
   isFocus,
   emptyError,
   placeholder,
-  isEmailValid,
-  emailValidError,
+  isValid,
+  validError,
   onClickClearButton,
 }) => {
   const name = 'email';
@@ -106,7 +106,7 @@ export const EmailInput = ({
       <div
         onBlur={onBlur}
         onFocus={onFocus}
-        className={setClasses(isDirty, isEmpty, isEmailValid, isFocus)}
+        className={setClasses(isDirty, isEmpty, isValid, isFocus)}
       >
         <input
           className={cn(styles.input, styles.textField)}
@@ -133,9 +133,9 @@ export const EmailInput = ({
         <span className={styles.hintError}>{emptyError}</span>
       ) : null}
 
-      {isDirty && !isEmailValid && !isEmpty ? (
+      {isDirty && !isValid && !isEmpty ? (
         <div>
-          {emailValidError.map((error) => (
+          {validError.map((error) => (
             <div
               className={cn(styles.hintError, styles.hintError__wrap)}
               key={nanoid()}
@@ -175,8 +175,8 @@ export const PasswordInput = ({
   clickShowPassword,
   onClickShowButton,
   onClickClearButton,
-  passwordValidError,
-  isPasswordInputValid,
+  validError,
+  isValid,
 }) => {
   const name = 'password';
 
@@ -185,7 +185,7 @@ export const PasswordInput = ({
       <div
         onBlur={onBlur}
         onFocus={onFocus}
-        className={setClasses(isDirty, isEmpty, isPasswordInputValid, isFocus)}
+        className={setClasses(isDirty, isEmpty, isValid, isFocus)}
       >
         <input
           className={cn(styles.input, styles.textField)}
@@ -220,9 +220,9 @@ export const PasswordInput = ({
         <span className={styles.hintError}>{emptyError}</span>
       ) : null}
 
-      {isDirty && !isPasswordInputValid && !isEmpty ? (
+      {isDirty && !isValid && !isEmpty ? (
         <div className={cn(styles.hintError, styles.hintError__wrap)}>
-          {passwordValidError.map((error) => (
+          {validError.map((error) => (
             <ul key={nanoid()} className={styles.hintError__list}>
               {error.list_title}
               {error.items.map((item) => (
@@ -246,10 +246,10 @@ export const ConfirmPasswordInput = ({
   isFocus,
   isDirty,
   isEmpty,
-  isMatch,
+  isValid,
   onChange,
   emptyError,
-  matchError,
+  validError,
   placeholder,
   showPassword,
   clickShowPassword,
@@ -263,7 +263,7 @@ export const ConfirmPasswordInput = ({
       <div
         onBlur={onBlur}
         onFocus={onFocus}
-        className={setClasses(isDirty, isEmpty, isMatch, isFocus)}
+        className={setClasses(isDirty, isEmpty, isValid, isFocus)}
       >
         <input
           className={cn(styles.input, styles.textField)}
@@ -296,8 +296,8 @@ export const ConfirmPasswordInput = ({
       {isDirty && isEmpty ? (
         <span className={styles.hintError}>{emptyError}</span>
       ) : null}
-      {!isMatch && isDirty && !isEmpty ? (
-        <span className={styles.hintError}>{matchError}</span>
+      {!isValid && isDirty && !isEmpty ? (
+        <span className={styles.hintError}>{validError}</span>
       ) : null}
     </>
   );
@@ -315,7 +315,7 @@ export const SecretQuestionInput = ({
   emptyError,
   validError,
   placeholder,
-  isCustomValid,
+  isValid,
   onClickClearButton,
 }) => {
   const name = 'secret-question';
@@ -325,7 +325,7 @@ export const SecretQuestionInput = ({
       <div
         onBlur={onBlur}
         onFocus={onFocus}
-        className={setClasses(isDirty, isEmpty, isCustomValid, isFocus)}
+        className={setClasses(isDirty, isEmpty, isValid, isFocus)}
       >
         <input
           id={name}
@@ -350,7 +350,7 @@ export const SecretQuestionInput = ({
       {isDirty && isEmpty ? (
         <span className={styles.hintError}>{emptyError}</span>
       ) : null}
-      {!isCustomValid && !isEmpty ? (
+      {!isValid && !isEmpty ? (
         <span className={styles.hintError}>{validError}</span>
       ) : null}
     </>
@@ -368,7 +368,7 @@ export const AnswerInput = ({
   onChange,
   emptyError,
   validError,
-  isCustomValid,
+  isValid,
   placeholder,
   onClickClearButton,
 }) => {
@@ -379,7 +379,7 @@ export const AnswerInput = ({
       <div
         onBlur={onBlur}
         onFocus={onFocus}
-        className={setClasses(isDirty, isEmpty, isCustomValid, isFocus)}
+        className={setClasses(isDirty, isEmpty, isValid, isFocus)}
       >
         <input
           id={name}
@@ -404,7 +404,7 @@ export const AnswerInput = ({
       {isDirty && isEmpty ? (
         <span className={styles.hintError}>{emptyError}</span>
       ) : null}
-      {!isCustomValid && !isEmpty ? (
+      {!isValid && !isEmpty ? (
         <span className={styles.hintError}>{validError}</span>
       ) : null}
     </>
