@@ -318,10 +318,6 @@ export const Machine = observer(({ list }) => {
                       </ul>
                     )}
                   </div>
-                  <button
-                    onClick={() => setShowHint(false)}
-                    className={styles.alert__close}
-                  />
                 </div>
               )}
             </div>

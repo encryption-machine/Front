@@ -14,7 +14,7 @@ export const AlertMark = () => {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path d="M9 5V6V5.5V5Z" stroke="#FF5151" strokeLinejoin="round" />
+      <path d="M9 5V6V5.5V5Z" strokeLinejoin="round" />
       <path d="M9 8V13" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
