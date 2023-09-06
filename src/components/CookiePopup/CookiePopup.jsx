@@ -1,15 +1,10 @@
 /* eslint-disable react/jsx-pascal-case */
-import { useState, useEffect } from 'react';
 import { Modal } from '../Modal/Modal';
+import useLocalStorage from '../../hooks/useLocalStorage';
 import styles from './CookiePopup.module.scss';
 
 const CookiePopup = () => {
-  const [isShow, setIsShow] = useState(
-    localStorage.cookieModal ? JSON.parse(localStorage.cookieModal) : true
-  );
-  useEffect(() => {
-    localStorage.setItem('cookieModal', JSON.stringify(isShow));
-  }, [isShow]);
+  const [isShow, setIsShow] = useLocalStorage('cookieModal', true);
 
   return (
     <>

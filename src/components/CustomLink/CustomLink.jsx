@@ -1,8 +1,6 @@
-import styles from './CustomLink.module.scss';
-
-export const CustomLink = ({ href, target, onClick, children }) => {
+export const CustomLink = ({ style, href, target, onClick, children }) => {
   return (
-    <a className={styles.link} href={href} target={target} onClick={onClick}>
+    <a className={style} href={href} target={target} onClick={onClick}>
       {children}
     </a>
   );

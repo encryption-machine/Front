@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import QRCode from 'react-qr-code';
+import cn from 'classnames';
 import { copyToClipboard } from '../../helpers';
 import SecretKeyModal from '../SecretKeyModal/SecretKeyModal';
 import FormButton from '../FormButton/FormButton';
@@ -10,10 +11,12 @@ import * as apiMachine from '../../utils/apiMachine';
 import { observer } from 'mobx-react-lite';
 import { SecretKeyGlobalStore as secretStore } from '../../stores';
 import { Button } from '../Button/Button';
+import useInputValidation from '../../hooks/useInputValidation';
 
 export const Machine = observer(({ list }) => {
   const [current, setCurrent] = React.useState('encryption');
   const [isSelectOpen, setSelectOpen] = React.useState(false);
+  const [isSelectCipher, setSelectCipher] = React.useState(false);
   const [selected, setSelected] = React.useState('Выберите язык шифрования');
   const [type, setType] = React.useState('');
   const [filteredList, setFilteredList] = React.useState(
@@ -27,11 +30,30 @@ export const Machine = observer(({ list }) => {
   const [keyLength, SetKeyLength] = useState(30);
   const [qrResult, SetQrResult] = useState('');
   const [qrCopy, SetQrCopy] = useState(false);
-  const [encryptionTextLength, SetEncryptionTextLength] = useState(2000);
+  const [encryptionTextLength, SetEncryptionTextLength] = useState(0);
   const [descKey, SetEncKey] = useState('');
+  const [validKey, setValidKey] = useState('');
   const [showHint, setShowHint] = useState(false);
   const selectRef = useRef(null);
   const activeClass = styles.tabActive;
+  const [validEnc, setValidEnc] = useState(null);
+  const [currentMinLength, setCurrentMinLength] = useState(0);
+  const [currentMaxLength, setCurrentMaxLength] = useState(2000);
+
+  const [disabled, setDisabled] = useState(true);
+  const [placeholder, setPlaceholder] = useState(selected);
+
+  const commonCipher = useInputValidation({
+    value: encryption,
+    regExp: validEnc,
+    length: { from: currentMinLength, to: currentMaxLength },
+  });
+
+  const key = useInputValidation({
+    value: secretKey,
+    regExp: validKey,
+    length: { from: 1, to: keyLength },
+  });
 
   const clickTab = (e) => {
     setCurrent(e.target.value);
@@ -51,21 +73,40 @@ export const Machine = observer(({ list }) => {
   };
 
   const choiceType = (e, value) => {
+    value && setSelectCipher(true);
     setSelected(value.name);
     setType(value.value);
+    setValidKey(value.key);
     SetKeyLength(value.length);
     setFilteredList(list.filter((item) => item.name !== value.name));
     SetEncKey(value.desc);
+    setResult('');
+    if (current === 'encryption') {
+      setCurrentMinLength(value.minLengthEnc);
+      setCurrentMaxLength(value.maxLengthEnc);
+      SetEncryptionTextLength(value.maxLengthEnc);
+      setValidEnc(value.validEncryption);
+    } else {
+      setCurrentMaxLength(value.maxLengthDec);
+      setCurrentMinLength(value.minLengthDec);
+      SetEncryptionTextLength(value.maxLengthDec);
+      setValidEnc(value.validDecryption);
+    }
     if (value.value === 'qr') {
       setCurrent('encryption');
       SetEncryptionTextLength(180);
-    } else {
-      SetEncryptionTextLength(2000);
     }
     selectClick();
+    if (!value) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+      setPlaceholder('Исходный текст');
+    }
   };
 
   const handleEncrypt = (e) => {
+    console.log(commonCipher.isValid);
     apiMachine
       .postEncryption(
         encryption,
@@ -144,7 +185,8 @@ export const Machine = observer(({ list }) => {
   };
 
   const handleEncryptionValue = (e) => {
-    SetEncryption(e.target.value.slice(0, encryptionTextLength));
+    SetEncryption(e.target.value.slice(0, Infinity));
+    setResult('');
   };
 
   const lengthOfText = useMemo(() => {
@@ -176,6 +218,22 @@ export const Machine = observer(({ list }) => {
   const copyClasses = !isCopyShow
     ? styles.copy__message
     : `${styles.copy__messageShow} ${styles.copy__message}`;
+
+  const setClassError = (...classes) => {
+    if (!commonCipher.isValid && !commonCipher.isEmpty && isSelectCipher) {
+      return cn(...classes, styles.error);
+    } else {
+      return classes;
+    }
+  };
+
+  const setClassErrorKey = (...classes) => {
+    if (!key.isValid && !key.isEmpty) {
+      return cn(...classes, styles.error);
+    } else {
+      return classes;
+    }
+  };
 
   return (
     <section className={styles.machine} id="ciphers">
@@ -224,10 +282,13 @@ export const Machine = observer(({ list }) => {
             </div>
           </div>
         </div>
-        <div className={styles.copy__input}>
+        <div className={setClassError(styles.copy__input)}>
           <div className={styles.alert}>
             <div className={styles.alert__cont}>
-              <button className={styles.alert__button} onClick={hintClick}>
+              <button
+                className={setClassError(styles.alert__button)}
+                onClick={hintClick}
+              >
                 <AlertMark />
               </button>
               {showHint && (
@@ -266,10 +327,11 @@ export const Machine = observer(({ list }) => {
             </div>
           </div>
           <textarea
+            disabled={disabled}
             name="leftArea"
             id="leftArea"
-            className={styles.text}
-            placeholder="Исходный текст "
+            className={setClassError(styles.text)}
+            placeholder={placeholder}
             value={encryption}
             onInput={(event) => handleEncryptionValue(event)}
           />
@@ -298,7 +360,9 @@ export const Machine = observer(({ list }) => {
         <div className={styles.machine__button}>
           <Button
             onClick={(e) => secretKeyClick(e)}
-            disabled={!encryption.length || !type.length}
+            disabled={
+              !encryption.length || !type.length || !commonCipher.isValid
+            }
             className={styles.button}
           >
             Запустить
@@ -318,7 +382,7 @@ export const Machine = observer(({ list }) => {
                   <input
                     type="text"
                     placeholder="Секретный ключ"
-                    className={styles.modal__input}
+                    className={setClassErrorKey(styles.modal__input)}
                     value={secretKey}
                     onChange={handleChangeKey}
                   />
@@ -326,7 +390,7 @@ export const Machine = observer(({ list }) => {
                 <div className={styles.modal__item}>
                   <FormButton
                     onClick={(e) => setSecretKey(e)}
-                    disabled={secretKey.length === 0}
+                    disabled={key.isEmpty || !key.isValid}
                   >
                     Ввести
                   </FormButton>
